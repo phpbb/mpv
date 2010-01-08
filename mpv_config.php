@@ -1,0 +1,39 @@
+<?php
+/**
+* Config file
+*
+* @package mpv_server
+* @version $Id$
+* @copyright (c) 2010 phpBB Group
+* @license Internal use only
+*
+*/
+
+// Measure the amount of time MPV takes to process zip package
+$starttime = explode(' ', microtime());
+$starttime = $starttime[1] + $starttime[0];
+
+// Server ID. Can be any number.
+define('SERVER_ID', 1);
+
+// If you don't want to connect to phpbb.com to get the xsd then set this to true
+// and copy the xsd(s) to the root/includes/xsd directory of your MPV copy
+define('LOCAL_ONLY', false);
+
+// Only used if LOCAL_ONLY is set to true
+define('PHPBB_VERSION', '3.0.6');
+
+// Latest MODX version.  Change as new versions get released.
+define('LATEST_MODX', '1.2.3');
+
+// Return with HTML formatting or not
+// Useful if displaying through forum
+define('HTML_FORMAT', false, true);
+
+// This is for statistics gathering
+// Format is:  'tag' => array('properties')
+$statistics = array(
+						'meta'		=> array('name', 'content'),
+				);
+
+?>
