@@ -102,13 +102,31 @@ class mpv_tests_modx
 		  
 			if (preg_match('#modx-(.*?)\.xsd#s', (string) $modx_object, $matches))
 			{
-				$current_modx_version = LATEST_MODX;  //$this->get_current_version('modx');  //not yet
+				$current_modx_version = $this->get_current_version('modx');
 				if ($matches[1] != $current_modx_version)
 				{
 					$this->push_error(mpv::ERROR_FAIL, 'USING_MODX_OUTDATED', array($matches[1], $current_modx_version));
 					//continue;
 				}
-				$errors = $modx_object->validate((LOCAL_ONLY) ? $this->validator->dir . 'xsd/' . $matches[0] : "http://www.phpbb.com/mods/xml/{$matches[0]}");
+				//Let's see if we can download the file from phpbb.compact
+				if (!LOCAL_ONLY && !@file_exists($this->validator->dir . 'store/data/' . $matches[0]))
+				{
+					$data = @file_get_contents("http://www.phpbb.com/mods/xml/{$matches[0]}");
+					
+					//Now we write out the .xsd
+					if (isset($data) && $data !== false)
+					{
+						$cache = @fopen($this->validator->dir . 'store/data/' . $matches[0], 'wb');
+						@fwrite($cache, $data);
+						@fclose($cache);
+					}
+					else
+					{
+						$this->push_error(mpv::ERROR_FAIL, sprintf('UNABLE_OPEN', "http://www.phpbb.com/mods/xml/{$matches[0]}"));
+						continue;
+					}
+				}
+				$errors = $modx_object->validate($this->validator->dir . 'store/data/' . $matches[0]);
 			}
 			else
 			{
@@ -657,6 +675,9 @@ class mpv_tests_modx
 	*/
 	private function get_current_version($type)
 	{
+		global $lang;
+		
+		//If we don't want to go out to the Internet we set these
 		if (LOCAL_ONLY)
 		{
 			switch ($type)
@@ -668,63 +689,83 @@ class mpv_tests_modx
 				case 'modx':
 					return LATEST_MODX;
 					break;
+				
+				default:
+					return false;
+					break;
 			}
 		}
-		(LOCAL_ONLY) ? PHPBB_VERSION : 
 		
 		$errstr = '';
 		$errno = 0;
 		$host = 'www.phpbb.com';
 		$port = 80;
 		$timeout = 10;
-		$directory = ($type == 'modx') ? '/modx' : '/updatecheck';
-		$filename = ($type == 'modx') ? '1x.txt' : '30x.txt';
+		$directory = '/updatecheck';
+		$filename = ($type == 'modx') ? 'modx_1x.txt' : '30x.txt';
+		$file_info = '';
+		$get_info = false;
 		
-		if ($fsock = @fsockopen($host, $port, $errno, $errstr, $timeout))
+		if (@file_exists($this->validator->dir . 'store/data/' . $filename))
 		{
-			@fputs($fsock, "GET $directory/$filename HTTP/1.1\r\n");
-			@fputs($fsock, "HOST: $host\r\n");
-			@fputs($fsock, "Connection: close\r\n\r\n");
-
-			$file_info = '';
-			$get_info = false;
-
-			while (!@feof($fsock))
+			//Get from cache if it's been less than a day since the last update
+			if ((time() - filemtime($this->validator->dir . 'store/data/' . $filename)) <= 86400)
 			{
-				if ($get_info)
-				{
-					$file_info .= @fread($fsock, 1024);
-				}
-				else
-				{
-					$line = @fgets($fsock, 1024);
-					if ($line == "\r\n")
-					{
-						$get_info = true;
-					}
-					else if (stripos($line, '404 not found') !== false)
-					{
-						$errstr = $lang['FILE_NOT_FOUND'] . ': ' . $filename;
-						return false;
-					}
-				}
+				$file_info = @file_get_contents($this->validator->dir . 'store/data/' . $filename);			
 			}
-			@fclose($fsock);
 		}
-		else
+		
+		//Only do this if we couldn't get the cache data
+		if (empty($file_info))
 		{
-			if ($errstr)
+			if ($fsock = @fsockopen($host, $port, $errno, $errstr, $timeout))
 			{
-				$errstr = utf8_convert_message($errstr);
-				return false;
+				@fputs($fsock, "GET $directory/$filename HTTP/1.1\r\n");
+				@fputs($fsock, "HOST: $host\r\n");
+				@fputs($fsock, "Connection: close\r\n\r\n");
+
+				while (!@feof($fsock))
+				{
+					if ($get_info)
+					{
+						$file_info .= @fread($fsock, 1024);
+					}
+					else
+					{
+						$line = @fgets($fsock, 1024);
+						if ($line == "\r\n")
+						{
+							$get_info = true;
+						}
+						else if (stripos($line, '404 not found') !== false)
+						{
+							$errstr = $lang['FILE_NOT_FOUND'] . ': ' . $filename;
+							return false;
+						}
+					}
+				}
+				//Cache the update file
+				$cache = @fopen($root_dir . 'store/data/' . $filename, 'wb');
+				@fwrite($cache, $file_info);
+				@fclose($cache);
+				
+				@fclose($fsock);
 			}
 			else
 			{
-				$errstr = $lang['FSOCK_DISABLED'];
-				return false;
+				if ($errstr)
+				{
+					$errstr = utf8_convert_message($errstr);
+					return false;
+				}
+				else
+				{
+					$errstr = $lang['FSOCK_DISABLED'];
+					return false;
+				}
 			}
 		}
-
+		
 		$info = explode("\n", $file_info);
 		
 		return $info[0];

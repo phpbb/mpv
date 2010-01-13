@@ -204,7 +204,15 @@ class mpv
 	 * @access	public
 	 */
 	public $zip_file;
-
+	
+	/**
+	* Name of the original zip file
+	*
+	* @var		string
+	* @access	public
+	*/
+	public $orig_package_name = 'zip';
+	
 	/**
 	 * Constructor
 	 *
@@ -410,7 +418,7 @@ class mpv
 
 		$this->zip_file = $package;
 		
-		$this->message .= $lang['VALIDATING_ZIP'] . "\n";
+		$this->message .= sprintf($lang['VALIDATING_ZIP'], $this->orig_package_name) . "\n\n";
 		
 		$this->push_error(self::ERROR_NOTICE, 'GENERAL_NOTICE'); // Add a general notice about possible wrong fails.
 
@@ -623,7 +631,7 @@ class mpv
 			$this->message .= $lang['NO_PRE_VAL_ERRORS'];
 		}
 
-		$this->message .= "\n\n" . $lang['REPORT_BY'] . " " . mpv::VERSION;
+		$this->message .= "\n" . $lang['REPORT_BY'] . " " . mpv::VERSION;
 
 		if ($this->server_signature !== false)
 		{

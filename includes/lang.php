@@ -53,7 +53,7 @@ $lang = array_merge($lang, array(
 	'TARGET_VERSION_NOT_FOUND'	=> 'The target-version element is missing from the MODX file',
 	'INVALID_VERSION_FORMAT'	=> 'The supplied version (%s) is invalid. The format should be: 1.0.0.',
 
-	'VALIDATING_ZIP'			=> 'Validating zip',
+	'VALIDATING_ZIP'			=> '(Validating %s)',
 	'MAJOR_VERSION_UNSTABLE'	=> 'Your MOD version (%s) is unstable. It should be higher strarting at 1.0.0, but the minor version (the middle digit) should not be odd.
 	Example:
 	[b]0.0.1[/b] is unstable
@@ -161,7 +161,8 @@ $lang = array_merge($lang, array(
 	'UNKNOWN_OUTPUT'	=> 'Unknown output type',
 	'MPV_NOTICE'		=> 'MPV notice found at %1$s line %2$s: %3$s',
 	'MPV_WARNING'		=> 'MPV warning found at %1$s line %2$s: %3$s',
-	'MPV_NOTICE'		=> 'MPV user notice found at %1$s line %2$s: %3$s',
+	'MPV_NOTICE'		=> 'MPV notice found at %1$s line %2$s: %3$s',
+	'MPV_USER_NOTICE'		=> 'MPV user notice found at %1$s line %2$s: %3$s',
 	'MPV_GENERAL_ERROR'		=> 'MPV encountered an error at %1$s line %2$s: %3$s',
 	'MPV_FAIL_RESULT'			=> 'FAIL',
 	'MPV_NOTICE_RESULT'			=> 'NOTICE',

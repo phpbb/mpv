@@ -31,7 +31,7 @@ function end_output()
 		}
 	}
 
-	print $debug_output . ((HTML_FORMAT) ? "</body></html>" : "");
+	print $debug_output . ((HTML_HEADERS) ? "</body></html>" : "");
 }
 
 /**
@@ -325,9 +325,9 @@ function generate_text_for_html_display($text)
 	
 	//BBCode replacement array
 	$bbcode = array(
-		"/\[b\](.*?)\[\/b\]/is" => '<strong>$1</strong>',
-		"/\[u\](.*?)\[\/u\]/is" => '<span style="text-decoration:underline">$1</span>',
-		"/\[color\=(.*?)\](.*?)\[\/color\]/is" => '<span style="color:$1">$2</span>',
+		"/\[b\](.*?)\[\/b\]/is" => '<span style="font-weight:bold;">$1</span>',
+		"/\[u\](.*?)\[\/u\]/is" => '<span style="text-decoration:underline;">$1</span>',
+		"/\[color\=(.*?)\](.*?)\[\/color\]/is" => '<span style="color:$1;">$2</span>',
 		"/\[code\](.*?)\[\/code\]/is" => '<pre style="padding-left:20px;">$1</pre>',
 	);
 

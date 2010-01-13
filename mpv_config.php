@@ -20,15 +20,19 @@ define('SERVER_ID', 1);
 // and copy the xsd(s) to the root/includes/xsd directory of your MPV copy
 define('LOCAL_ONLY', false);
 
-// Only used if LOCAL_ONLY is set to true
-define('PHPBB_VERSION', '3.0.6');
-
-// Latest MODX version.  Change as new versions get released.
-define('LATEST_MODX', '1.2.3');
-
 // Return with HTML formatting or not
 // Useful if displaying through forum
-define('HTML_FORMAT', false, true);
+// Third parameter allows for overriding
+define('HTML_FORMAT', true, true);
+
+// Sometimes we want HTML formatting without the HTML headers
+define('HTML_HEADERS', false);
+
+// Latest phpBB3 version. Only used if LOCAL_ONLY is set to true
+define('PHPBB_VERSION', '3.0.6');
+
+// Latest MODX version. Only used if LOCAL_ONLY is set to true
+define('LATEST_MODX', '1.2.3');
 
 // This is for statistics gathering
 // Format is:  'tag' => array('properties')

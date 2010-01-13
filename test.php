@@ -33,14 +33,19 @@ register_shutdown_function('end_output');
 error_reporting(E_ALL);
 
 $mpv = new mpv();
-$mpv->output_type = mpv::OUTPUT_HTML;
+$mpv->output_type = ((HTML_FORMAT) ? mpv::OUTPUT_HTML : mpv::OUTPUT_BBCODE);
 $mpv->validate('my-mod.zip');
 
-print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
-<head>
-<title>' . $lang['TITLE'] . '</title>
-</head>
-<body>' . $lang['VALIDATION_RESULTS'] . "\n\n" . nl2br($mpv);
+if (HTML_HEADERS)
+{
+	print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+	<head>
+	<title>' . $lang['TITLE'] . '</title>
+	</head>
+	<body>';
+}
+
+print $lang['VALIDATION_RESULTS'] . "\n\n" . ((HTML_FORMAT) ? nl2br($mpv) : $mpv);
 
 ?>
