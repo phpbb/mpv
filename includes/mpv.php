@@ -3,7 +3,7 @@
 * Main file
 *
 * @package mpv
-* @version $Id: mpv.php 126 2009-11-18 03:41:24Z davidiq $
+* @version $Id$
 * @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -55,22 +55,27 @@ class mpv
 	const VERSION = '$Rev: 126 $';
 
 	/**
-	 * Exec
+	 * use "unzip" unix command for unzipping
 	 *
 	 */
 	const UNZIP_EXEC = 1;
 
 	/**
-	 * ZIP
+	 * use phpbb's zip compression class
 	 *
 	 */
-	const UNZIP_PHP = 2;
+	const UNZIP_PHPBB = 2;
+
+	/**
+	 * use the Zip php extension
+	 */
+	const UNZIP_PHP = 3;
 
 	/**
 	 * Decide on if exec is enabled to use exec (And Zip exists) or phpBB's zip handler.
 	 *
 	 */
-	const UNZIP_PREFERENCE = 3;
+	const UNZIP_PREFERENCE = 4;
 	
 	/**
 	 * Enable the execution of PHP for included files.
@@ -237,10 +242,14 @@ class mpv
 
 		if ($unzip_type == self::UNZIP_PREFERENCE)
 		{
-			$unzip_type = self::UNZIP_PHP;
+			$unzip_type = self::UNZIP_PHPBB;
 			if (function_exists('exec') && stristr(php_uname(), 'Windows') === false)
 			{
 				$unzip_type = self::UNZIP_EXEC;
+			}
+			else if (extension_loaded('zip'))
+			{
+				$unzip_type = self::UNZIP_PHP;
 			}
 		}
 
@@ -442,6 +451,19 @@ class mpv
 
 			// Unzip it.
 			@exec('cd ' . escapeshellarg($this->temp_dir) . ' && unzip ' . escapeshellarg($basename));
+		}
+		else if ($this->unzip_type == self::UNZIP_PHP)
+		{
+			$zip = new ZipArchive();
+			if ($zip->open($package) === true)
+			{
+				$zip->extractTo($this->temp_dir);
+				$zip->close();
+			}
+			else
+			{
+				die('Failed to open archive using UNZIP_PHP');
+			}
 		}
 		else
 		{
