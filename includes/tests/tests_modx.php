@@ -3,14 +3,14 @@
 * Tests for checking the MODX file(s)
 *
 * @package mpv
-* @version $Id$
-* @copyright (c) 2008 phpBB Group
+* @version $Id: tests_modx.php 126 2009-11-18 03:41:24Z davidiq $
+* @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
 /**
- * Collection of tests which are ran on the MOD's MODX files
+ * Collection of tests which are run on the MOD's MODX files
  *
  * @package		mpv
  * @subpackage	tests
@@ -86,6 +86,8 @@ class mpv_tests_modx
 	 */
 	public function run()
 	{
+		global $statistics;
+		
 		$test_methods = get_class_methods($this);
 
 		if (!is_array($this->validator->modx_files) || !sizeof($this->validator->modx_files))
@@ -96,36 +98,35 @@ class mpv_tests_modx
 
 		foreach ($this->validator->modx_files as $modx_filename => $modx_object)
 		{
-		  $this->modx_filename = $modx_filename;
+			$this->modx_filename = $modx_filename;
 		  
-			if (preg_match('#modx\\-1\\.0(\\.\d)\\.xsd#s', (string) $modx_object, $matches))
+			if (preg_match('#modx-(.*?)\.xsd#s', (string) $modx_object, $matches))
 			{
-				$this->push_error(mpv::ERROR_FAIL, 'MODX_OUTDATED', "1.0{$matches[1]}");
-				continue;
-			}
-
-			// It has no use trying to run any tests if the MODX doesn't validate
-			if (preg_match('#modx\\-1\\.2\\.0\\.xsd#s', (string) $modx_object, $matches))
-			{
-				$errors = $modx_object->validate($this->validator->dir . 'modx-1.2.0.xsd');
-
-				$this->push_error(mpv::ERROR_FAIL, 'USING_MODX_OUTDATE', array('1.2.0', mpv::$LATEST_MODX));
-			}
-			else if (preg_match('#modx\\-1\\.2\\.1\\.xsd#s', (string) $modx_object, $matches))
-			{
-				$errors = $modx_object->validate($this->validator->dir . 'modx-1.2.1.xsd');
-
-				$this->push_error(mpv::ERROR_FAIL, 'USING_MODX_OUTDATE', array('1.2.1', mpv::$LATEST_MODX));
-			}
-			else if (preg_match('#modx\\-1\\.2\\.2\\.xsd#s', (string) $modx_object, $matches))
-			{
-				$errors = $modx_object->validate($this->validator->dir . 'modx-1.2.2.xsd');
-				
-				$this->push_error(mpv::ERROR_FAIL, 'USING_MODX_OUTDATE', array('1.2.2', mpv::$LATEST_MODX));
-			}
-			else if (preg_match('#modx\\-1\\.2\\.3\\.xsd#s', (string) $modx_object, $matches))
-			{
-				$errors = $modx_object->validate($this->validator->dir . 'modx-1.2.3.xsd');
+				$current_modx_version = $this->get_current_version('modx');
+				if ($matches[1] != $current_modx_version)
+				{
+					$this->push_error(mpv::ERROR_FAIL, 'USING_MODX_OUTDATED', array($matches[1], $current_modx_version));
+					//continue;
+				}
+				//Let's see if we can download the file from phpbb.compact
+				if (!LOCAL_ONLY && !@file_exists($this->validator->dir . 'store/data/' . $matches[0]))
+				{
+					$data = @file_get_contents("http://www.phpbb.com/mods/xml/{$matches[0]}");
+					
+					//Now we write out the .xsd
+					if (isset($data) && $data !== false)
+					{
+						$cache = @fopen($this->validator->dir . 'store/data/' . $matches[0], 'wb');
+						@fwrite($cache, $data);
+						@fclose($cache);
+					}
+					else
+					{
+						$this->push_error(mpv::ERROR_FAIL, sprintf('UNABLE_OPEN', "http://www.phpbb.com/mods/xml/{$matches[0]}"));
+						continue;
+					}
+				}
+				$errors = $modx_object->validate($this->validator->dir . 'store/data/' . $matches[0]);
 			}
 			else
 			{
@@ -146,7 +147,45 @@ class mpv_tests_modx
 
 			$this->modx_object 		= $modx_object;
 			$this->modx_dir			= $this->extract_dir($modx_filename);
-
+			$mod_title = $this->modx_object->get_xpath('//header/title', true);
+			
+			//Do we need to store some statistics?
+			if (sizeof($statistics))
+			{
+				foreach ($statistics as $tag => $properties)
+				{
+					$line_to_write = '';
+					
+					//First we need to get the tag's existing nodes
+					$tag_node = $this->modx_object->get_by_name($tag, false);
+					//Now we go through each node to get the properties
+					foreach ($tag_node as $node)
+					{
+						foreach ($properties as $property)
+						{
+							if (empty($line_to_write))
+							{
+								//Let's start with the MOD's title
+								$line_to_write = $mod_title->value;
+							}
+							//Let's build the string we're going to save
+							$line_to_write .= "||" . $property . ": " . $node->attributes[$property];
+						}
+					}
+					if (!empty($line_to_write))
+					{
+						//Open text file and write to it
+						$file_handle = @fopen($this->validator->dir . 'store/data/' . $tag . '_data.txt', 'a');
+						if ($file_handle !== false)
+						{
+							@fwrite($file_handle, $line_to_write . "\r\n");
+							@fclose($fh);
+						}
+					}
+				}
+				
+			}
+			
 			foreach ($test_methods as $method)
 			{
 				if (substr($method, 0, 5) == 'test_')
@@ -240,7 +279,7 @@ class mpv_tests_modx
 		}
 		unset($open_ary);
 
-		$files_array = file($this->validator->dir . 'filelist.txt');
+		$files_array = file($this->validator->dir . 'includes/tests/filelist.txt');
 
 		// Simulation of in_array. Might be able to switch back to the actual
 		// function.
@@ -449,11 +488,16 @@ class mpv_tests_modx
 		return $return;
 	}
 
+	/**
+	* Test the phpBB version
+	*/
 	private function test_phpbb_version()
 	{
 		$return = true;
 
 		$phpbb_version = $this->modx_object->get_by_name('target-version', true);
+		//If we're only going to be local then we get the version from the config file
+		$current_phpbb_version = $this->get_current_version('phpbb');
 
 		if (!is_object($phpbb_version))
 		{
@@ -461,9 +505,9 @@ class mpv_tests_modx
 
 			$return = false;
 		}
-		else if (trim($phpbb_version->value) != mpv::$LATEST_PHPBB)
+		else if (trim($phpbb_version->value) != $current_phpbb_version)
 		{
-			$this->push_error(mpv::ERROR_WARNING , 'NOT_LATEST_PHPBB', array($phpbb_version->value, mpv::$LATEST_PHPBB));
+			$this->push_error(mpv::ERROR_WARNING , 'NOT_LATEST_PHPBB', array($phpbb_version->value, $current_phpbb_version));
 
 			$return = false;
 		}
@@ -616,13 +660,115 @@ class mpv_tests_modx
 	}
 
 	/**
-	 * Returns a array with failed tests
-	 *
-	 * @access	public
-	 * @return	array
-	 */
-	 public function return_failed_tests()
-	 {
+	* Returns a array with failed tests
+	*
+	* @access	public
+	* @return	array
+	*/
+	public function return_failed_tests()
+	{
 		return $this->failed_tests;
-	 }
+	}
+	 
+	/**
+	* Return the current phpBB3 version from phpBB.com's updatecheck directory
+	*/
+	private function get_current_version($type)
+	{
+		global $lang;
+		
+		//If we don't want to go out to the Internet we set these
+		if (LOCAL_ONLY)
+		{
+			switch ($type)
+			{
+				case 'phpbb':
+					return PHPBB_VERSION;
+					break;
+				
+				case 'modx':
+					return LATEST_MODX;
+					break;
+				
+				default:
+					return false;
+					break;
+			}
+		}
+		
+		$errstr = '';
+		$errno = 0;
+		$host = 'www.phpbb.com';
+		$port = 80;
+		$timeout = 10;
+		$directory = '/updatecheck';
+		$filename = ($type == 'modx') ? 'modx_1x.txt' : '30x.txt';
+		$file_info = '';
+		$get_info = false;
+		
+		if (@file_exists($this->validator->dir . 'store/data/' . $filename))
+		{
+			//Get from cache if it's been less than a day since the last update
+			if ((time() - filemtime($this->validator->dir . 'store/data/' . $filename)) <= 86400)
+			{
+				$file_info = @file_get_contents($this->validator->dir . 'store/data/' . $filename);			
+			}
+		}
+		
+		//Only do this if we couldn't get the cache data
+		if (empty($file_info))
+		{
+			if ($fsock = @fsockopen($host, $port, $errno, $errstr, $timeout))
+			{
+				@fputs($fsock, "GET $directory/$filename HTTP/1.1\r\n");
+				@fputs($fsock, "HOST: $host\r\n");
+				@fputs($fsock, "Connection: close\r\n\r\n");
+
+				while (!@feof($fsock))
+				{
+					if ($get_info)
+					{
+						$file_info .= @fread($fsock, 1024);
+					}
+					else
+					{
+						$line = @fgets($fsock, 1024);
+						if ($line == "\r\n")
+						{
+							$get_info = true;
+						}
+						else if (stripos($line, '404 not found') !== false)
+						{
+							$errstr = $lang['FILE_NOT_FOUND'] . ': ' . $filename;
+							return false;
+						}
+					}
+				}
+				//Cache the update file
+				$cache = @fopen($root_dir . 'store/data/' . $filename, 'wb');
+				@fwrite($cache, $file_info);
+				@fclose($cache);
+				
+				@fclose($fsock);
+			}
+			else
+			{
+				if ($errstr)
+				{
+					$errstr = utf8_convert_message($errstr);
+					return false;
+				}
+				else
+				{
+					$errstr = $lang['FSOCK_DISABLED'];
+					return false;
+				}
+			}
+		}
+		
+		$info = explode("\n", $file_info);
+		
+		return $info[0];
+	}
+
 }

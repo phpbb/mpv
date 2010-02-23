@@ -4,20 +4,13 @@
 *
 * @package mpv
 * @version $Id$
-* @copyright (c) 2008 phpBB Group
+* @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-/**
-*/
-if (!defined('IN_PHPBB') || (defined('NO_PHPBB') && NO_PHPBB))
-{
-	exit;
-}
-
-require_once('lib/cortex_base.php');
-require_once('lib/cortex_xml.php');
+require($root_path . 'includes/lib/cortex_base.' . $phpEx);
+require($root_path . 'includes/lib/cortex_xml.' . $phpEx);
 
 /**
  * Main MPV validation class
@@ -32,17 +25,17 @@ class mpv
 	const ERROR_FAIL = 1;
 
 	/**
-	 * Constant for a notice
+	 * Constant for notices
 	 */
 	const ERROR_NOTICE = 2;
 
 	/**
-	 * Constant for a warning
+	 * Constant for warnings
 	 */
 	const ERROR_WARNING = 3;
 
 	/**
-	 * Constant for a information notice
+	 * Constant for information notices
 	 */
 	const ERROR_INFO = 4;
 
@@ -59,25 +52,30 @@ class mpv
 	/**
 	 * MPV version
 	 */
-	const VERSION = '$Rev$';
+	const VERSION = '$Rev: 126 $';
 
 	/**
-	 * Exec
+	 * use "unzip" unix command for unzipping
 	 *
 	 */
 	const UNZIP_EXEC = 1;
 
 	/**
-	 * ZIP
+	 * use phpbb's zip compression class
 	 *
 	 */
-	const UNZIP_PHP = 2;
+	const UNZIP_PHPBB = 2;
+
+	/**
+	 * use the Zip php extension
+	 */
+	const UNZIP_PHP = 3;
 
 	/**
 	 * Decide on if exec is enabled to use exec (And Zip exists) or phpBB's zip handler.
 	 *
 	 */
-	const UNZIP_PREFERENCE = 3;
+	const UNZIP_PREFERENCE = 4;
 	
 	/**
 	 * Enable the execution of PHP for included files.
@@ -93,23 +91,12 @@ class mpv
 	const DONT_EXEC_PHP = 2;
 
 	/**
-	 * Latest phpBB version, dont forget to update when new phpBB3 is released ;).
-	 */
-	public static $LATEST_PHPBB = '3.0.6';
-
-	/**
-	 * Latest MODX version,
-	 * dont forget to update when a new version is released (Including correct xsd and changes in tests/test/modx.php)!
-	 */
-	public static $LATEST_MODX = '1.2.3';
-
-	/**
 	 * MPV directory
 	 *
 	 * @access 	public
 	 * @var		string
 	 */
-	public $dir = '';
+	public $dir = './';
 
 	/**
 	 * Our collection of tests class objects
@@ -207,14 +194,6 @@ class mpv
 	 */
 	public static $exec_php = false;
 
-
-	/**
-	 * Enable debug, prints the failed test with classname
-	 * @access	private
-	 * @var		bool
-	 */
-	private $enable_debug = false;
-
 	/**
 	 * Tests are failed or not.
 	 *
@@ -227,22 +206,22 @@ class mpv
 	 * Name of zip file
 	 *
 	 * @var 	string
-	 * @access	private
+	 * @access	public
 	 */
-	private $zip_file;
-
+	public $zip_file;
+	
 	/**
-	 * phpBB used or not internally.
-	 *
-	 * @var 	bool
-	 * @access 	private
-	 */
-	private $phpbb = true;
-
+	* Name of the original zip file
+	*
+	* @var		string
+	* @access	public
+	*/
+	public $orig_package_name = 'zip';
+	
 	/**
 	 * Constructor
 	 *
-	 * @param string	$dir		Directory with data ($phpbb_root_path)
+	 * @param string	$dir		Directory with data ($root_path)
 	 * @param int		$unzip_type	Unzip type, see constants
 	 * @param bool		$remove_zip Remove zip after using it.
 	 *
@@ -251,32 +230,27 @@ class mpv
 	 */
 	public function __construct($dir = null, $unzip_type = self::UNZIP_PREFERENCE, $remove_zip = true)
 	{
-		global $phpEx;
+		global $phpEx, $lang;
 
 		if (is_null($dir))
 		{
-			global $phpbb_root_path;
-			$dir = $phpbb_root_path;
+			global $root_path;
+			$dir = $root_path;
 		}
 
 		set_error_handler(array($this, 'error_handler'));
 
 		if ($unzip_type == self::UNZIP_PREFERENCE)
 		{
-			$unzip_type = self::UNZIP_PHP;
+			$unzip_type = self::UNZIP_PHPBB;
 			if (function_exists('exec') && stristr(php_uname(), 'Windows') === false)
 			{
 				$unzip_type = self::UNZIP_EXEC;
 			}
-		}
-
-		if (defined('NO_PHPBB') && NO_PHPBB)
-		{
-			if ($unzip_type == self::UNZIP_PHP)
+			else if (extension_loaded('zip'))
 			{
-				trigger_error('You have selected as unzip method phpBB, but phpBB isn\'t included/used. Use exec or enable phpBB itself.', E_USER_ERROR);
+				$unzip_type = self::UNZIP_PHP;
 			}
-			$this->phpbb = false;
 		}
 
 		$this->unzip_type = $unzip_type;
@@ -296,13 +270,13 @@ class mpv
 		$this->output_type = self::OUTPUT_BBCODE;
 
 		// Get the available test collections
-		if ($opendir = opendir($this->dir . 'tests/'))
+		if ($opendir = opendir($this->dir . 'includes/tests/'))
 		{
 			while (false !== ($file = readdir($opendir)))
 			{
 				if (preg_match('#tests_([a-z]+)\.' . preg_quote($phpEx, '#') . '$#i', $file))
 				{
-					$php_file = $this->dir . 'tests/' . $file;
+					$php_file = $this->dir . 'includes/tests/' . $file;
 
 					require($php_file);
 
@@ -327,6 +301,8 @@ class mpv
 	 */
 	public function error_handler($error_no, $msg_text, $error_file, $error_line)
 	{
+		global $lang;
+		
 		$error_file = basename($error_file);
 
 		// Do not display notices if we suppress them via @
@@ -341,24 +317,21 @@ class mpv
 		}
 		else if ($error_no == E_NOTICE)
 		{
-			print "MPV notice found at $error_file line $error_line: $msg_text";
-
+			print sprintf($lang['MPV_NOTICE'], $error_file, $error_line, $msg_text);
 			return;
 		}
 		else if ($error_no == E_WARNING)
 		{
-			print "MPV warning found at $error_file line $error_line: $msg_text";
-
+			print sprintf($lang['MPV_WARNING'], $error_file, $error_line, $msg_text);
 			return;
 		}
 		else if ($error_no == E_USER_NOTICE)
 		{
-			print "MPV phpBB notice found at $error_file line $error_line: $msg_text";
-
+			print sprintf($lang['MPV_USER_NOTICE'], $error_file, $error_line, $msg_text);
 			return;
 		}
 
-		die("MPV found out that you created a error: $msg_text in $error_file line $error_line");
+		die(sprintf($lang['MPV_GENERAL_ERROR'], $error_file, $error_line, $msg_text));
 	}
 
 	/**
@@ -373,7 +346,7 @@ class mpv
 	 */
 	public function push_error($type, $message, $filename = null, $sprintf_args = null)
 	{
-		global $user;
+		global $lang;
 
 		// Mold $sprintf_args into something usable
 		if (is_null($sprintf_args))
@@ -386,22 +359,22 @@ class mpv
 		}
 
 		// Quick and dirty, but it works well for development
-		if (!isset($user->lang[$message]))
+		if (!isset($lang[$message]))
 		{
-			$user->lang[$message] = $message;
+			$lang[$message] = $message;
 
 			if (sizeof($sprintf_args) > 0)
 			{
-				$user->lang[$message] .= str_repeat(' %s ', sizeof($sprintf_args));
+				$lang[$message] .= str_repeat(' %s ', sizeof($sprintf_args));
 			}
 		}
 
 		// Compose the message
-		$message = @vsprintf($user->lang[$message], $sprintf_args);
+		$message = @vsprintf($lang[$message], $sprintf_args);
 		if (!is_null($filename))
 		{
-			global $phpbb_root_path;
-			$filename = str_replace(array(phpbb_realpath($phpbb_root_path), '\\'), array('', '/'), $filename);
+			global $root_path;
+			$filename = str_replace(array(phpbb_realpath($root_path), '\\'), array('', '/'), $filename);
 			$message = $filename . ': ' . $message;
 		}
 
@@ -409,24 +382,24 @@ class mpv
 		switch ($type)
 		{
 			case self::ERROR_FAIL:
-				$this->message .= '[color=red][ [b]FAIL[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=red][ [b]' . $lang['MPV_FAIL_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
 			break;
 
 			case self::ERROR_NOTICE:
-				$this->message .= '[color=blue][ [b]NOTICE[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=blue][ [b]' . $lang['MPV_NOTICE_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
 			break;
 
 			case self::ERROR_WARNING:
-				$this->message .= '[color=orange][ [b]WARNING[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=orange][ [b]' . $lang['MPV_WARNING_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
 			break;
 
 			case self::ERROR_INFO:
-				$this->message .= '[color=purple][ [b]INFO[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=purple][ [b]' . $lang['MPV_INFO_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
 			break;
 
 			default:
-				$this->message .= '[color=orange][ [b]WARNING[/b] ][/color] [b]Invalid $type for this function!' . "\n\n";
-				$this->message .= '[color=purple][ [b]INFO[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=orange][ [b]' . $lang['MPV_WARNING_RESULT'] . '[/b] ][/color] [b]' . $lang['INVALID_TYPE'] . "\n\n";
+				$this->message .= '[color=purple][ [b]' . $lang['MPV_INFO_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
 		}
 
 		// Store the raw log in $this->errors
@@ -446,7 +419,7 @@ class mpv
 	 */
 	public function validate($package)
 	{
-		global $phpbb_root_path, $phpEx;
+		global $root_path, $phpEx, $lang;
 
 		// Clear some data
 		$this->errors = array();
@@ -454,7 +427,7 @@ class mpv
 
 		$this->zip_file = $package;
 		
-		$this->message .= 'Validating zip ' . "\n";
+		$this->message .= sprintf($lang['VALIDATING_ZIP'], $this->orig_package_name) . "\n\n";
 		
 		$this->push_error(self::ERROR_NOTICE, 'GENERAL_NOTICE'); // Add a general notice about possible wrong fails.
 
@@ -467,7 +440,7 @@ class mpv
 			return;
 		}
 
-		$this->temp_dir = $phpbb_root_path . 'store/temp/mpv_' . md5(uniqid(time())) . '/';
+		$this->temp_dir = $root_path . 'store/temp/mpv_' . md5(uniqid(time())) . '/';
 		mkdir($this->temp_dir, 0777, true);
 
 		if ($this->unzip_type == self::UNZIP_EXEC)
@@ -479,16 +452,24 @@ class mpv
 			// Unzip it.
 			@exec('cd ' . escapeshellarg($this->temp_dir) . ' && unzip ' . escapeshellarg($basename));
 		}
+		else if ($this->unzip_type == self::UNZIP_PHP)
+		{
+			$zip = new ZipArchive();
+			if ($zip->open($package) === true)
+			{
+				$zip->extractTo($this->temp_dir);
+				$zip->close();
+			}
+			else
+			{
+				die('Failed to open archive using UNZIP_PHP');
+			}
+		}
 		else
 		{
-			if (!$this->phpbb)
-			{
-				die("This should not happen, \$this->phpbb is false, but zip method is set to phpBB");
-			}
-
 			if (!class_exists('compress_zip'))
 			{
-				include($phpbb_root_path . 'includes/functions_compress.' . $phpEx);
+				include($root_path . 'includes/functions_compress.' . $phpEx);
 			}
 
 			// Next, try to unzip it
@@ -662,20 +643,24 @@ class mpv
 	 */
 	public function __toString()
 	{
+		global $lang;
+		
 		$fail		= (isset($this->errors[mpv::ERROR_FAIL])) ? sizeof($this->errors[mpv::ERROR_FAIL]) : 0;
 		$warning 	= (isset($this->errors[mpv::ERROR_WARNING])) ? sizeof($this->errors[mpv::ERROR_WARNING]) : 0;
 
 		if ($fail == 0 && $warning == 0)
 		{
-			$this->message .= 'No pre-validation problems found';
+			$this->message .= $lang['NO_PRE_VAL_ERRORS'];
 		}
 
-		$this->message .= "\n\nReport made by MPV " . mpv::VERSION . " || ";
+		$this->message .= "\n" . $lang['REPORT_BY'] . " " . mpv::VERSION;
 
 		if ($this->server_signature !== false)
 		{
-			$this->message .= "MPV server " . $this->server_signature . " || ";
+			$this->message .= " || " . $lang['MPV_SERVER'] . ": " . $this->server_signature ;
 		}
+		
+		$this->message .= "\n";
 
 		switch ($this->output_type)
 		{
@@ -683,21 +668,11 @@ class mpv
 				return $this->message;
 
 			case self::OUTPUT_HTML:
-
-				if (!$this->phpbb)
-				{
-					return $this->message;
-				}
-
 				$text = htmlspecialchars($this->message);
-				$uid = $bitfield = $options = ''; // will be modified by generate_text_for_storage
-				$allow_bbcode = $allow_urls = $allow_smilies = true;
-				generate_text_for_storage($text, $uid, $bitfield, $options, $allow_bbcode, $allow_urls, $allow_smilies);
-
-				return generate_text_for_display($text, $uid, $bitfield, $options);
+				return generate_text_for_html_display($text);
 
 			default:
-				throw new Exception('Unknown output type "' . (int)$this->output_type . '"');
+				throw new Exception($lang['UNKNOWN_OUTPUT'] . ' "' . (int)$this->output_type . '"');
 		}
 	}
 }

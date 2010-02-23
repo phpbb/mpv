@@ -87,16 +87,16 @@ class mpv_tests_execution
 	 */
 	public function run()
 	{
-	  // Make sure these tests are enabled in MPV.
-	  // These tests are for security reasons disabled by default.
-	  // Only enable these tests if you know what you do and
-	  // if this MPV install isnt public usable.
-	  // These tests are NOT enabled at the online MPV at phpBB.com
-	  // if you want to use these tests you need to install MPV
-	  // locally.
-	  // If you use these tests is it at your own risk.
-	  if (mpv::$exec_php !== mpv::EXEC_PHP)
-	  {
+		// Make sure these tests are enabled in MPV.
+		// These tests are for security reasons disabled by default.
+		// Only enable these tests if you know what you do and
+		// if this MPV install isnt public usable.
+		// These tests are NOT enabled at the online MPV at phpBB.com
+		// if you want to use these tests you need to install MPV
+		// locally.
+		// If you use these tests is it at your own risk.
+		if (mpv::$exec_php !== mpv::EXEC_PHP)
+		{
 			return;
 		}
 		

@@ -7,7 +7,7 @@
  * @license		http://opensource.org/licenses/gpl-license.php GNU Public License
  * @author		Vic D'Elfant
  *
- * @version		$Id$
+ * @version		$Id: cortex_xml.php 116 2009-10-10 12:30:47Z evil3 $
  */
 
 /**
@@ -23,7 +23,7 @@ class cortex_xml extends cortex_base
 	 * @access	public
 	 * @var		string
 	 */
-	const revision = '$Rev$';
+	const revision = '$Rev: 116 $';
 
 	/**
 	 * This element's corresponding DOMElement
@@ -261,9 +261,9 @@ class cortex_xml extends cortex_base
 	 */
 	public function validate($schema = null)
 	{
-		if (is_null($schema) && !is_null($this->schema_location))
+		if ((is_null($schema) && !is_null($this->schema_location)) || strpos($schema, 'http://') !== false)
 		{
-			$schema = @file_get_contents($this->schema_location);
+			$schema = @file_get_contents((strpos($schema, 'http://') !== false) ? $schema : $this->schema_location);
 			if ($schema === false)
 			{
 				return true;
@@ -288,12 +288,12 @@ class cortex_xml extends cortex_base
 	}
 
 	/**
-	 * Internal error handler for filling the error stack. Should not be called
-	 * from outside of this class.
-	 *
-	 * @access	public
-	 * @return	void
-	 */
+	* Internal error handler for filling the error stack. Should not be called
+	* from outside of this class.
+	*
+	* @access	public
+	* @return	void
+	*/
 	public function error_handler($error_no, $msg_text, $error_file, $error_line)
 	{
 		$this->error_stack[] = substr($msg_text, strpos($msg_text, ']: Element') + 3);

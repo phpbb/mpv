@@ -1,22 +1,21 @@
 <?php
 /**
-* Tests for verifying the package's structure in accordance with the packaging
-* rules
+* Tests for testing/auditing the html code of the MOD
 *
 * @package mpv
-* @version $Id$
+* @version $Id: tests_html.php 54 2009-03-25 16:26:21Z paul $
 * @copyright (c) 2008 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
 /**
- * Collection of tests which are used to check the MOD's file structure
+ * Collection of tests which are ran on the MOD's code
  *
  * @package		mpv
  * @subpackage	tests
  */
-class mpv_tests_packaging
+class mpv_tests_html
 {
 	/**
 	 * mpv (validator) object
@@ -43,12 +42,28 @@ class mpv_tests_packaging
 	private $failed_tests;
 
 	/**
-	 * Array of "unwanted files", all strtolowered
+	 * The filename of the file we're currently testing
 	 *
 	 * @access	private
-	 * @var		array
+	 * @var		string
 	 */
-	private $unwanted_files = array('__macosx', '.ds_store', 'thumbs.db', '.svn');
+	private $file_name;
+
+	/**
+	 * The contents of the file we're currently testing
+	 *
+	 * @access	private
+	 * @var		string
+	 */
+	private $file_contents;
+
+	/**
+	 * The content of the file we're testing, but as array
+	 *
+	 * @access private
+	 * @var array
+	 */
+	private $file_contents_file;
 
 	/**
 	 * Constructor
@@ -73,128 +88,89 @@ class mpv_tests_packaging
 	public function run()
 	{
 		$test_methods = get_class_methods($this);
-		foreach ($test_methods as $method)
-		{
-			if (substr($method, 0, 5) == 'test_')
-			{
-				if (!$this->$method() || $this->terminate)
-				{
-					$this->failed_tests[] = substr($method, 5);
-				}
 
-				if ($this->terminate)
+		$files = array();
+
+		if (is_array($this->validator->package_files))
+		{
+			$files = array_merge($files, $this->validator->package_files);
+		}
+
+		if (is_array($this->validator->modx_files))
+		{
+			$files = array_merge($files, $this->validator->modx_files);
+		}
+
+		foreach ($files as $package_file)
+		{
+			// Only test html, php, xml files
+			if (!in_array(strrchr($package_file, '.'), array('.php', '.xml', '.html')))
+			{
+				continue;
+			}
+
+			$this->failed_tests = array();
+
+			$this->file_name = $package_file;
+			$this->file_contents = file_get_contents($this->validator->temp_dir . $package_file);
+
+			$this->file_contents_file = file($this->validator->temp_dir . $package_file);
+
+			foreach ($test_methods as $method)
+			{
+				if (substr($method, 0, 5) == 'test_')
 				{
-					return;
+					if (!$this->$method() || $this->terminate)
+					{
+						$this->failed_tests[] = substr($method, 5);
+					}
+
+					if ($this->terminate)
+					{
+						unset($this->file_contents, $this->file_contents_file);
+
+						return;
+					}
 				}
 			}
+
+			unset($this->file_contents, $this->file_contents_file);
 		}
 	}
 
 	/**
-	 * Test if the there is more as 1 xsl file
-	 *
-	 * @access private
-	 * @return bool
-	 */
-	private function test_xsl()
-	{
-		if (sizeof($this->validator->xsl_files) == 0)
-		{
-			$this->push_error(mpv::ERROR_FAIL, 'NO_XSL_FILE');
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Checks to see if the required license.txt exists
-	 *
-	 * @access private
-	 * @return bool
-	 */
-	private function test_license()
-	{
-		foreach ($this->validator->package_files as $filename)
-		{
-			if (strtolower(basename($filename)) == 'license.txt')
-			{
-				return true;
-			}
-		}
-		$this->push_error(mpv::ERROR_FAIL, 'NO_LICENSE');
-		return false;
-	}
-
-	/**
-	 * Test to see if prosilver.xml or english.xml exisits.
+	 * Test for non closed BR tags
 	 *
 	 * @return bool
-	 * @access private
 	 */
-	private function test_prosilver_english()
+	private function test_br()
 	{
 		$return = true;
-		foreach ($this->validator->package_files as $filename)
+
+		if (preg_match('#<br(\s+)?>#', $this->file_contents))
 		{
-			$file = strtolower(basename($filename));
-
-			if ($file == 'prosilver.xml' || (strpos($file, 'prosilver') !== false && strpos($file, '.xml') !== false))
-			{
-				$this->push_error(mpv::ERROR_FAIL, 'PROSILVER_NO_MAIN_MODX', null, array($filename));
-				$return = false;
-			}
-
-			if ($file == 'en.xml' || (strpos($file, 'english') !== false && strpos($file, '.xml') !== false))
-			{
-				$this->push_error(mpv::ERROR_FAIL, 'ENGLISH_NO_MAIN_MODX', null, array($filename));
-				$return = false;
-			}
+			$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_BR_NON_CLOSED', false, '#<br(\s+)?>#');
 		}
 
 		return $return;
 	}
-
 	/**
-	 * Checks to see if there are bad files from svn or the OS
+	 * Test for non closed IMG tags
 	 *
-	 * @access private
 	 * @return bool
 	 */
-	private function test_unwanted()
+	private function test_img()
 	{
-		/**
-		 * @TODO: Does this work? I never saw a notice regarding it?
-		 */
-		// precache regexp for efficiency
-		$regexp = '#(^|.*/)(' . implode('|', array_map('preg_quote', $this->unwanted_files)) . ')(?:/|$)#i';
-
-		$unwanted_files = array();
-		foreach ($this->validator->package_files as $filename)
+		$return = true;
+		/*
+		 * Disable this check for now, it doesnt detect it correctly atm.
+		if (preg_match('#<img\s.+(?<!/)>#', $this->file_contents))
 		{
-			if (preg_match($regexp, $filename, $matches))
-			{
-				// don't add files multiple times
-				if (isset($unwanted_files[$matches[1] . $matches[2]]))
-				{
-					continue;
-				}
-
-				// add unwanted file, use array keys for efficiency
-				$unwanted_files[$matches[1] . $matches[2]] = true;
-
-				// if there is no dir, it's the root
-				if ($matches[1] === '')
-				{
-					$matches[1] = './';
-				}
-
-				// push notice
-				$this->push_error(mpv::ERROR_NOTICE, 'UNWANTED_FILE', null, array($matches[1], $matches[2]));
-			}
+			$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_IMG_NON_CLOSED', false, '#<img\s.+(?<!/)>#');
 		}
+		*/
 
-		return sizeof($unwanted_files);
+		return $return;
 	}
 
 	/**
@@ -203,13 +179,12 @@ class mpv_tests_packaging
 	 * @access	private
 	 * @param	int			Error type
 	 * @param	string		Message
-	 * @param	string		Filename of the file causing the error
 	 * @param	mixed		Optional array of sprintf() values, or a non-array for passing one single value
 	 * @return	void
 	 */
-	private function push_error($type, $message, $filename = null, $sprintf_args = null)
+	private function push_error($type, $message, $sprintf_args = null)
 	{
-		$this->validator->push_error($type, $message, $filename, $sprintf_args);
+		$this->validator->push_error($type, $message, $this->file_name, $sprintf_args);
 	}
 
 	/**

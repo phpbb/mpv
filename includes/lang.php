@@ -4,19 +4,11 @@
 * MPV language [English]
 *
 * @package mpv
-* @version $Id$
-* @copyright (c) 2008 phpBB Group
+* @version $Id: lang.php 74 2009-09-08 17:48:24Z evil3 $
+* @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-
-/**
-* DO NOT CHANGE
-*/
-if (!defined('IN_PHPBB'))
-{
-	exit;
-}
 
 if (empty($lang) || !is_array($lang))
 {
@@ -36,15 +28,32 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
+	'TITLE'					=> 'phpBB MOD Pre-Validator Results',
+	'TITLE_STATS'			=> 'MPV Stats',
+	'MIN_PHP'				=> 'PHP 5.2.0 is required',
+	'INVALID_ID'			=> 'Invalid ID',
+	'NO_DATA'				=> 'No data found',
+	'VALIDATION_RESULTS'	=> 'Validation results:',
+	'MEM_USE'				=> 'Memory Usage:',
+	'TOTAL_TIME'			=> 'Time : %.3fs',
+	'GB'					=> 'GB',
+	'GIB'					=> 'GiB',
+	'MB'					=> 'MB',
+	'MIB'					=> 'MiB',
+	'BYTES'					=> 'Bytes',
+	'KB'					=> 'KB',
+	'KIB'					=> 'KiB',
 	'NO_MODX_FILES'			=> 'No MODX files found in package',
 	'MODX_SCHEMA_INVALID'	=> 'Invalid XML/MODX [code]%s[/code]',
-	'MODX_OUTDATED'			=> 'You are using an outdated version of MODX (%s).  Please update to the latest version.',
 
+	'FSOCK_DISABLED'		=> 'The operation could not be completed because the <var>fsockopen</var> function has been disabled or the server being queried could not be found.',
+	'FILE_NOT_FOUND'		=> 'The requested file could not be found',
 	'VERSION_FIELD_MISSING'		=> 'The version element is missing from the MODX file.',
 	'LICENSE_FIELD_MISSING'		=> 'The license element is missing from the MODX file.',
 	'TARGET_VERSION_NOT_FOUND'	=> 'The target-version element is missing from the MODX file',
 	'INVALID_VERSION_FORMAT'	=> 'The supplied version (%s) is invalid. The format should be: 1.0.0.',
 
+	'VALIDATING_ZIP'			=> '(Validating %s)',
 	'MAJOR_VERSION_UNSTABLE'	=> 'Your MOD version (%s) is unstable. It should be higher strarting at 1.0.0, but the minor version (the middle digit) should not be odd.
 	Example:
 	[b]0.0.1[/b] is unstable
@@ -128,7 +137,7 @@ $lang = array_merge($lang, array(
 
 	'COPY_BASENAME_DIFFER'	=> 'Basenames of the copy command differ: From %s to %s.  Both should be the same',
 
-	'USING_MODX_OUTDATE'	=> 'You are using MODX version %s while the latest release of MODX is %s.  Please update your MODX file to the latest version.',
+	'USING_MODX_OUTDATED'	=> 'You are using MODX version %s while the latest release of MODX is %s.  Please update your MODX file to the latest version.',
 	'USING_MODX_UNKNOWN'  => 'Found a invalid MODX version for XML file.  Cannot continue pre-validating this file.',
 
 	'PROSILVER_NO_MAIN_MODX'	=> 'ProSilver style changes should be placed in the main MODX file and not in %s.',
@@ -146,5 +155,22 @@ $lang = array_merge($lang, array(
 	'UNABLE_OPEN' => 'Unable to open %s.',
 	'UNABLE_WRITE'=> 'Unable to write to %s.',
 	'PHP_ERROR'   => 'A PHP error was found: [code]%s[/code]',
+	'NO_PRE_VAL_ERRORS'	=> 'No pre-validation problems found',
+	'REPORT_BY'		=> 'Report made by MPV',
+	'MPV_SERVER'	=> 'MPV server',
+	'UNKNOWN_OUTPUT'	=> 'Unknown output type',
+	'MPV_NOTICE'		=> 'MPV notice found at %1$s line %2$s: %3$s',
+	'MPV_WARNING'		=> 'MPV warning found at %1$s line %2$s: %3$s',
+	'MPV_NOTICE'		=> 'MPV notice found at %1$s line %2$s: %3$s',
+	'MPV_USER_NOTICE'		=> 'MPV user notice found at %1$s line %2$s: %3$s',
+	'MPV_GENERAL_ERROR'		=> 'MPV encountered an error at %1$s line %2$s: %3$s',
+	'MPV_FAIL_RESULT'			=> 'FAIL',
+	'MPV_NOTICE_RESULT'			=> 'NOTICE',
+	'MPV_WARNING_RESULT'		=> 'WARNING',
+	'MPV_INFO_RESULT'			=> 'INFO',
+	'INVALID_TYPE'			=> 'Invalid $type for this function!',
+	'MOD_NAME'				=> 'MOD Name',
+	'SUBMIT_COUNT'			=> 'Submission Count',
+	'TAG_DATA'				=> 'Tag Data',
+	'DATA_COUNT'			=> 'Data Count',
 ));
-
