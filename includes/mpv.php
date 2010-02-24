@@ -247,9 +247,9 @@ class mpv
 			if (function_exists('exec') && stristr(php_uname(), 'Windows') === false)
 			{
 				$check = false;
-				@exec("whereis zip", $check);
+				@exec("whereis unzip", $check);
 				
-				if ($check[0] != "zip:") // If zip doesnt exists whereis returns under linux zip: (4 chars). 
+				if ($check[0] != "unzip:") // If unzip doesnt exists whereis returns under linux unzip: (6 chars). 
 				{
 					$exec_check = true;
 				}

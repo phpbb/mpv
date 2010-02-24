@@ -173,4 +173,6 @@ $lang = array_merge($lang, array(
 	'SUBMIT_COUNT'			=> 'Submission Count',
 	'TAG_DATA'				=> 'Tag Data',
 	'DATA_COUNT'			=> 'Data Count',
+	
+	'ZIP_METHOD'			=> 'Using %s as zip method at %s',
 ));
