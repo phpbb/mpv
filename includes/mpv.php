@@ -243,7 +243,19 @@ class mpv
 		if ($unzip_type == self::UNZIP_PREFERENCE)
 		{
 			$unzip_type = self::UNZIP_PHPBB;
+			$exec_check = false;
 			if (function_exists('exec') && stristr(php_uname(), 'Windows') === false)
+			{
+				$check = false;
+				@exec("whereis zip", $check);
+				
+				if ($check[0] != "zip:") // If zip doesnt exists whereis returns under linux zip: (4 chars). 
+				{
+					$exec_check = true;
+				}
+			}
+			
+			if ($exec_check)
 			{
 				$unzip_type = self::UNZIP_EXEC;
 			}
@@ -251,6 +263,7 @@ class mpv
 			{
 				$unzip_type = self::UNZIP_PHP;
 			}
+			unset($exec_check);
 		}
 
 		$this->unzip_type = $unzip_type;
@@ -442,6 +455,11 @@ class mpv
 
 		$this->temp_dir = $root_path . 'store/temp/mpv_' . md5(uniqid(time())) . '/';
 		mkdir($this->temp_dir, 0777, true);
+		
+		if (defined('MPV_DEBUG') && MPV_DEBUG)
+		{
+			$this->push_error(self::ERROR_INFO, 'ZIP_METHOD', __FILE__, $this->unzip_type);
+		}
 
 		if ($this->unzip_type == self::UNZIP_EXEC)
 		{

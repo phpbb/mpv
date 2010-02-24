@@ -34,6 +34,9 @@ define('PHPBB_VERSION', '3.0.6');
 // Latest MODX version. Only used if LOCAL_ONLY is set to true
 define('LATEST_MODX', '1.2.3');
 
+// MPV Debug, disabled by default, will add some extra info about the MPV status
+define('MPV_DEBUG', false);
+
 // This is for statistics gathering
 // Format is:  'tag' => array('properties')
 $statistics = array(
