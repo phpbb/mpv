@@ -490,6 +490,7 @@ class mpv
 			{
 				$this->push_error(self::ERROR_FAIL, 'UNABLE_OPEN_PHP', __FILE__, $package);
 				$this->cleanup();
+				return;
 			}
 		}
 		else
