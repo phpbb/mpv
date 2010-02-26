@@ -52,7 +52,7 @@ class mpv
 	/**
 	 * MPV version
 	 */
-	const VERSION = '$Rev: 126 $';
+	const VERSION = '$Rev$';
 
 	/**
 	 * use "unzip" unix command for unzipping

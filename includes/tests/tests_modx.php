@@ -3,7 +3,7 @@
 * Tests for checking the MODX file(s)
 *
 * @package mpv
-* @version $Id: tests_modx.php 126 2009-11-18 03:41:24Z davidiq $
+* @version $Id$
 * @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *

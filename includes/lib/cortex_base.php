@@ -7,7 +7,7 @@
  * @license		http://opensource.org/licenses/gpl-license.php GNU Public License
  * @author		Vic D'Elfant
  *
- * @version		$Id: cortex_base.php 116 2009-10-10 12:30:47Z evil3 $
+ * @version		$Id$
  */
 
 /**
@@ -23,7 +23,7 @@ class cortex_base
 	 * @access	public
 	 * @var		string
 	 */
-	const revision = '$Rev: 116 $';
+	const revision = '$Rev$';
 
 	/**
 	 * Getter, will attempt to call $this->__get_<property>()

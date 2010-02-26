@@ -3,7 +3,7 @@
 * Tests for testing/auditing the code of the MOD
 *
 * @package mpv
-* @version $Id: tests_code.php 117 2009-10-31 15:34:22Z tumba25 $
+* @version $Id$
 * @copyright (c) 2008 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *

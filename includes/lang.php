@@ -4,7 +4,7 @@
 * MPV language [English]
 *
 * @package mpv
-* @version $Id: lang.php 74 2009-09-08 17:48:24Z evil3 $
+* @version $Id$
 * @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *

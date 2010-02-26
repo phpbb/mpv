@@ -3,7 +3,7 @@
 * Tests for checking the language files of a MOD
 *
 * @package mpv
-* @version $Id: tests_lang.php 54 2009-03-25 16:26:21Z paul $
+* @version $Id$
 * @copyright (c) 2008 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
