@@ -381,7 +381,7 @@ class mpv
 				$lang[$message] .= str_repeat(' %s ', sizeof($sprintf_args));
 			}
 		}
-
+var_dump($lang);
 		// Compose the message
 		$message = @vsprintf($lang[$message], $sprintf_args);
 		if (!is_null($filename))
@@ -458,7 +458,7 @@ class mpv
 		
 		if (defined('MPV_DEBUG') && MPV_DEBUG)
 		{
-			$this->push_error(self::ERROR_INFO, 'ZIP_METHOD', $this->unzip_type);
+			$this->push_error(self::ERROR_INFO, 'ZIP_METHOD', __FILE__, $this->unzip_type);
 		}
 
 		if ($this->unzip_type == self::UNZIP_EXEC)
