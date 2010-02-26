@@ -458,7 +458,7 @@ class mpv
 		
 		if (defined('MPV_DEBUG') && MPV_DEBUG)
 		{
-			$this->push_error(self::ERROR_INFO, 'ZIP_METHOD', __FILE__, $this->unzip_type);
+			$this->push_error(self::ERROR_INFO, 'ZIP_METHOD', $this->unzip_type);
 		}
 
 		if ($this->unzip_type == self::UNZIP_EXEC)
@@ -468,7 +468,7 @@ class mpv
 			copy($package, $this->temp_dir . $basename);
 
 			// Unzip it.
-			@exec('cd ' . escapeshellarg($this->temp_dir) . ' && unzip ' . escapeshellarg($basename));
+			exec('cd ' . escapeshellarg($this->temp_dir) . ' && unzip ' . escapeshellarg($basename));
 		}
 		else if ($this->unzip_type == self::UNZIP_PHP)
 		{
