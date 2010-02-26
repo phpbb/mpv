@@ -28,6 +28,9 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
+	// Only used for debug purposes.
+	'ZIP_METHOD'			=> 'Using %s as zip method',
+	
 	'TITLE'					=> 'phpBB MOD Pre-Validator Results',
 	'TITLE_STATS'			=> 'MPV Stats',
 	'MIN_PHP'				=> 'PHP 5.2.0 is required',
@@ -173,6 +176,4 @@ $lang = array_merge($lang, array(
 	'SUBMIT_COUNT'			=> 'Submission Count',
 	'TAG_DATA'				=> 'Tag Data',
 	'DATA_COUNT'			=> 'Data Count',
-	
-	'ZIP_METHOD'			=> 'Using %s as zip method',
 ));

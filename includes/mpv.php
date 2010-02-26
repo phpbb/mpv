@@ -381,7 +381,7 @@ class mpv
 				$lang[$message] .= str_repeat(' %s ', sizeof($sprintf_args));
 			}
 		}
-var_dump($lang);
+
 		// Compose the message
 		$message = @vsprintf($lang[$message], $sprintf_args);
 		if (!is_null($filename))
