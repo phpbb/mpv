@@ -475,12 +475,21 @@ class mpv
 			$zip = new ZipArchive();
 			if ($zip->open($package) === true)
 			{
-				$zip->extractTo($this->temp_dir);
+				if (!$zip->extractTo($this->temp_dir))
+				{
+					$zip->close();
+					$this->push_error(self::ERROR_FAIL, 'UNABLE_EXTRACT_PHP', __FILE__, $package);
+					$this->cleanup();
+
+					return;				
+				}
+				
 				$zip->close();
 			}
 			else
 			{
-				die('Failed to open archive using UNZIP_PHP');
+				$this->push_error(self::ERROR_FAIL, 'UNABLE_OPEN_PHP', __FILE__, $package);
+				$this->cleanup();
 			}
 		}
 		else

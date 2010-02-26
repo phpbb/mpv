@@ -132,6 +132,8 @@ $lang = array_merge($lang, array(
 	'INCLUDE_NO_PHP'		=> 'A call to include or require is missing $phpEx in call at line %s: %s',
 
 	'PACKAGE_NOT_EXISTS'	=> 'Choosen file (%s) does not exist',
+	'UNABLE_EXTRACT_PHP'	=> 'Unable to extract %s using php.',
+	'UNABLE_OPEN_PHP'	=> 'Unable to open %s using php.',	
 
 	'LINK_NOT_EXISTS'		=> 'The file(s) for link %s do(es) not exist in the zip file.',
 
