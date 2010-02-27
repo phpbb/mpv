@@ -30,6 +30,10 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	// Only used for debug purposes.
 	'ZIP_METHOD'			=> 'Using %s as zip method',
+	'TYPE_PHP'			=> 'php',
+	'TYPE_PHPBB'			=> 'phpBB',
+	'TYPE_EXEC'			=> 'exec',
+	'INVALID_ZIP_METHOD'		=> 'Invalid zip method %s',
 	
 	'TITLE'					=> 'phpBB MOD Pre-Validator Results',
 	'TITLE_STATS'			=> 'MPV Stats',

@@ -458,7 +458,25 @@ class mpv
 		
 		if (defined('MPV_DEBUG') && MPV_DEBUG)
 		{
-			$this->push_error(self::ERROR_INFO, 'ZIP_METHOD', __FILE__, $this->unzip_type);
+			$type = '';
+			switch ($this->unzip_type)
+			{
+				case self::UNZIP_EXEC:
+					$type = $lang['TYPE_EXEC'];
+				break;
+				case self::UNZIP_PHP:
+					$type = $lang['TYPE_PHP'];				
+				break;
+				case self::UNZIP_PHPBB:
+					$type = $lang['TYPE_PHPBB'];				
+				break;
+				default:
+					$this->push_error(self::ERROR_FAIL, 'INVALID_ZIP_METHOD', __FILE__, $this->zip_type);
+					$this->cleanup();
+					return;						
+				
+			}
+			$this->push_error(self::ERROR_INFO, 'ZIP_METHOD', __FILE__, $this->unzip_type, $type);
 		}
 
 		if ($this->unzip_type == self::UNZIP_EXEC)
@@ -493,7 +511,7 @@ class mpv
 				return;
 			}
 		}
-		else
+		else if ($this->unzip_type == self::UNZIP_PHPBB)
 		{
 			if (!class_exists('compress_zip'))
 			{
@@ -503,6 +521,12 @@ class mpv
 			// Next, try to unzip it
 			$compress = new compress_zip('r', $package);
 			$compress->extract($this->temp_dir);
+		}
+		else
+		{
+			$this->push_error(self::ERROR_FAIL, 'INVALID_ZIP_METHOD', __FILE__, $this->unzip_type);
+			$this->cleanup();
+			return;		
 		}
 
 		foreach (self::dir_files($this->temp_dir) as $file)
