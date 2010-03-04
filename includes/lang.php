@@ -34,7 +34,7 @@ $lang = array_merge($lang, array(
 	'TYPE_PHPBB'			=> 'phpBB',
 	'TYPE_EXEC'			=> 'exec',
 	'INVALID_ZIP_METHOD'		=> 'Invalid zip method %s',
-	
+
 	'TITLE'					=> 'phpBB MOD Pre-Validator Results',
 	'TITLE_STATS'			=> 'MPV Stats',
 	'MIN_PHP'				=> 'PHP 5.2.0 is required',
@@ -64,7 +64,7 @@ $lang = array_merge($lang, array(
 	'MAJOR_VERSION_UNSTABLE'	=> 'Your MOD version (%s) is unstable. It should be higher strarting at 1.0.0, but the minor version (the middle digit) should not be odd.
 	Example:
 	[b]0.0.1[/b] is unstable
-	[b]1.1.0[/b] is unstable
+	[b]0.1.0[/b] is unstable
 	[b]1.0.1[/b] is stable',
 
 	'NOT_LATEST_PHPBB'		=> 'Target revision in the MODX file says the MOD is for %s while the latest phpBB version is %s',
@@ -137,7 +137,7 @@ $lang = array_merge($lang, array(
 
 	'PACKAGE_NOT_EXISTS'	=> 'Choosen file (%s) does not exist',
 	'UNABLE_EXTRACT_PHP'	=> 'Unable to extract %s using php.',
-	'UNABLE_OPEN_PHP'	=> 'Unable to open %s using php.',	
+	'UNABLE_OPEN_PHP'	=> 'Unable to open %s using php.',
 
 	'LINK_NOT_EXISTS'		=> 'The file(s) for link %s do(es) not exist in the zip file.',
 
@@ -158,9 +158,9 @@ $lang = array_merge($lang, array(
 	'USAGE_IMG_NON_CLOSED'	=> 'An IMG is not closed correctly which causes invalid XHTML at line %s: %s',
 
 	'FILE_NON_BINARY'		=> 'File has been detected as non-binary while the extension IS binary. Checking for PHP code for security reasons. ',
-	
+
 	'GENERAL_NOTICE'  => 'Please note that all checks are done by an automated tool.  In [u]some[/u] cases a FAIL/WARNING can be valid/allowed usage of a function.',
-	
+
 	'UNABLE_OPEN' => 'Unable to open %s.',
 	'UNABLE_WRITE'=> 'Unable to write to %s.',
 	'PHP_ERROR'   => 'A PHP error was found: [code]%s[/code]',

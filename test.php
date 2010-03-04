@@ -4,40 +4,46 @@
 *
 * @package mpv
 * @version $Id$
-* @copyright (c) 2008 phpBB Group
+* @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-// if you dont want to use a phpBB installation, define the next constant.
-// Please note, only the EXEC (So basicly linux) is supported then as unzip method.
-// If you have enabled this piece of code, you can securly remove the code below.
-// define ('NO_PHPBB', true);
-
-// Standard phpBB includes
-define('IN_PHPBB', true);
-$phpbb_root_path = './../../www/community/';
 $phpEx = substr(strrchr(__FILE__, '.'), 1);
+$root_path = './';
 
-require_once($phpbb_root_path . 'common.' . $phpEx);
+// Will define all needed things.
+require('./mpv_config.' . $phpEx);
+require('./includes/lang.' . $phpEx);
+
+if (version_compare(PHP_VERSION, '5.2.0', '<'))
+{
+	die($lang['MIN_PHP']);
+}
+require('./includes/functions_mpv.' . $phpEx);
+require('./includes/mpv.' . $phpEx);
+
+//Override HTML format
+define('HTML_FORMAT', true);
+
+register_shutdown_function('end_output');
+
 error_reporting(E_ALL);
 
-$user->session_begin();
-$auth->acl($user->data);
-$user->setup();
-
-// $user->add_lang('lang'); // If you want to display text place lang in language/en :)
-
-if (version_compare(PHP_VERSION, '5.2.1', '<'))
-{
-	trigger_error('PHP 5.2.1 is required');
-}
-
-require_once('mpv.php');
-
-$mpv = new mpv('./');
+$mpv = new mpv();
+$mpv->output_type = ((HTML_FORMAT) ? mpv::OUTPUT_HTML : mpv::OUTPUT_BBCODE);
 $mpv->validate('my-mod.zip');
 
-print "Validation results:\n <br />" . nl2br($mpv);
+if (HTML_HEADERS)
+{
+	print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+	<head>
+	<title>' . $lang['TITLE'] . '</title>
+	</head>
+	<body>';
+}
+
+print $lang['VALIDATION_RESULTS'] . "\n\n" . ((HTML_FORMAT) ? nl2br($mpv) : $mpv);
 
 ?>
