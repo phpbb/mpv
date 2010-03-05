@@ -342,7 +342,7 @@ class mpv_tests_modx
 
 		foreach ($copy_ary as $copy_tag)
 		{
-			if (trim(basename($copy_tag->attributes['from'])) != trim(basename($copy_tag->attributes['to'])))
+			if (isset ($copy_tag->attributes['from']) && isset($copy_tag->attributes['to']) && trim(basename($copy_tag->attributes['from'])) != trim(basename($copy_tag->attributes['to'])))
 			{
 				$this->push_error(mpv::ERROR_FAIL, 'COPY_BASENAME_DIFFER', array(basename($copy_tag->attributes['from']), basename($copy_tag->attributes['to'])));
 
