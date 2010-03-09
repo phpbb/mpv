@@ -19,8 +19,6 @@ function end_output()
 
 	$debug_output = "\n" . sprintf($lang['TOTAL_TIME'], $totaltime);
 
-echo get_formatted_filesize(memory_get_peak_usage()) . '<br>';
-
 	if (function_exists('memory_get_usage'))
 	{
 		if ($memory_usage = memory_get_usage())
