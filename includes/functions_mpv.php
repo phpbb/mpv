@@ -12,12 +12,14 @@
 function end_output()
 {
 	global $starttime, $lang;
-	
+
 	// Some debug stuff.
 	$mtime = explode(' ', microtime());
 	$totaltime = $mtime[0] + $mtime[1] - $starttime;
 
 	$debug_output = "\n" . sprintf($lang['TOTAL_TIME'], $totaltime);
+
+echo get_formatted_filesize(memory_get_peak_usage()) . '<br>';
 
 	if (function_exists('memory_get_usage'))
 	{
@@ -47,7 +49,7 @@ function end_output()
 function get_formatted_filesize($value, $string_only = true, $allowed_units = false)
 {
 	global $lang;
-	
+
 	$available_units = array(
 		'gb' => array(
 			'min' 		=> 1073741824, // pow(2, 30)
@@ -320,9 +322,9 @@ else
 */
 function generate_text_for_html_display($text)
 {
-	//Replace new 
+	//Replace new
 	$text = str_replace("\n", "<br />\n", $text);
-	
+
 	//BBCode replacement array
 	$bbcode = array(
 		"/\[b\](.*?)\[\/b\]/is" => '<span style="font-weight:bold;">$1</span>',
