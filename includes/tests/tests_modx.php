@@ -507,7 +507,14 @@ class mpv_tests_modx
 		}
 		else if (trim($phpbb_version->value) != $current_phpbb_version)
 		{
-			$this->push_error(mpv::ERROR_WARNING , 'NOT_LATEST_PHPBB', array($phpbb_version->value, $current_phpbb_version));
+			if (basename($this->modx_filename) == $this->modx_filename)
+			{
+				$this->push_error(mpv::ERROR_FAIL , 'NOT_LATEST_PHPBB', array($phpbb_version->value, $current_phpbb_version));
+			}
+			else
+			{
+				$this->push_error(mpv::ERROR_WARNING , 'NOT_LATEST_PHPBB', array($phpbb_version->value, $current_phpbb_version));
+			}
 
 			$return = false;
 		}
