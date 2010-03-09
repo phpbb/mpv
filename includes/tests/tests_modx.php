@@ -87,7 +87,7 @@ class mpv_tests_modx
 	public function run()
 	{
 		global $statistics;
-		
+
 		$test_methods = get_class_methods($this);
 
 		if (!is_array($this->validator->modx_files) || !sizeof($this->validator->modx_files))
@@ -99,7 +99,7 @@ class mpv_tests_modx
 		foreach ($this->validator->modx_files as $modx_filename => $modx_object)
 		{
 			$this->modx_filename = $modx_filename;
-		  
+
 			if (preg_match('#modx-(.*?)\.xsd#s', (string) $modx_object, $matches))
 			{
 				$current_modx_version = $this->get_current_version('modx');
@@ -112,7 +112,7 @@ class mpv_tests_modx
 				if (!LOCAL_ONLY && !@file_exists($this->validator->dir . 'store/data/' . $matches[0]))
 				{
 					$data = @file_get_contents("http://www.phpbb.com/mods/xml/{$matches[0]}");
-					
+
 					//Now we write out the .xsd
 					if (isset($data) && $data !== false)
 					{
@@ -148,14 +148,14 @@ class mpv_tests_modx
 			$this->modx_object 		= $modx_object;
 			$this->modx_dir			= $this->extract_dir($modx_filename);
 			$mod_title = $this->modx_object->get_xpath('//header/title', true);
-			
+
 			//Do we need to store some statistics?
 			if (sizeof($statistics))
 			{
 				foreach ($statistics as $tag => $properties)
 				{
 					$line_to_write = '';
-					
+
 					//First we need to get the tag's existing nodes
 					$tag_node = $this->modx_object->get_by_name($tag, false);
 					//Now we go through each node to get the properties
@@ -183,9 +183,9 @@ class mpv_tests_modx
 						}
 					}
 				}
-				
+
 			}
-			
+
 			foreach ($test_methods as $method)
 			{
 				if (substr($method, 0, 5) == 'test_')
@@ -669,14 +669,14 @@ class mpv_tests_modx
 	{
 		return $this->failed_tests;
 	}
-	 
+
 	/**
 	* Return the current phpBB3 version from phpBB.com's updatecheck directory
 	*/
 	private function get_current_version($type)
 	{
 		global $lang;
-		
+
 		//If we don't want to go out to the Internet we set these
 		if (LOCAL_ONLY)
 		{
@@ -685,17 +685,17 @@ class mpv_tests_modx
 				case 'phpbb':
 					return PHPBB_VERSION;
 					break;
-				
+
 				case 'modx':
 					return LATEST_MODX;
 					break;
-				
+
 				default:
 					return false;
 					break;
 			}
 		}
-		
+
 		$errstr = '';
 		$errno = 0;
 		$host = 'www.phpbb.com';
@@ -705,16 +705,16 @@ class mpv_tests_modx
 		$filename = ($type == 'modx') ? 'modx_1x.txt' : '30x.txt';
 		$file_info = '';
 		$get_info = false;
-		
+
 		if (@file_exists($this->validator->dir . 'store/data/' . $filename))
 		{
 			//Get from cache if it's been less than a day since the last update
 			if ((time() - filemtime($this->validator->dir . 'store/data/' . $filename)) <= 86400)
 			{
-				$file_info = @file_get_contents($this->validator->dir . 'store/data/' . $filename);			
+				$file_info = @file_get_contents($this->validator->dir . 'store/data/' . $filename);
 			}
 		}
-		
+
 		//Only do this if we couldn't get the cache data
 		if (empty($file_info))
 		{
@@ -748,7 +748,7 @@ class mpv_tests_modx
 				$cache = @fopen($root_dir . 'store/data/' . $filename, 'wb');
 				@fwrite($cache, $file_info);
 				@fclose($cache);
-				
+
 				@fclose($fsock);
 			}
 			else
@@ -765,9 +765,9 @@ class mpv_tests_modx
 				}
 			}
 		}
-		
+
 		$info = explode("\n", $file_info);
-		
+
 		return $info[0];
 	}
 
