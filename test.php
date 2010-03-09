@@ -30,7 +30,7 @@ register_shutdown_function('end_output');
 
 error_reporting(E_ALL);
 
-$mpv = new mpv();
+$mpv = new mpv(null, mpv::UNZIP_PREFERENCE, false);
 $mpv->output_type = ((HTML_FORMAT) ? mpv::OUTPUT_HTML : mpv::OUTPUT_BBCODE);
 $mpv->validate('my-mod.zip');
 

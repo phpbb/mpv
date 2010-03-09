@@ -174,7 +174,7 @@ class mpv
 	 * @access	public
 	 * @var		string
 	 **/
-	public $mod_dir;
+	static public $mod_dir;
 
 	/**
 	 * Array with errors
@@ -535,8 +535,37 @@ class mpv
 			$this->cleanup();
 			return;		
 		}
+		
+		$file_exists = 0;
+		$dir_exists = 0;
+		if ($dh = opendir($this->temp_dir))
+		{
+			while (false !== ($file = readdir($dh)))
+			{
+				if ($file == '.' || $file == '..')
+				{
+					continue;
+				}
+				
+				if (is_dir($this->temp_dir . $file))
+				{
+					$dir_exists++;
+					$dir = $file;
+				}
+				if (is_file($this->temp_dir . $file) && $file != $package)
+				{
+				var_dump($file);
+					$file_exists++;
+				}
+			}			
+		}
+		
+		if (!$file_exists && $dir_exists)
+		{
+			self::$mod_dir = $dir;
+		}
 
-		foreach (self::dir_files($this->temp_dir) as $file)
+		foreach (self::dir_files($this->temp_dir, '', true) as $file)
 		{
 			$this->package_files[] = $file;
 
@@ -661,7 +690,7 @@ class mpv
 	 * @param	string		Path to directory
 	 * @return	array
 	 */
-	public static function dir_files($root, $dir = '', $first = false)
+	public static function dir_files($root, $dir = '')
 	{
 		$filelist = array();
 
@@ -670,11 +699,6 @@ class mpv
 			$dir .= '/';
 		}
 		
-		if ($first)
-		{
-			$counter = 0;
-		}
-
 		if ($dh = opendir($root . $dir))
 		{
 			while ($file = @readdir($dh))
@@ -690,17 +714,12 @@ class mpv
 				}
 				else
 				{
-					$counter++;
 					$filelist[] = $dir . $file;
 				}
 			}
 			closedir($dh);
 		}
 		
-		if ($first && $counter)
-		{
-			$this->mod_dir = $dir;
-		}
 
 		return $filelist;
 	}
