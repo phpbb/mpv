@@ -168,6 +168,13 @@ class mpv
 	 * @var 	array
 	 */
 	public $xsl_files;
+	
+	/**
+	 * Directory name that is in the zip for this MOD
+	 * @access	public
+	 * @var		string
+	 **/
+	public $mod_dir;
 
 	/**
 	 * Array with errors
@@ -654,13 +661,18 @@ class mpv
 	 * @param	string		Path to directory
 	 * @return	array
 	 */
-	public static function dir_files($root, $dir = '')
+	public static function dir_files($root, $dir = '', $first = false)
 	{
 		$filelist = array();
 
 		if ($dir && substr($dir, -1) != '/')
 		{
 			$dir .= '/';
+		}
+		
+		if ($first)
+		{
+			$counter = 0;
 		}
 
 		if ($dh = opendir($root . $dir))
@@ -678,10 +690,16 @@ class mpv
 				}
 				else
 				{
+					$counter++;
 					$filelist[] = $dir . $file;
 				}
 			}
 			closedir($dh);
+		}
+		
+		if ($first && $counter)
+		{
+			$this->mod_dir = $dir;
 		}
 
 		return $filelist;
