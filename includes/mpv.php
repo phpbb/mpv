@@ -554,7 +554,6 @@ class mpv
 				}
 				if (is_file($this->temp_dir . $file) && $file != $package)
 				{
-				var_dump($file);
 					$file_exists++;
 				}
 			}			
