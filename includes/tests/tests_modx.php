@@ -505,7 +505,7 @@ class mpv_tests_modx
 
 			$return = false;
 		}
-		else if (trim($phpbb_version->value) != $current_phpbb_version)
+		else if (strtolower(trim($phpbb_version->value)) != strtolower($current_phpbb_version))
 		{
 			if (mpv::$mod_dir . '/' . basename($this->modx_filename) == $this->modx_filename)
 			{
