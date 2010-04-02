@@ -61,7 +61,7 @@ $lang = array_merge($lang, array(
 	'INVALID_VERSION_FORMAT'	=> 'The supplied version (%s) is invalid. The format should be: 1.0.0.',
 
 	'VALIDATING_ZIP'			=> '(Validating %s)',
-	'MAJOR_VERSION_UNSTABLE'	=> 'Your MOD version (%s) is unstable. It should be higher strarting at 1.0.0, but the minor version (the middle digit) should not be odd.
+	'MAJOR_VERSION_UNSTABLE'	=> 'Your MOD version (%s) is unstable. It should be higher starting at 1.0.0.
 	Example:
 	[b]0.0.1[/b] is unstable
 	[b]0.1.0[/b] is unstable
