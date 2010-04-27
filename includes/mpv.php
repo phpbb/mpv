@@ -40,6 +40,11 @@ class mpv
 	const ERROR_INFO = 4;
 
 	/**
+	* Output validation report as plain text
+	*/
+	const OUTPUT_TEXT = 0;
+
+	/*
 	 * Output validation report as BBcode
 	 */
 	const OUTPUT_BBCODE = 1;
@@ -76,14 +81,14 @@ class mpv
 	 *
 	 */
 	const UNZIP_PREFERENCE = 4;
-	
+
 	/**
 	 * Enable the execution of PHP for included files.
 	 * Before you enable this you should read tests/test_execution.php and understand the
 	 * written text.
 	 */
 	const EXEC_PHP = 1;
-	
+
 	/**
 	 * Disable the execution of php.
 	 * this is the default setting for security reasons.
@@ -168,7 +173,7 @@ class mpv
 	 * @var 	array
 	 */
 	public $xsl_files;
-	
+
 	/**
 	 * Directory name that is in the zip for this MOD
 	 * @access	public
@@ -191,7 +196,7 @@ class mpv
 	 * @access 	public
 	 */
 	public $server_signature = false;
-	
+
 	/**
 	 * Set if php is executed or not.
 	 * Value can be mpv::EXEC_PHP or mpv::DONT_EXEC_PHP.
@@ -216,7 +221,7 @@ class mpv
 	 * @access	public
 	 */
 	public $zip_file;
-	
+
 	/**
 	* Name of the original zip file
 	*
@@ -224,7 +229,7 @@ class mpv
 	* @access	public
 	*/
 	public $orig_package_name = 'zip';
-	
+
 	/**
 	 * Constructor
 	 *
@@ -255,13 +260,13 @@ class mpv
 			{
 				$check = false;
 				@exec("whereis unzip", $check);
-				
-				if ($check[0] != "unzip:") // If unzip doesnt exists whereis returns under linux unzip: (6 chars). 
+
+				if ($check[0] != "unzip:") // If unzip doesnt exists whereis returns under linux unzip: (6 chars).
 				{
 					$exec_check = true;
 				}
 			}
-			
+
 			if ($exec_check)
 			{
 				$unzip_type = self::UNZIP_EXEC;
@@ -322,7 +327,7 @@ class mpv
 	public function error_handler($error_no, $msg_text, $error_file, $error_line)
 	{
 		global $lang;
-		
+
 		$error_file = basename($error_file);
 
 		// Do not display notices if we suppress them via @
@@ -446,9 +451,9 @@ class mpv
 		$this->message = '';
 
 		$this->zip_file = $package;
-		
+
 		$this->message .= sprintf($lang['VALIDATING_ZIP'], $this->orig_package_name) . "\n\n";
-		
+
 		$this->push_error(self::ERROR_NOTICE, 'GENERAL_NOTICE'); // Add a general notice about possible wrong fails.
 
 		// First see if the package actually exists
@@ -462,7 +467,7 @@ class mpv
 
 		$this->temp_dir = $root_path . 'store/temp/mpv_' . md5(uniqid(time())) . '/';
 		mkdir($this->temp_dir, 0777, true);
-		
+
 		if (defined('MPV_DEBUG') && MPV_DEBUG)
 		{
 			$type = '';
@@ -472,16 +477,16 @@ class mpv
 					$type = $lang['TYPE_EXEC'];
 				break;
 				case self::UNZIP_PHP:
-					$type = $lang['TYPE_PHP'];				
+					$type = $lang['TYPE_PHP'];
 				break;
 				case self::UNZIP_PHPBB:
-					$type = $lang['TYPE_PHPBB'];				
+					$type = $lang['TYPE_PHPBB'];
 				break;
 				default:
 					$this->push_error(self::ERROR_FAIL, 'INVALID_ZIP_METHOD', __FILE__, $this->zip_type);
 					$this->cleanup();
-					return;						
-				
+					return;
+
 			}
 			$this->push_error(self::ERROR_INFO, 'ZIP_METHOD', __FILE__, $this->unzip_type, $type);
 		}
@@ -506,9 +511,9 @@ class mpv
 					$this->push_error(self::ERROR_FAIL, 'UNABLE_EXTRACT_PHP', __FILE__, $package);
 					$this->cleanup();
 
-					return;				
+					return;
 				}
-				
+
 				$zip->close();
 			}
 			else
@@ -533,9 +538,9 @@ class mpv
 		{
 			$this->push_error(self::ERROR_FAIL, 'INVALID_ZIP_METHOD', __FILE__, $this->unzip_type);
 			$this->cleanup();
-			return;		
+			return;
 		}
-		
+
 		$file_exists = 0;
 		$dir_exists = 0;
 		if ($dh = opendir($this->temp_dir))
@@ -546,7 +551,7 @@ class mpv
 				{
 					continue;
 				}
-				
+
 				if (is_dir($this->temp_dir . $file))
 				{
 					$dir_exists++;
@@ -556,9 +561,9 @@ class mpv
 				{
 					$file_exists++;
 				}
-			}			
+			}
 		}
-		
+
 		if (!$file_exists && $dir_exists)
 		{
 			self::$mod_dir = $dir;
@@ -697,7 +702,7 @@ class mpv
 		{
 			$dir .= '/';
 		}
-		
+
 		if ($dh = opendir($root . $dir))
 		{
 			while ($file = @readdir($dh))
@@ -718,7 +723,7 @@ class mpv
 			}
 			closedir($dh);
 		}
-		
+
 
 		return $filelist;
 	}
@@ -732,7 +737,7 @@ class mpv
 	public function __toString()
 	{
 		global $lang;
-		
+
 		$fail		= (isset($this->errors[mpv::ERROR_FAIL])) ? sizeof($this->errors[mpv::ERROR_FAIL]) : 0;
 		$warning 	= (isset($this->errors[mpv::ERROR_WARNING])) ? sizeof($this->errors[mpv::ERROR_WARNING]) : 0;
 
@@ -747,7 +752,7 @@ class mpv
 		{
 			$this->message .= " || " . $lang['MPV_SERVER'] . ": " . $this->server_signature ;
 		}
-		
+
 		$this->message .= "\n";
 
 		switch ($this->output_type)
@@ -758,6 +763,14 @@ class mpv
 			case self::OUTPUT_HTML:
 				$text = htmlspecialchars($this->message);
 				return generate_text_for_html_display($text);
+
+			case self::OUTPUT_TEXT:
+				$text = htmlspecialchars($this->message);
+				$text = generate_text_for_html_display($text);
+				$text = htmlspecialchars_decode(strip_tags(str_replace('<br />', "\n", $text)));
+				$text = str_replace("\n\n", "\n", $text);
+				$text = str_replace("\n", PHP_EOL, $text);
+				return $text;
 
 			default:
 				throw new Exception($lang['UNKNOWN_OUTPUT'] . ' "' . (int)$this->output_type . '"');
