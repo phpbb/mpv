@@ -164,7 +164,7 @@ class mpv_tests_packaging
 				{
 					$md5 = md5_file($this->validator->temp_dir . $file);
 					
-					if (in_array($this->license_md5,$md5)
+					if (in_array($this->license_md5,$md5))
 					{
 						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, array($md5, implode(', ',$this->license_md5)));
 					}
