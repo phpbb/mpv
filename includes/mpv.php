@@ -287,8 +287,8 @@ class mpv
 		$this->errors = array();
 		$this->message = '';
 
-		$this->xsl_files		= array();
-		$this->modx_files		= array();
+		$this->xsl_files	= array();
+		$this->modx_files	= array();
 		$this->package_files	= array();
 		$this->test_collections	= array();
 

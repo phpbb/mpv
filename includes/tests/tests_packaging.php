@@ -49,6 +49,29 @@ class mpv_tests_packaging
 	 * @var		array
 	 */
 	private $unwanted_files = array('__macosx', '.ds_store', 'thumbs.db', '.svn');
+	
+	
+	/**
+	 * String with valid MD5 for license.txt
+	 * @access	private
+	 * @var 	string	 
+	 */
+	private $license_md5 = 'eb723b61539feef013de476e68b5c50a'; // Only one valid MD5 for the license.txt
+	
+	/**	 
+	 * Array with MD5's for the MODX xsl files.
+	 * IMPORTANT: The first MD5 is _always_ the newest and only valid MD5!
+	 * @access	private
+	 * @var		array	
+	 */
+	private $valid_md5_xsl = array(
+		'515b908b69d5a926fefa9d4176565575', // md5 for http://www.phpbb.com/mods/modx/1.2.5/modx.prosilver.en.xsl
+		'cbb5a076d38102ed083b1a0538ee4980', // md5 for http://www.phpbb.com/mods/modx/1.2.4/modx.prosilver.en.xsl
+		'732e30fb150234112cf46516551f28fb', // md5 for http://www.phpbb.com/mods/modx/1.2.3/modx.prosilver.en.xsl
+		'ad685f8a0b1bef7651222531824e0d5b', // md5 for http://www.phpbb.com/mods/modx/1.2.2/modx.prosilver.en.xsl
+		'b96fbe26f60eea25ca8632c670ae7421', // md5 for http://www.phpbb.com/mods/modx/1.2.1/modx.prosilver.en.xsl
+		'95e0c31a6a6d31922eb6e92b2747dd2b', // md5 for http://www.phpbb.com/mods/modx/1.2.0/modx.prosilver.en.xsl
+	);
 
 	/**
 	 * Constructor
@@ -76,7 +99,7 @@ class mpv_tests_packaging
 		foreach ($test_methods as $method)
 		{
 			if (substr($method, 0, 5) == 'test_')
-			{
+			{eb723b61539feef013de476e68b5c50a
 				if (!$this->$method() || $this->terminate)
 				{
 					$this->failed_tests[] = substr($method, 5);
@@ -105,6 +128,49 @@ class mpv_tests_packaging
 		}
 
 		return true;
+	}
+	
+	
+	/**
+	 * Test the MD5 for certian files like UMIL and xsl
+	 *
+	 * @access private
+	 * @return bool	 
+	 */
+	private function test_files()
+	{
+		$error = false;
+		if (sizeof($this->validator->xsl_files) > 0)
+		{
+			foreach ($this->validator->xsl_files as $file)
+			{
+				$md5 = md5_file($file);
+				
+				if (!in_array($md5, $this->valid_md5_xsl))
+				{
+					$error = true;
+					$this->push_error(mpv::ERROR_WARNING, 'MODIFIED_XSL', $file, $md5, $this->valid_md5_xsl[0]);
+				}
+				else if ($md5 != $this->valid_md5_xsl[0]) // Note, newest MD5 for xsl should be the first!
+				{
+					$error = true;
+					$this->push_error(mpv::ERROR_FAIL, 'OLD_XSL', $file, $md5);
+				}
+			}
+			
+			foreach ($this->validator->package_files as $file)
+			{
+				if (strpos($file, 'license.txt') !== false)
+				{
+					$md5 = md5_file($file);
+					
+					if ($this->license_md5 != $md5)
+					{
+						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, $md5, $license_md5);
+					}
+				}
+			}
+		}
 	}
 
 	/**

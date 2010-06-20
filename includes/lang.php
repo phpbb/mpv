@@ -182,4 +182,8 @@ $lang = array_merge($lang, array(
 	'SUBMIT_COUNT'			=> 'Submission Count',
 	'TAG_DATA'				=> 'Tag Data',
 	'DATA_COUNT'			=> 'Data Count',
+	
+	'MODIFIED_XSL'		=> 'The MD5 signature of the XSL file %s is unknown, file might be modified. Found signature %s, expected newest %s',
+	'OLD_XSL'		=> 'You are using a old version of the MODX xsl for file %s. You should update the XSL prior to submitting',
+	'LICENSE_MD5'		=> 'Found a wrong md5 signature for %s. Found %s while expected %s',
 ));
