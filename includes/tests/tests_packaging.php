@@ -149,12 +149,12 @@ class mpv_tests_packaging
 				if (!in_array($md5, $this->valid_md5_xsl))
 				{
 					$error = true;
-					$this->push_error(mpv::ERROR_WARNING, 'MODIFIED_XSL', $file, $md5, $this->valid_md5_xsl[0]);
+					$this->push_error(mpv::ERROR_WARNING, 'MODIFIED_XSL', $file, array($md5, $this->valid_md5_xsl[0]));
 				}
 				else if ($md5 != $this->valid_md5_xsl[0]) // Note, newest MD5 for xsl should be the first!
 				{
 					$error = true;
-					$this->push_error(mpv::ERROR_FAIL, 'OLD_XSL', $file, $md5);
+					$this->push_error(mpv::ERROR_FAIL, 'OLD_XSL', $file, array($md5));
 				}
 			}
 			
@@ -166,7 +166,7 @@ class mpv_tests_packaging
 					
 					if ($this->license_md5 != $md5)
 					{
-						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, $md5, $this->license_md5);
+						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, array($md5, $this->license_md5));
 					}
 				}
 			}
