@@ -74,6 +74,10 @@ $lang = array_merge($lang, array(
 	'SHORT_TAGS'			=> 'This file is using short open tags (<? instead of <?php) at line %s: %s',
 
 	'LICENSE_NOT_GPL2'		=> 'The license specified in the MODX file may not be the GPLv2.',
+	
+	'MODIFIED_XSL'		=> 'The MD5 signature of the XSL file is unknown, file might be modified. Found signature %s, expected newest %s',
+	'OLD_XSL'		=> 'You are using a old version of the MODX xsl. You should update the XSL prior to submitting',
+	'LICENSE_MD5'		=> 'Found a wrong md5 signature. Found %s while expected %s',	
 
 	'MANY_EDIT_CHILDREN'	=> 'The MOD uses many edit children.  This could indicate incorrect usage of the edit tag.',
 	'MULTIPLE_XSL'			=> 'You have multiple XSL files.  It is preferred to have only one XSL file so as to not confuse the user.',
@@ -182,8 +186,4 @@ $lang = array_merge($lang, array(
 	'SUBMIT_COUNT'			=> 'Submission Count',
 	'TAG_DATA'				=> 'Tag Data',
 	'DATA_COUNT'			=> 'Data Count',
-	
-	'MODIFIED_XSL'		=> 'The MD5 signature of the XSL file is unknown, file might be modified. Found signature %s, expected newest %s',
-	'OLD_XSL'		=> 'You are using a old version of the MODX xsl. You should update the XSL prior to submitting',
-	'LICENSE_MD5'		=> 'Found a wrong md5 signature. Found %s while expected %s',
 ));

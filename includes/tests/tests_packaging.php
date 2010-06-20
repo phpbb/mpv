@@ -166,7 +166,7 @@ class mpv_tests_packaging
 					
 					if ($this->license_md5 != $md5)
 					{
-						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, $md5, $license_md5);
+						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, $md5, $this->license_md5);
 					}
 				}
 			}
