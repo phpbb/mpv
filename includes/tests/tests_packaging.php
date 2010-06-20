@@ -99,7 +99,7 @@ class mpv_tests_packaging
 		foreach ($test_methods as $method)
 		{
 			if (substr($method, 0, 5) == 'test_')
-			{eb723b61539feef013de476e68b5c50a
+			{
 				if (!$this->$method() || $this->terminate)
 				{
 					$this->failed_tests[] = substr($method, 5);
