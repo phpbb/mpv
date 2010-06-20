@@ -56,7 +56,7 @@ class mpv_tests_packaging
 	 * @access	private
 	 * @var 	string	 
 	 */
-	private $license_md5 = 'eb723b61539feef013de476e68b5c50a'; // Only one valid MD5 for the license.txt
+	private $license_md5 = array('eb723b61539feef013de476e68b5c50a', '0cce1e42ef3fb133940946534fcf8896'); // Both seems to be good, one with unix lineends, one with windows?
 	
 	/**	 
 	 * Array with MD5's for the MODX xsl files.
@@ -164,9 +164,9 @@ class mpv_tests_packaging
 				{
 					$md5 = md5_file($this->validator->temp_dir . $file);
 					
-					if ($this->license_md5 != $md5)
+					if (in_array($this->license_md5,$md5)
 					{
-						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, array($md5, $this->license_md5));
+						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, array($md5, implode(', ',$this->license_md5)));
 					}
 				}
 			}
