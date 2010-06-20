@@ -144,7 +144,7 @@ class mpv_tests_packaging
 		{
 			foreach ($this->validator->xsl_files as $file)
 			{
-				$md5 = md5_file($file);
+				$md5 = md5_file($this->validator->temp_dir . $file);
 				
 				if (!in_array($md5, $this->valid_md5_xsl))
 				{
@@ -162,7 +162,7 @@ class mpv_tests_packaging
 			{
 				if (strpos($file, 'license.txt') !== false)
 				{
-					$md5 = md5_file($file);
+					$md5 = md5_file($this->validator->temp_dir . $file);
 					
 					if ($this->license_md5 != $md5)
 					{

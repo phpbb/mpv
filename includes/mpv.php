@@ -407,24 +407,24 @@ class mpv
 		switch ($type)
 		{
 			case self::ERROR_FAIL:
-				$this->message .= '[color=red][ [b]' . $lang['MPV_FAIL_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=red][ [b]' . $lang['MPV_FAIL_RESULT'] . '[/b] ][/color] ' . $message . "\n";
 			break;
 
 			case self::ERROR_NOTICE:
-				$this->message .= '[color=blue][ [b]' . $lang['MPV_NOTICE_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=blue][ [b]' . $lang['MPV_NOTICE_RESULT'] . '[/b] ][/color] ' . $message . "\n";
 			break;
 
 			case self::ERROR_WARNING:
-				$this->message .= '[color=orange][ [b]' . $lang['MPV_WARNING_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=orange][ [b]' . $lang['MPV_WARNING_RESULT'] . '[/b] ][/color] ' . $message . "\n";
 			break;
 
 			case self::ERROR_INFO:
-				$this->message .= '[color=purple][ [b]' . $lang['MPV_INFO_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=purple][ [b]' . $lang['MPV_INFO_RESULT'] . '[/b] ][/color] ' . $message . "\n";
 			break;
 
 			default:
-				$this->message .= '[color=orange][ [b]' . $lang['MPV_WARNING_RESULT'] . '[/b] ][/color] [b]' . $lang['INVALID_TYPE'] . "\n\n";
-				$this->message .= '[color=purple][ [b]' . $lang['MPV_INFO_RESULT'] . '[/b] ][/color] ' . $message . "\n\n";
+				$this->message .= '[color=orange][ [b]' . $lang['MPV_WARNING_RESULT'] . '[/b] ][/color] [b]' . $lang['INVALID_TYPE'] . "\n";
+				$this->message .= '[color=purple][ [b]' . $lang['MPV_INFO_RESULT'] . '[/b] ][/color] ' . $message . "\n";
 		}
 
 		// Store the raw log in $this->errors
