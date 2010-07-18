@@ -177,7 +177,7 @@ class mpv_tests_packaging
 				
 				$tmp = explode('/', $file);
 //var_dump($tmp);
-			/*	if (sizeof($tmp) >= 1 && $tmp[sizeof($tmp) - 1] == 'umil' && $tmp[sizeof($tmp) ] == 'umil.php')
+			if (sizeof($tmp) >= 1 && $tmp[sizeof($tmp) - 1] == 'umil' && $tmp[sizeof($tmp) ] == 'umil.php')
 				{
 					$md5 = md5_file($this->validator->temp_dir . $file);
 					
@@ -211,7 +211,7 @@ class mpv_tests_packaging
 						$this->push_error(mpv::ERROR_WARNING, 'INCORRECT_UMIL_MD5', $file);
 					}
 					
-				}*/
+				}
 			}
 		}
 	}
