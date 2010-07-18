@@ -176,8 +176,8 @@ class mpv_tests_packaging
 				}
 				
 				$tmp = explode('/', $file);
-//var_dump($tmp);
-			if (sizeof($tmp) >= 1 && $tmp[sizeof($tmp) - 1] == 'umil' && $tmp[sizeof($tmp) ] == 'umil.php')
+var_dump($tmp);
+				if (sizeof($tmp) >= 1 && $tmp[sizeof($tmp) - 2] == 'umil' && $tmp[sizeof($tmp) - 1] == 'umil.php')
 				{
 					$md5 = md5_file($this->validator->temp_dir . $file);
 					
