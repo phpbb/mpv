@@ -29,10 +29,13 @@ define('HTML_FORMAT', true, true);
 define('HTML_HEADERS', false);
 
 // Latest phpBB3 version. Only used if LOCAL_ONLY is set to true
-define('PHPBB_VERSION', '3.0.6');
+define('PHPBB_VERSION', '3.0.7-PL1');
 
 // Latest MODX version. Only used if LOCAL_ONLY is set to true
-define('LATEST_MODX', '1.2.3');
+define('LATEST_MODX', '1.2.5');
+
+// Latest UMIL version. Only used if LOCAL_ONLY is set to true
+define('LATEST_UMIL', '1.0.2');
 
 // MPV Debug, disabled by default, will add some extra info about the MPV status
 define('MPV_DEBUG', false);

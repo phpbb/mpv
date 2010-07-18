@@ -186,4 +186,10 @@ $lang = array_merge($lang, array(
 	'SUBMIT_COUNT'			=> 'Submission Count',
 	'TAG_DATA'				=> 'Tag Data',
 	'DATA_COUNT'			=> 'Data Count',
+	
+	'NO_UMIL_VERSION'		=> 'Could not find UMIL_VERSION in umil.php',
+	'UMIL_OUTDATED'			=> 'The included UMIL is outdated.',
+	'INCORRECT_UMIL_MD5'		=> 'The included UMIL is modified.',
+	'UNKNOWN_VERSION_UMIL'		=> 'The included UMIL version is unknown. The can mean the version is outdated.',
+	
 ));

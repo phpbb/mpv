@@ -66,11 +66,16 @@ class mpv_tests_packaging
 	 */
 	private $valid_md5_xsl = array(
 		'515b908b69d5a926fefa9d4176565575', // md5 for http://www.phpbb.com/mods/modx/1.2.5/modx.prosilver.en.xsl
+		'515b908b69d5a926fefa9d4176565575',
 		'cbb5a076d38102ed083b1a0538ee4980', // md5 for http://www.phpbb.com/mods/modx/1.2.4/modx.prosilver.en.xsl
 		'732e30fb150234112cf46516551f28fb', // md5 for http://www.phpbb.com/mods/modx/1.2.3/modx.prosilver.en.xsl
 		'ad685f8a0b1bef7651222531824e0d5b', // md5 for http://www.phpbb.com/mods/modx/1.2.2/modx.prosilver.en.xsl
 		'b96fbe26f60eea25ca8632c670ae7421', // md5 for http://www.phpbb.com/mods/modx/1.2.1/modx.prosilver.en.xsl
 		'95e0c31a6a6d31922eb6e92b2747dd2b', // md5 for http://www.phpbb.com/mods/modx/1.2.0/modx.prosilver.en.xsl
+	);
+	
+	private $valid_md5_umil = array(
+		'1.0.2'		=>	'db40dbe549fcbbb5a790f7e81ce8e4db',
 	);
 
 	/**
@@ -169,6 +174,44 @@ class mpv_tests_packaging
 						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, array($md5, implode(', ',$this->license_md5)));
 					}
 				}
+				
+				$tmp = explode('/', $file);
+//var_dump($tmp);
+			/*	if (sizeof($tmp) >= 1 && $tmp[sizeof($tmp) - 1] == 'umil' && $tmp[sizeof($tmp) ] == 'umil.php')
+				{
+					$md5 = md5_file($this->validator->temp_dir . $file);
+					
+					if (!defined('IN_PHPBB'))
+					{
+						define('IN_PHPBB', true);
+					}
+					include ($this->validator->temp_dir . $file);
+					
+					if (!defined('UMIL_VERSION'))
+					{
+						$this->push_error(mpv::ERROR_FAIL, 'NO_UMIL_VERSION', $file);
+					}
+					else if (version_compare(UMIL_VERSION, mpv::get_current_version('umil'), '<'))
+					{
+						$this->push_error(mpv::ERROR_FAIL, 'UMIL_OUTDATED', $file);
+						
+						// Check to see if the md5 still exists
+						if (isset($this->valid_md5_umil[UMIL_VERSION]) && $this->valid_md5_umil[UMIL_VERSION] != $md5)
+						{
+							// Invalid MD5 for version as well :)
+							$this->push_error(mpv::ERROR_WARNING, 'INCORRECT_UMIL_MD5', $file);							
+						}
+					}
+					else if (!isset($this->valid_md5_umil[UMIL_VERSION]))
+					{
+						$this->push_error(mpv::ERROR_FAIL, 'UNKNOWN_VERSION_UMIL', $file);
+					}
+					else if ($this->valid_md5_umil[UMIL_VERSION] != $md5)
+					{
+						$this->push_error(mpv::ERROR_WARNING, 'INCORRECT_UMIL_MD5', $file);
+					}
+					
+				}*/
 			}
 		}
 	}

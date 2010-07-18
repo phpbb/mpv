@@ -102,7 +102,7 @@ class mpv_tests_modx
 
 			if (preg_match('#modx-(.*?)\.xsd#s', (string) $modx_object, $matches))
 			{
-				$current_modx_version = $this->get_current_version('modx');
+				$current_modx_version = mpv::get_current_version('modx');
 				if ($matches[1] != $current_modx_version)
 				{
 					$this->push_error(mpv::ERROR_FAIL, 'USING_MODX_OUTDATED', array($matches[1], $current_modx_version));
@@ -497,7 +497,7 @@ class mpv_tests_modx
 
 		$phpbb_version = $this->modx_object->get_by_name('target-version', true);
 		//If we're only going to be local then we get the version from the config file
-		$current_phpbb_version = $this->get_current_version('phpbb');
+		$current_phpbb_version = mpv::get_current_version('phpbb');
 
 		if (!is_object($phpbb_version))
 		{
@@ -617,9 +617,9 @@ class mpv_tests_modx
 
 			foreach ($ignore_in_line as $value)
 			{
-			  if (strpos($content_new, $value) !== false)
-			  {
-			    $content_new = '';
+				if (strpos($content_new, $value) !== false)
+				{
+					$content_new = '';
 				}
 			}
 
@@ -676,106 +676,4 @@ class mpv_tests_modx
 	{
 		return $this->failed_tests;
 	}
-
-	/**
-	* Return the current phpBB3 version from phpBB.com's updatecheck directory
-	*/
-	private function get_current_version($type)
-	{
-		global $lang;
-
-		//If we don't want to go out to the Internet we set these
-		if (LOCAL_ONLY)
-		{
-			switch ($type)
-			{
-				case 'phpbb':
-					return PHPBB_VERSION;
-					break;
-
-				case 'modx':
-					return LATEST_MODX;
-					break;
-
-				default:
-					return false;
-					break;
-			}
-		}
-
-		$errstr = '';
-		$errno = 0;
-		$host = 'www.phpbb.com';
-		$port = 80;
-		$timeout = 10;
-		$directory = '/updatecheck';
-		$filename = ($type == 'modx') ? 'modx_1x.txt' : '30x.txt';
-		$file_info = '';
-		$get_info = false;
-
-		if (@file_exists($this->validator->dir . 'store/data/' . $filename))
-		{
-			//Get from cache if it's been less than a day since the last update
-			if ((time() - filemtime($this->validator->dir . 'store/data/' . $filename)) <= 86400)
-			{
-				$file_info = @file_get_contents($this->validator->dir . 'store/data/' . $filename);
-			}
-		}
-
-		//Only do this if we couldn't get the cache data
-		if (empty($file_info))
-		{
-			if ($fsock = @fsockopen($host, $port, $errno, $errstr, $timeout))
-			{
-				@fputs($fsock, "GET $directory/$filename HTTP/1.1\r\n");
-				@fputs($fsock, "HOST: $host\r\n");
-				@fputs($fsock, "Connection: close\r\n\r\n");
-
-				while (!@feof($fsock))
-				{
-					if ($get_info)
-					{
-						$file_info .= @fread($fsock, 1024);
-					}
-					else
-					{
-						$line = @fgets($fsock, 1024);
-						if ($line == "\r\n")
-						{
-							$get_info = true;
-						}
-						else if (stripos($line, '404 not found') !== false)
-						{
-							$errstr = $lang['FILE_NOT_FOUND'] . ': ' . $filename;
-							return false;
-						}
-					}
-				}
-				//Cache the update file
-				$cache = @fopen($root_dir . 'store/data/' . $filename, 'wb');
-				@fwrite($cache, $file_info);
-				@fclose($cache);
-
-				@fclose($fsock);
-			}
-			else
-			{
-				if ($errstr)
-				{
-					$errstr = utf8_convert_message($errstr);
-					return false;
-				}
-				else
-				{
-					$errstr = $lang['FSOCK_DISABLED'];
-					return false;
-				}
-			}
-		}
-
-		$info = explode("\n", $file_info);
-
-		return $info[0];
-	}
-
 }

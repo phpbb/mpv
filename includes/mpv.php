@@ -101,7 +101,7 @@ class mpv
 	 * @access 	public
 	 * @var		string
 	 */
-	public $dir = './';
+	public static $dir = './';
 
 	/**
 	 * Our collection of tests class objects
@@ -776,4 +776,121 @@ class mpv
 				throw new Exception($lang['UNKNOWN_OUTPUT'] . ' "' . (int)$this->output_type . '"');
 		}
 	}
+	
+	/**
+	* Return the current phpBB3 version from phpBB.com's updatecheck directory
+	*/
+	public static function get_current_version($type)
+	{
+		global $lang;
+
+		//If we don't want to go out to the Internet we set these
+		if (LOCAL_ONLY)
+		{
+			switch ($type)
+			{
+				case 'phpbb':
+					return PHPBB_VERSION;
+					break;
+
+				case 'modx':
+					return LATEST_MODX;
+					break;
+				case 'umil':
+					return LATEST_UMIL;
+					break;
+				default:
+					return false;
+					break;
+			}
+		}
+
+		$errstr = '';
+		$errno = 0;
+		$host = 'www.phpbb.com';
+		$port = 80;
+		$timeout = 10;
+		$directory = '/updatecheck';
+		switch ($type)
+		{
+			case 'phpbb':
+				$filename = '30x.txt';
+			break;
+			case 'modx':
+				$filename = 'modx_1x.txt';
+			break;
+			case 'umil':
+				$filename = 'umil.txt';
+			break;
+			default:
+				return false;
+		}
+
+		$file_info = '';
+		$get_info = false;
+
+		if (file_exists(self::$dir . 'store/data/' . $filename))
+		{
+			//Get from cache if it's been less than a day since the last update
+			if ((time() - filemtime(self::$dir . 'store/data/' . $filename)) <= 86400)
+			{
+				$file_info = file_get_contents(self::$dir . 'store/data/' . $filename);
+			}
+		}
+
+		//Only do this if we couldn't get the cache data
+		if (empty($file_info))
+		{
+			if ($fsock = @fsockopen($host, $port, $errno, $errstr, $timeout))
+			{
+				@fputs($fsock, "GET $directory/$filename HTTP/1.1\r\n");
+				@fputs($fsock, "HOST: $host\r\n");
+				@fputs($fsock, "Connection: close\r\n\r\n");
+
+				while (!@feof($fsock))
+				{
+					if ($get_info)
+					{
+						$file_info .= @fread($fsock, 1024);
+					}
+					else
+					{
+						$line = @fgets($fsock, 1024);
+						if ($line == "\r\n")
+						{
+							$get_info = true;
+						}
+						else if (stripos($line, '404 not found') !== false)
+						{
+							$errstr = $lang['FILE_NOT_FOUND'] . ': ' . $filename;
+							return false;
+						}
+					}
+				}
+				//Cache the update file
+				$cache = @fopen($root_dir . 'store/data/' . $filename, 'wb');
+				@fwrite($cache, $file_info);
+				@fclose($cache);
+
+				@fclose($fsock);
+			}
+			else
+			{
+				if ($errstr)
+				{
+					$errstr = utf8_convert_message($errstr);
+					return false;
+				}
+				else
+				{
+					$errstr = $lang['FSOCK_DISABLED'];
+					return false;
+				}
+			}
+		}
+
+		$info = explode("\n", $file_info);
+
+		return $info[0];
+	}	
 }
