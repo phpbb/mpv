@@ -72,10 +72,12 @@ class mpv_tests_packaging
 		'ad685f8a0b1bef7651222531824e0d5b', // md5 for http://www.phpbb.com/mods/modx/1.2.2/modx.prosilver.en.xsl
 		'b96fbe26f60eea25ca8632c670ae7421', // md5 for http://www.phpbb.com/mods/modx/1.2.1/modx.prosilver.en.xsl
 		'95e0c31a6a6d31922eb6e92b2747dd2b', // md5 for http://www.phpbb.com/mods/modx/1.2.0/modx.prosilver.en.xsl
+		'6497dcb866bf9d0d882368cc9d4c8fae', // md5 for http://www.phpbb.com/mods/utilities/creator/file.php?file=modx.prosilver.en.xsl
 	);
 	
 	private $valid_md5_umil = array(
 		'1.0.2'		=>	'db40dbe549fcbbb5a790f7e81ce8e4db',
+		'1.0.3'		=>	'e0999771662ee6eada0425ff076c3062',
 	);
 
 	/**
