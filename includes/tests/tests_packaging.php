@@ -179,7 +179,7 @@ class mpv_tests_packaging
 				
 				$tmp = explode('/', $file);
 
-				if (isset($tmp[sizeof($tmp) - 2]] && isset($tmp[sizeof($tmp) - 1]) && $tmp[sizeof($tmp) - 2] == 'umil' && $tmp[sizeof($tmp) - 1] == 'umil.php')
+				if (isset($tmp[sizeof($tmp) - 2]) && isset($tmp[sizeof($tmp) - 1]) && $tmp[sizeof($tmp) - 2] == 'umil' && $tmp[sizeof($tmp) - 1] == 'umil.php')
 				{
 					$md5 = md5_file($this->validator->temp_dir . $file);
 					
