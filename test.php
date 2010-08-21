@@ -32,7 +32,8 @@ error_reporting(E_ALL);
 
 $mpv = new mpv(null, mpv::UNZIP_PREFERENCE, false);
 $mpv->output_type = ((HTML_FORMAT) ? mpv::OUTPUT_HTML : mpv::OUTPUT_BBCODE);
-$mpv->validate('my-mod.zip');
+mpv::$exec_php = mpv::EXEC_PHP;
+$mpv->validate('./test-file.zip');
 
 if (HTML_HEADERS)
 {

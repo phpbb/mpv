@@ -95,6 +95,7 @@ class mpv_tests_execution
 		// if you want to use these tests you need to install MPV
 		// locally.
 		// If you use these tests is it at your own risk.
+		
 		if (mpv::$exec_php !== mpv::EXEC_PHP)
 		{
 			return;
@@ -112,7 +113,7 @@ class mpv_tests_execution
 			$this->file_name = $package_file;
 
 			// Only test PHP files
-			if (substr($package_file, -3) === 'php')
+			if (substr($package_file, -3) !== 'php')
 
 			{
 				continue;
@@ -154,64 +155,46 @@ class mpv_tests_execution
 	private function test_php()
 	{
 	  
-	  $file = tempnam(sys_get_temp_dir(), 'mpv');
-	  $open = @fopen($file, 'wb');
-	  
-	  if (!$open)
+		$file = tempnam(sys_get_temp_dir(), 'mpv');
+		$file2 = tempnam(sys_get_temp_dir(), 'mpv');
+		$open = @fopen($file, 'wb');
+
+		if (!$open)
 		{
 			$this->push_error(mpv::ERROR_NOTICE, 'UNABLE_OPEN', $file);
 			return false;
 		}
-		// Make sure there is NEVER code executed.
-		// We still are able to check for syntax/parse errors,
-		// What the goal is of this file.
-		//
-		// NEVER REMOVE THE NEXT LINE, ITS A SECURITY PRECAUTION!
-		// (Also dont define MPV_CODE_EXEC ;))
-		$result = @fwrite($open, "<?php\nif (!defined('MPV_CODE_EXEC')) exit; \n ?".">");
-		
-    if (!$result)
-		{
-			fclose($open);
-			$this->push_error(mpv::ERROR_NOTICE, 'UNABLE_WRITE', $file);
-			
-			return;
-    }
-		
 		foreach(file($this->validator->temp_dir . $this->file_name) as $line)
 		{
 			$result = @fwrite($open, "$line\n");
 
-	    if (!$result)
+			if (!$result)
 			{
 				fclose($open);
 				$this->push_error(mpv::ERROR_NOTICE, 'UNABLE_WRITE', $file);
-
+	
 				return;
-	    }
+			}
 		}
-    @fclose($file);
-    
-		
+		@fclose($file);
 		$result = array();
-		
-		$data = @exec('php ' . escapeshellarg($file), $result);
-		
+		$data = @exec('php -l ' . escapeshellarg($file) . " 2>&1 >/dev/null", $result);
 		@unlink($file);
-		
+
 		if (sizeof($result))
 		{
-		  // looks like we have a problem.
-      foreach ($result as $error)
+			// looks like we have a problem.
+			$ct = sizeof($result) ;
+			for ($i = 0; $i < $ct; $i++)
 			{
-				$this->push_error(mpv::error_warning, 'PHP_ERROR', htmlspecialchars($error));
-      }
+				$error = str_replace($file, $this->file_name, $result[$i]);
+				$this->push_error(mpv::ERROR_WARNING, 'PHP_ERROR', htmlspecialchars($error));
+			}
 		}
-		
-	  return true;
+
+		return true;
 	}
 	
-
 	/**
 	 * Wrapper around $this->validator->push_error
 	 *
