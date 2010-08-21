@@ -372,7 +372,6 @@ class mpv_tests_code
 
 		foreach ($functions_warning as $function)
 		{
-
 			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({1}#si", $this->file_contents))
 			{
 				$return = $this->display_line_code(mpv::ERROR_WARNING, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
@@ -714,4 +713,8 @@ class mpv_tests_code
 	 {
 		return $this->failed_tests;
 	 }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cfa737f4c01aa4051c32770a922576caa1e8f382
