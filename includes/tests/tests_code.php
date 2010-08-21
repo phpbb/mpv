@@ -372,6 +372,7 @@ class mpv_tests_code
 
 		foreach ($functions_warning as $function)
 		{
+
 			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({1}#si", $this->file_contents))
 			{
 				$return = $this->display_line_code(mpv::ERROR_WARNING, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
