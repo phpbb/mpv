@@ -713,8 +713,4 @@ class mpv_tests_code
 	 {
 		return $this->failed_tests;
 	 }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> cfa737f4c01aa4051c32770a922576caa1e8f382
