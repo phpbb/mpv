@@ -55,11 +55,6 @@ class mpv
 	const OUTPUT_HTML = 2;
 
 	/**
-	 * MPV version
-	 */
-	const VERSION = '$Rev$';
-
-	/**
 	 * use "unzip" unix command for unzipping
 	 *
 	 */
@@ -746,7 +741,7 @@ class mpv
 			$this->message .= $lang['NO_PRE_VAL_ERRORS'];
 		}
 
-		$this->message .= "\n" . $lang['REPORT_BY'] . " " . mpv::VERSION;
+		$this->message .= "\n" . $lang['REPORT_BY'] . " " . $this->mpv_version();
 
 		if ($this->server_signature !== false)
 		{
@@ -775,6 +770,17 @@ class mpv
 			default:
 				throw new Exception($lang['UNKNOWN_OUTPUT'] . ' "' . (int)$this->output_type . '"');
 		}
+	}
+	
+	/**
+	* get current version of MPV
+	* returns current git revision
+	*/
+	public function mpv_version()
+	{
+		global $root_path;
+		$version_file = $root_path . '.git/refs/heads/master';
+		return file_exists($version_file) ? trim(file_get_contents($version_file)) : '';
 	}
 	
 	/**
