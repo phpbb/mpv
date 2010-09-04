@@ -258,10 +258,10 @@ class mpv
 		if (!is_array($lang))
 		{
 			$lang = '';
-			if (!dir_exists($dir . 'languages'))
+			if (!file_exists($dir . '/includes/languages/'))
 			{
 				// Language dir does not exists.
-				if (file_exsts($dir . 'lang.' $phpEx))
+				if (file_exists($dir . 'lang.' . $phpEx))
 				{
 					$lang = 'lang.' . $phpEx;
 				}
@@ -270,18 +270,18 @@ class mpv
 					die('Language directory not found');
 				}
 			}
-			else if($mpv_lang && @file_exists($dir . 'languages/' . $mpv_lang . '/lang.' . $phpEx))
+			else if($mpv_lang && file_exists($dir . '/includes/languages/' . $mpv_lang . '/lang.' . $phpEx))
 			{
-				$lang = $dir . 'languages/' . $mpv_lang . '/lang.' . $phpEx;
+				$lang = $dir . '/includes/languages/' . $mpv_lang . '/lang.' . $phpEx;
 			}
-			else if(MPV_LANG && @file_exists($dir . 'languages/' . MPV_LANG . '/lang.' . $phpEx))
+			else if(MPV_LANG && file_exists($dir . '/includes/languages/' . MPV_LANG . '/lang.' . $phpEx))
 			{
-				$lang = $dir . 'languages/' . MPV_LANG . '/lang.' . $phpEx;
+				$lang = $dir . '/includes/languages/' . MPV_LANG . '/lang.' . $phpEx;
 			}
 			else
 			{
 				// no language defined, use en
-				$lang = $dir . 'languages/en/lang.' . $phpEx;
+				$lang = $dir . '/includes/languages/en/lang.' . $phpEx;
 			}
 			
 			include($lang);

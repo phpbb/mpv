@@ -16,10 +16,17 @@ function end_output()
 	// Some debug stuff.
 	$mtime = explode(' ', microtime());
 	$totaltime = $mtime[0] + $mtime[1] - $starttime;
+	
+	if (is_array($lang))
+	{
+		$debug_output = "\n" . sprintf($lang['TOTAL_TIME'], $totaltime);
+	}
+	else
+	{
+		$debug_output = "\n" . sprintf('Time : %.3fs', $totaltime);	
+	}
 
-	$debug_output = "\n" . sprintf($lang['TOTAL_TIME'], $totaltime);
-
-	if (function_exists('memory_get_usage'))
+	if (function_exists('memory_get_usage') && is_array($lang))// Do not display this if $lang is not defined.
 	{
 		if ($memory_usage = memory_get_usage())
 		{
@@ -31,7 +38,7 @@ function end_output()
 		}
 	}
 
-	print $debug_output . ((HTML_HEADERS) ? "</body></html>" : "");
+	print $debug_output . "\n" . ((HTML_HEADERS) ? "</body></html>" : "");
 }
 
 /**
