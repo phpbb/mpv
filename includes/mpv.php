@@ -235,7 +235,7 @@ class mpv
 	 * @access	public
 	 * @return	void
 	 */
-	public function __construct($dir = null, $unzip_type = self::UNZIP_PREFERENCE, $remove_zip = true)
+	public function __construct($dir = null, $unzip_type = self::UNZIP_PREFERENCE, $remove_zip = true, $mpv_lang = false)
 	{
 		global $phpEx, $lang;
 
@@ -244,6 +244,49 @@ class mpv
 			global $root_path;
 			$dir = $root_path;
 		}
+		
+		/**
+		 * Language is already included, iam not going to overwrite it
+		 * If a user wants to include a non english language, starting from
+		 * September 4, 2010 he should not include his own language file.
+		 * MPV will include the requested language, to set the language,
+		 * you need to set it as default parameter for the contructor,
+		 * or define it as MPV_LANG.
+		 * Note that the parameter given to this function is used
+		 * if favour of MPV_LANG.
+		 */
+		if (!is_array($lang))
+		{
+			$lang = '';
+			if (!dir_exists($dir . 'languages'))
+			{
+				// Language dir does not exists.
+				if (file_exsts($dir . 'lang.' $phpEx))
+				{
+					$lang = 'lang.' . $phpEx;
+				}
+				else
+				{
+					die('Language directory not found');
+				}
+			}
+			else if($mpv_lang && @file_exists($dir . 'languages/' . $mpv_lang . '/lang.' . $phpEx))
+			{
+				$lang = $dir . 'languages/' . $mpv_lang . '/lang.' . $phpEx;
+			}
+			else if(MPV_LANG && @file_exists($dir . 'languages/' . MPV_LANG . '/lang.' . $phpEx))
+			{
+				$lang = $dir . 'languages/' . MPV_LANG . '/lang.' . $phpEx;
+			}
+			else
+			{
+				// no language defined, use en
+				$lang = $dir . 'languages/en/lang.' . $phpEx;
+			}
+			
+			include($lang);
+		}
+		
 
 		set_error_handler(array($this, 'error_handler'));
 

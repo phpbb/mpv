@@ -40,6 +40,10 @@ define('LATEST_UMIL', '1.0.2');
 // MPV Debug, disabled by default, will add some extra info about the MPV status
 define('MPV_DEBUG', false);
 
+// MPV language, by default english. Any possiblities from includes/languages/ is allowed. 
+// Use the _exact_ directory name
+define('MPV_LANG', 'en');
+
 // This is for statistics gathering
 // Format is:  'tag' => array('properties')
 $statistics = array(
