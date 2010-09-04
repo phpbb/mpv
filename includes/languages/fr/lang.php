@@ -70,7 +70,7 @@ $lang = array_merge($lang, array(
 	'NO_MODX_FILES'			=> 'Aucun fichier MODX n’a été trouvé dans cette archive',
 	'MODX_SCHEMA_INVALID'	=> 'XML/MODX invalide [code]%s[/code]',
 
-	'FSOCK_DISABLED'		=> 'L’opération n’a pu se terminer car la fonction <var>fsockopen</var> a été désactivée ou le serveur demandé est introuvable.',
+	'FSOCK_DISABLED'		=> 'L’opération n’a pas pu se terminer car la fonction <var>fsockopen</var> a été désactivée ou le serveur demandé est introuvable.',
 	'FILE_NOT_FOUND'		=> 'Le fichier demandé est introuvable',
 	'VERSION_FIELD_MISSING'		=> 'L’élément “version” n’a pas été spécifié dans le fichier MODX.',
 	'LICENSE_FIELD_MISSING'		=> 'L’élément “license” n’a pas été spécifié dans le fichier MODX.',

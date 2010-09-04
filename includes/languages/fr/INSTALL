@@ -1,1 +1,35 @@
-Decompress the downloaded package into the includes/ directory (overwrite file) and upload it.
+# 
+#-----[ DIY ]----------------------------------------------------------------------------------
+#
+Decompress the downloaded package into the includes/languages/ directory and upload it.
+Make sure to remove includes/lang.php from your old MPV installation.
+Remember when decompressing the packages that you must retain the directory structure. If you
+are unsure how to do this with your software, please check its documentation. Failure to
+retain the directory structure will result in the language not being available.
+
+# 
+#-----[ OPEN ]---------------------------------------------------------------------------------
+# 	
+mpv_config.php
+
+#
+#-----[ FIND ]---------------------------------------------------------------------------------
+#
+// MPV language, by default english. Any possiblities from includes/languages/ is allowed. 
+// Use the _exact_ directory name
+define('MPV_LANG', 'en');
+
+#
+#-----[ IN LINE FIND ]-------------------------------------------------------------------------
+#
+define('MPV_LANG', 'en');
+
+#
+#-----[ IN-LINE REPLACE WITH ]-----------------------------------------------------------------
+#
+define('MPV_LANG', 'fr');
+
+#
+#-----[ SAVE/CLOSE ALL FILES ]-----------------------------------------------------------------
+#
+# EoM
