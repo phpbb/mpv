@@ -336,6 +336,7 @@ function generate_text_for_html_display($text)
 		"/\[u\](.*?)\[\/u\]/is" => '<span style="text-decoration:underline;">$1</span>',
 		"/\[color\=(.*?)\](.*?)\[\/color\]/is" => '<span style="color:$1;">$2</span>',
 		"/\[code\](.*?)\[\/code\]/is" => '<pre style="padding-left:20px;">$1</pre>',
+		"/\[url\=(.*?)\](.*?)\[\url\]/is" => '<a href="$1">$2</a>',
 	);
 
 	//Replace BBCode
