@@ -32,7 +32,6 @@ $root_path = './';
 
 // Will define all needed things.
 require('./mpv_config.' . $phpEx);
-require('./includes/lang.' . $phpEx);
 
 if (version_compare(PHP_VERSION, '5.2.0', '<'))
 {
