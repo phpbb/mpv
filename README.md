@@ -12,4 +12,4 @@ Do you have an improvement? Did you fix a bug? Fork our GitHub repo, make your c
 
 ## Bugs
 
-If you found a bug, and you are unable to fix it yourself, please report it at the MODteam tools bugtracker at phpBB.com: http://www.phpbb.com/bugs/modteamtools/
+If you found a bug, and you are unable to fix it yourself, please report it at the MOD team tools bug tracker at phpBB.com: http://www.phpbb.com/bugs/modteamtools/
