@@ -16,7 +16,7 @@ $root_path = './';
 
 // Will define all needed things.
 include($root_path . 'mpv_config.' . $phpEx);
-include($root_path . 'includes/lang.' . $phpEx);
+include($root_path . 'includes/languages/' . MPV_LANG . '/lang.' . $phpEx);
 include($root_path . 'includes/functions_mpv.' . $phpEx);
 include($root_path . 'includes/mpv.' . $phpEx);
 
