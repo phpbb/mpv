@@ -8,8 +8,12 @@ http://www.phpbb.com/mods/mpv/
 
 ## Patches
 
-Do you have an improvement? Did you fix a bug? Fork our GitHub repo, make your changes in a separate branch and send a pull request.
+Do you have an improvement?  Did you fix a bug?  Fork our GitHub repo, make your changes in a separate branch, and send a pull request.
 
-## Bugs
+## Translations
 
-If you found a bug, and you are unable to fix it yourself, please report it to the [MOD Team Tools](http://www.phpbb.com/bugs/modteamtools/) bug tracker on phpBB.com.
+Have a translation and want to be awesome?  See the "Patches".
+
+## Bug Tracker
+
+If you find a bug, and you are unable to fix it yourself, please submit it to the [MOD Team Tools](http://www.phpbb.com/bugs/modteamtools/) bug tracker on phpBB.com.
