@@ -5,7 +5,7 @@
 * @package mpv_server
 * @version $Id$
 * @copyright (c) 2010 phpBB Group
-* @license Internal use only
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
