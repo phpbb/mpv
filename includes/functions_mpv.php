@@ -5,7 +5,7 @@
 * @package mpv_server
 * @version $Id$
 * @copyright (c) 2010 phpBB Group
-* @license Internal use only
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -336,12 +336,99 @@ function generate_text_for_html_display($text)
 		"/\[u\](.*?)\[\/u\]/is" => '<span style="text-decoration:underline;">$1</span>',
 		"/\[color\=(.*?)\](.*?)\[\/color\]/is" => '<span style="color:$1;">$2</span>',
 		"/\[code\](.*?)\[\/code\]/is" => '<pre style="padding-left:20px;">$1</pre>',
+		'#\[url(=(.*))?\](.*)\[/url\]#iUe' => "validate_url('\$2', '\$3')",
 	);
 
 	//Replace BBCode
 	$text = preg_replace(array_keys($bbcode), array_values($bbcode), $text);
+	
 	return $text;
 }
+
+/**
+* Validate url
+*
+* @param string $var1 optional url parameter for url bbcode: [url(=$var1)]$var2[/url]
+* @param string $var2 url bbcode content: [url(=$var1)]$var2[/url]
+*/
+function validate_url($var1, $var2)
+{
+	global $config;
+
+	$var1 = str_replace("\r\n", "\n", str_replace('\"', '"', trim($var1)));
+	$var2 = str_replace("\r\n", "\n", str_replace('\"', '"', trim($var2)));
+
+	$url = ($var1) ? $var1 : $var2;
+
+	if ($var1 && !$var2)
+	{
+		$var2 = $var1;
+	}
+
+	if (!$url)
+	{
+		return '[url' . (($var1) ? '=' . $var1 : '') . ']' . $var2 . '[/url]';
+	}
+
+	$valid = false;
+
+	$url = str_replace(' ', '%20', $url);
+
+	// Checking urls
+	if (preg_match('#^' . get_preg_expression('url') . '$#i', $url) ||
+		preg_match('#^' . get_preg_expression('www_url') . '$#i', $url))
+	{
+		$valid = true;
+	}
+
+	if ($valid)
+	{
+		// if there is no scheme, then add http schema
+		if (!preg_match('#^[a-z][a-z\d+\-.]*:/{2}#i', $url))
+		{
+			$url = 'http://' . $url;
+		}
+
+		return ($var1) ? '<a href="' . $url . '">' . $var2 . '</a>' : '<a href="' . $url . '"' . $url . '</a>';
+	}
+
+	return '[url' . (($var1) ? '=' . $var1 : '') . ']' . $var2 . '[/url]';
+}
+
+/**
+* This function returns a regular expression pattern for commonly used expressions
+* Use with / as delimiter for email mode and # for url modes
+* mode can be: email|bbcode_htm|url|url_inline|www_url|www_url_inline|relative_url|relative_url_inline|ipv4|ipv6
+*/
+function get_preg_expression($mode)
+{
+	switch ($mode)
+	{
+		case 'url':
+		case 'url_inline':
+			$inline = ($mode == 'url') ? ')' : '';
+			$scheme = ($mode == 'url') ? '[a-z\d+\-.]' : '[a-z\d+]'; // avoid automatic parsing of "word" in "last word.http://..."
+			// generated with regex generation file in the develop folder
+			return "[a-z]$scheme*:/{2}(?:(?:[a-z0-9\-._~!$&'($inline*+,;=:@|]+|%[\dA-F]{2})+|[0-9.]+|\[[a-z0-9.]+:[a-z0-9.]+:[a-z0-9.:]+\])(?::\d*)?(?:/(?:[a-z0-9\-._~!$&'($inline*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-z0-9\-._~!$&'($inline*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-z0-9\-._~!$&'($inline*+,;=:@/?|]+|%[\dA-F]{2})*)?";
+		break;
+
+		case 'www_url':
+		case 'www_url_inline':
+			$inline = ($mode == 'www_url') ? ')' : '';
+			return "www\.(?:[a-z0-9\-._~!$&'($inline*+,;=:@|]+|%[\dA-F]{2})+(?::\d*)?(?:/(?:[a-z0-9\-._~!$&'($inline*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-z0-9\-._~!$&'($inline*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-z0-9\-._~!$&'($inline*+,;=:@/?|]+|%[\dA-F]{2})*)?";
+		break;
+
+		case 'relative_url':
+		case 'relative_url_inline':
+			$inline = ($mode == 'relative_url') ? ')' : '';
+			return "(?:[a-z0-9\-._~!$&'($inline*+,;=:@|]+|%[\dA-F]{2})*(?:/(?:[a-z0-9\-._~!$&'($inline*+,;=:@|]+|%[\dA-F]{2})*)*(?:\?(?:[a-z0-9\-._~!$&'($inline*+,;=:@/?|]+|%[\dA-F]{2})*)?(?:\#(?:[a-z0-9\-._~!$&'($inline*+,;=:@/?|]+|%[\dA-F]{2})*)?";
+		break;
+	}
+
+	return '';
+}
+
+
 
 // phpbb_chmod() permissions
 @define('CHMOD_ALL', 7);
