@@ -1,8 +1,8 @@
 <?php
 /**
 *
-* This file is part of French (Formal Honorifics) MPV translation.
-* Copyright (C) 2010 Maël Soucaze
+* This file is part of French MPV translation.
+* Copyright (c) 2010 Maël Soucaze.
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -207,6 +207,6 @@ $lang = array_merge($lang, array(
 	'NO_UMIL_VERSION'		=> 'Impossible de trouver UMIL_VERSION dans umil.php',
 	'UMIL_OUTDATED'			=> 'L’UMIL fourni est obsolète.',
 	'INCORRECT_UMIL_MD5'		=> 'L’UMIL fourni est modifié.',
-	'UNKNOWN_VERSION_UMIL'		=> 'La version d’UMIL fournie est inconnue. Cela peut signifier que la version est obsolète.',
+	'UNKNOWN_VERSION_UMIL'		=> 'La version d’UMIL que vous avez renseigné est inconnue. Cela peut signifier que la version est obsolète.',
 
 ));
