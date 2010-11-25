@@ -9,6 +9,7 @@ http://www.phpbb.com/mods/mpv/
 ## Patches
 
 Do you have an improvement?  Did you fix a bug?  Fork our GitHub repo, make your changes in a separate branch, and send a pull request.
+Please read our guidelines first here: http://wiki.phpbb.com/display/DEV/Sub-Project+Contribution+Guidelines
 
 ## Translations
 
