@@ -6,14 +6,10 @@ It is written and maintained by the phpBB Modifications Team.
 
 http://www.phpbb.com/mods/mpv/
 
-## Patches
+## Contributions
 
-Do you have an improvement?  Did you fix a bug?  Fork our GitHub repo, make your changes in a separate branch, and send a pull request.
-Please read our guidelines first here: http://wiki.phpbb.com/display/DEV/Sub-Project+Contribution+Guidelines
-
-## Translations
-
-Have a translation and want to be awesome?  See the "Patches".
+Do you have an improvement? Did you made a translation?  Did you fix a bug?  Fork our GitHub repo, make your changes in a separate branch, and send a pull request.
+Please read our guidelines first [here](http://wiki.phpbb.com/display/DEV/Sub-Project+Contribution+Guidelines)
 
 ## Bug Tracker
 
