@@ -56,7 +56,7 @@ class mpv_tests_packaging
 	 * @access	private
 	 * @var 	string	 
 	 */
-	private $license_md5 = array('eb723b61539feef013de476e68b5c50a', '0cce1e42ef3fb133940946534fcf8896'); // Both seems to be good, one with unix lineends, one with windows?
+	private $license_md5 = array('eb723b61539feef013de476e68b5c50a', '0cce1e42ef3fb133940946534fcf8896', 'e060338598cd2cd6b8503733fdd40a11'); // Both seems to be good, one with unix lineends, one with windows?
 	
 	/**	 
 	 * Array with MD5's for the MODX xsl files.
@@ -78,6 +78,7 @@ class mpv_tests_packaging
 	private $valid_md5_umil = array(
 		'1.0.2'		=>	'db40dbe549fcbbb5a790f7e81ce8e4db',
 		'1.0.3'		=>	'e0999771662ee6eada0425ff076c3062',
+		'1.0.4'		=>	'c64d91b7ee357604fc973ba0594bbe02',
 	);
 
 	/**
