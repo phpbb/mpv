@@ -78,7 +78,7 @@ class mpv_tests_packaging
 	private $valid_md5_umil = array(
 		'1.0.2'		=>	'db40dbe549fcbbb5a790f7e81ce8e4db',
 		'1.0.3'		=>	'e0999771662ee6eada0425ff076c3062',
-		'1.0.4'		=>	'baf72845aaac24a91f0ae190c08f536e',
+		'1.0.4'		=>	'ada48057d56ebd22298648a8130fe573',
 	);
 
 	/**
