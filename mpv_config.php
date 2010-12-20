@@ -35,7 +35,7 @@ define('PHPBB_VERSION', '3.0.7-PL1');
 define('LATEST_MODX', '1.2.5');
 
 // Latest UMIL version. Only used if LOCAL_ONLY is set to true
-define('LATEST_UMIL', '1.0.2');
+define('LATEST_UMIL', '1.0.4');
 
 // MPV Debug, disabled by default, will add some extra info about the MPV status
 define('MPV_DEBUG', false);
