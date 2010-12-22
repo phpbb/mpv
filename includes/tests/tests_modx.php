@@ -373,7 +373,7 @@ class mpv_tests_modx
 		{
 			$from	= str_replace('\\', '/', $copy_tag->attributes['from']);
 			$to		= str_replace('\\', '/', $copy_tag->attributes['to']);
-			if (isset ($from) && isset(to) && trim(basename($from)) != trim(basename(to)))
+			if (isset ($from) && isset($to) && trim(basename($from)) != trim(basename($to)))
 			{
 				$this->push_error(mpv::ERROR_FAIL, 'COPY_BASENAME_DIFFER', array(basename($from), basename($to)));
 
