@@ -139,6 +139,7 @@ class mpv_tests_packaging
 	private function test_files()
 	{
 		$error = false;
+		$found_umil = false;
 		if (sizeof($this->validator->xsl_files) > 0)
 		{
 			foreach ($this->validator->xsl_files as $file)
@@ -175,6 +176,12 @@ class mpv_tests_packaging
 				{
 					$md5 = md5_file($this->validator->temp_dir . $file);
 					
+					if ($found_umil)
+					{
+						$this->push_error(mpv::ERROR_WARNING, 'POSSIBLE_TWO_UMIL', null, array($file, $found_umil));
+						continue;
+					}
+					
 					if (!defined('IN_PHPBB'))
 					{
 						define('IN_PHPBB', true);
@@ -184,6 +191,8 @@ class mpv_tests_packaging
 					if (!defined('UMIL_VERSION'))
 					{
 						$this->push_error(mpv::ERROR_FAIL, 'NO_UMIL_VERSION', $file);
+						
+						continue;
 					}
 					else if (version_compare(UMIL_VERSION, mpv::get_current_version('umil'), '<'))
 					{
@@ -204,7 +213,7 @@ class mpv_tests_packaging
 					{
 						$this->push_error(mpv::ERROR_WARNING, 'INCORRECT_UMIL_MD5', $file);
 					}
-					
+					$found_umil = $file;
 				}
 			}
 		}

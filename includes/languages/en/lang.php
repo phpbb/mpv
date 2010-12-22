@@ -191,5 +191,6 @@ $lang = array_merge($lang, array(
 	'UMIL_OUTDATED'			=> 'The included UMIL is outdated.',
 	'INCORRECT_UMIL_MD5'		=> 'The included UMIL is modified.',
 	'UNKNOWN_VERSION_UMIL'		=> 'The included UMIL version is unknown. The can mean the version is outdated.',
+	'POSSIBLE_TWO_UMIL'			=> 'Possible 2 UMIL files included: %s and %s.',
 	
 ));
