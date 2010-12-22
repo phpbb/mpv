@@ -227,13 +227,29 @@ class mpv_tests_modx
 			return false;
 		}
 		$version = $version->value;
+		
+		$unstable = array(
+			'rc',
+			'alpha',
+			'beta',
+			'dev',
+		);
+		
+		foreach ($unstable as $option)
+		{
+			if (strpos($option, $version) !== false)
+			{
+				$this->push_error(mpv::ERROR_FAIL, 'MAJOR_VERSION_UNSTABLE', array($version));
+				$pass = false;
+			}
+		}
 
 		// Check the version format and numbering
 		if (preg_match('#((\d+)\.)+(\d+)[a-z]?#', $version, $matches))
 		{
 			if ($matches[0] < 1)
 			{
-				$this->push_error(mpv::ERROR_FAIL, 'MAJOR_VERSION_UNSTABLE', $version);
+				$this->push_error(mpv::ERROR_FAIL, 'MAJOR_VERSION_UNSTABLE', array($version));
 				$pass = false;
 			}
 		}
@@ -242,6 +258,14 @@ class mpv_tests_modx
 			// Not a valid version
 			$this->push_error(mpv::ERROR_FAIL, 'INVALID_VERSION_FORMAT', array($version));
 			$pass = false;
+		}
+		
+		$tmp = trim(preg_replace('#((\d+)\.)+(\d+)[a-z]?#', '', $version));
+		
+		if (!empty($tmp))
+		{
+			// Woohoo, user is nub, something more as a number
+			$this->push_error(mpv::ERROR_FAIL, 'VERSION_SHOULD_BE_VERSION', array($version, $version));
 		}
 
 		return $pass;

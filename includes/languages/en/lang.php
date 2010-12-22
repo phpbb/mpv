@@ -66,6 +66,7 @@ $lang = array_merge($lang, array(
 	[b]0.0.1[/b] is unstable
 	[b]0.1.0[/b] is unstable
 	[b]1.0.1[/b] is stable',
+	'VERSION_SHOULD_BE_VERSION'	=> 'The supplied version (%s) should just be a version like 1.0.0, and not be %s.',
 
 	'NOT_LATEST_PHPBB'		=> 'Target revision in the MODX file says the MOD is for %s while the latest phpBB version is %s',
 
