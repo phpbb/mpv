@@ -123,6 +123,14 @@ class mpv
 	private $message;
 
 	/**
+	 * Array of "unwanted files/directories", all strtolowered
+	 *
+	 * @access	private
+	 * @var		array
+	 */
+	public static $unwanted_files;
+
+	/**
 	 * Output type; either OUTPUT_BBCODE or OUTPUT_HTML
 	 *
 	 * @access	public
@@ -161,6 +169,15 @@ class mpv
 	 * @var		array
 	 */
 	public $package_files;
+	
+	
+	/**
+	 * Array containing all directories in a MOD package
+	 * 
+	 * @access	public
+	 * @var		array
+	 */
+	public static $package_directories = array();
 
 	/**
 	 * Array containing all XSL files
@@ -316,6 +333,11 @@ class mpv
 			unset($exec_check);
 		}
 
+		if (defined('UNWANTED') && UNWANTED)
+		{
+			self::$unwanted_files = explode('|', UNWANTED);
+		}
+
 		$this->unzip_type = $unzip_type;
 		$this->remove_zip = $remove_zip;
 		$this->exec_php   = self::DONT_EXEC_PHP;
@@ -325,10 +347,11 @@ class mpv
 		$this->errors = array();
 		$this->message = '';
 
-		$this->xsl_files	= array();
-		$this->modx_files	= array();
-		$this->package_files	= array();
-		$this->test_collections	= array();
+		$this->xsl_files			= array();
+		$this->modx_files			= array();
+		$this->package_files		= array();
+		$this->package_directories	= array();
+		$this->test_collections		= array();
 
 		$this->output_type = self::OUTPUT_BBCODE;
 
@@ -353,6 +376,20 @@ class mpv
 			closedir($opendir);
 		}
 	}
+
+	/**
+	 * Check if the file is unwanted or not.
+	 * 
+	 * @param string $directory
+	 * @return boolean
+	 */
+	public static function check_unwanted($directory)
+	{
+		$regexp = '#(^|.*/)(' . implode('|', array_map('preg_quote', self::$unwanted_files)) . ')(?:/|$)#i';
+		
+		return preg_match($regexp, $directory) ? true : false;
+	}
+
 
 	/**
 	 * error handler
@@ -740,6 +777,8 @@ class mpv
 		{
 			$dir .= '/';
 		}
+		
+		self::$package_directories[] = $dir;
 
 		if ($dh = opendir($root . $dir))
 		{

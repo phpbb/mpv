@@ -97,6 +97,11 @@ class mpv_tests_code
 		foreach ($this->validator->package_files as $package_file)
 		{
 			$this->file_name = $package_file;
+			
+			if (mpv::check_unwanted($package_file))
+			{
+				continue;
+			}			
 
 			// Only test PHP files
 			// We also check files that should be binary, but arent.

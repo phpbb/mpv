@@ -99,6 +99,11 @@ class mpv_tests_modx
 		foreach ($this->validator->modx_files as $modx_filename => $modx_object)
 		{
 			$this->modx_filename = $modx_filename;
+			
+			if (mpv::check_unwanted($modx_filename))
+			{
+				continue;
+			}			
 
 			if (preg_match('#modx-(.*?)\.xsd#s', (string) $modx_object, $matches))
 			{

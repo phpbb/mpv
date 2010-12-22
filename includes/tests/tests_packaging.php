@@ -41,15 +41,6 @@ class mpv_tests_packaging
 	 * @var		array
 	 */
 	private $failed_tests;
-
-	/**
-	 * Array of "unwanted files", all strtolowered
-	 *
-	 * @access	private
-	 * @var		array
-	 */
-	private $unwanted_files = array('__macosx', '.ds_store', 'thumbs.db', '.svn');
-	
 	
 	/**
 	 * String with valid MD5 for license.txt
@@ -229,6 +220,11 @@ class mpv_tests_packaging
 	{
 		foreach ($this->validator->package_files as $filename)
 		{
+			if (mpv::check_unwanted($filename))
+			{
+				continue;
+			}
+			
 			if (strtolower(basename($filename)) == 'license.txt')
 			{
 				return true;
@@ -249,6 +245,11 @@ class mpv_tests_packaging
 		$return = true;
 		foreach ($this->validator->package_files as $filename)
 		{
+			if (mpv::check_unwanted($filename))
+			{
+				continue;
+			}		
+		
 			$file = strtolower(basename($filename));
 
 			if ($file == 'prosilver.xml' || (strpos($file, 'prosilver') !== false && strpos($file, '.xml') !== false))
@@ -275,14 +276,11 @@ class mpv_tests_packaging
 	 */
 	private function test_unwanted()
 	{
-		/**
-		 * @TODO: Does this work? I never saw a notice regarding it?
-		 */
 		// precache regexp for efficiency
-		$regexp = '#(^|.*/)(' . implode('|', array_map('preg_quote', $this->unwanted_files)) . ')(?:/|$)#i';
+		$regexp = '#(^|.*/)(' . implode('|', array_map('preg_quote', mpv::$unwanted_files)) . ')(?:/|$)#i';
 
 		$unwanted_files = array();
-		foreach ($this->validator->package_files as $filename)
+		foreach (mpv::$package_directories as $filename)
 		{
 			if (preg_match($regexp, $filename, $matches))
 			{
@@ -302,7 +300,7 @@ class mpv_tests_packaging
 				}
 
 				// push notice
-				$this->push_error(mpv::ERROR_NOTICE, 'UNWANTED_FILE', null, array($matches[1], $matches[2]));
+				$this->push_error(mpv::ERROR_FAIL, 'UNWANTED_FILE', null, array($matches[1], $matches[2]));
 			}
 		}
 

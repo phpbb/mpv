@@ -109,6 +109,11 @@ class mpv_tests_lang
 			{
 				continue;
 			}*/
+			
+			if (mpv::check_unwanted($package_file))
+			{
+				continue;
+			}			
 
 			$this->failed_tests = array();
 

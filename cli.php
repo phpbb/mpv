@@ -44,6 +44,7 @@ error_reporting(E_ALL);
 
 $mpv = new mpv(null, mpv::UNZIP_PREFERENCE, false);
 $mpv->output_type = (mpv::OUTPUT_TEXT);
+mpv::$exec_php = mpv::EXEC_PHP;
 $mpv->validate($argv[1]);
 
 print $lang['VALIDATION_RESULTS'] . "\n\n" . $mpv;

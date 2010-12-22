@@ -110,6 +110,11 @@ class mpv_tests_execution
 
 		foreach ($this->validator->package_files as $package_file)
 		{
+			if (mpv::check_unwanted($package_file))
+			{
+				continue;
+			}		
+		
 			$this->file_name = $package_file;
 
 			// Only test PHP files

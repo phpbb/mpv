@@ -44,6 +44,10 @@ define('MPV_DEBUG', false);
 // Use the _exact_ directory name
 define('MPV_LANG', 'en');
 
+// Files that generate a warning, and that _arent_ checked.
+// Seperate with |
+define('UNWANTED', '__macosx|.ds_store|thumbs.db|.svn|.git|.project');
+
 // This is for statistics gathering
 // Format is:  'tag' => array('properties')
 $statistics = array(

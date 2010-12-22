@@ -103,6 +103,11 @@ class mpv_tests_html
 
 		foreach ($files as $package_file)
 		{
+			if (mpv::check_unwanted($package_file))
+			{
+				continue;
+			}		
+		
 			// Only test html, php, xml files
 			if (!in_array(strrchr($package_file, '.'), array('.php', '.xml', '.html')))
 			{
