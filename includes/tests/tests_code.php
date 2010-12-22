@@ -271,6 +271,11 @@ class mpv_tests_code
 	 */
 	private function test_in_phpbb()
 	{
+		if (preg_match("#(a|u|m)cp/info/(a|u|m)cp_(.?)#i", $this->file_name))
+		{
+			// Ignore info files
+			return true;
+		}
 		if (preg_match("#define([ ]+){0,1}\(([ ]+){0,1}'IN_PHPBB'#", $this->file_contents))
 		{
 			return true;
