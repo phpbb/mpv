@@ -448,14 +448,15 @@ class mpv_tests_code
 			'$HTTP_ENV_VARS',
 			'$HTTP_COOKIE_VARS',
 			'$HTTP_POST_FILES',
-			'$HTTP_SESSION_VARS');
+			'$HTTP_SESSION_VARS',
+			'$_FILES',
+			);
 
 		$warning_functions = array(
 			'$_SESSION',
 			'$_SERVER',
 			'$_ENV',
 			'$_REQUEST',
-			'$_FILES',
 		);
 
 		$isset_functions = array(
