@@ -144,7 +144,7 @@ $lang = array_merge($lang, array(
 	'UNABLE_EXTRACT_PHP'	=> 'Unable to extract %s using php.',
 	'UNABLE_OPEN_PHP'	=> 'Unable to open %s using php.',
 
-	'LINK_NOT_EXISTS'		=> 'The file(s) for link %s do(es) not exist in the zip file.',
+	'LINK_NOT_EXISTS'		=> 'The file for link %s does not exist in the zip file.',
 
 	'NO_IN_PHPBB'			=> 'A define for IN_PHPBB is missing or there is no check for if IN_PHPBB is set.',
 	'FILE_EMPTY'			=> 'This PHP file has been detected as being empty.',

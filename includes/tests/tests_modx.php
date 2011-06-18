@@ -218,7 +218,6 @@ class mpv_tests_modx
 	private function test_version()
 	{
 		$version = $this->modx_object->get_xpath('//header/mod-version', true);
-		$pass = true;
 
 		if (!is_object($version))
 		{
@@ -226,38 +225,33 @@ class mpv_tests_modx
 
 			return false;
 		}
-		$version = $version->value;
+		$version = strtolower($version->value);
 		
 		$unstable = array(
 			'rc',
 			'alpha',
 			'beta',
 			'dev',
+			'a',
+			'b',
 		);
 		
-		foreach ($unstable as $option)
-		{
-			if (strpos($option, $version) !== false)
-			{
-				$this->push_error(mpv::ERROR_FAIL, 'MAJOR_VERSION_UNSTABLE', array($version));
-				$pass = false;
-			}
-		}
+		$option = implode('|', $unstable);
 
 		// Check the version format and numbering
 		if (preg_match('#((\d+)\.)+(\d+)[a-z]?#', $version, $matches))
 		{
-			if ($matches[0] < 1)
+			if ($matches[0] < 1 || preg_match('#((\d+)\.)+(\d+)-([' . $option . ']+)(\d+{0,)?#i', $version, $matches))
 			{
 				$this->push_error(mpv::ERROR_FAIL, 'MAJOR_VERSION_UNSTABLE', array($version));
-				$pass = false;
+				return false;
 			}
 		}
 		else
 		{
 			// Not a valid version
 			$this->push_error(mpv::ERROR_FAIL, 'INVALID_VERSION_FORMAT', array($version));
-			$pass = false;
+			return false;
 		}
 		
 		$tmp = trim(preg_replace('#((\d+)\.)+(\d+)[a-z]?#', '', $version));
@@ -266,9 +260,10 @@ class mpv_tests_modx
 		{
 			// Woohoo, user is nub, something more as a number
 			$this->push_error(mpv::ERROR_FAIL, 'VERSION_SHOULD_BE_VERSION', array($version, $version));
+			return false;
 		}
 
-		return $pass;
+		return true;
 	}
 
 	private function test_xsl_exists()
@@ -536,7 +531,7 @@ class mpv_tests_modx
 
 			$return = false;
 		}
-		else if (strtolower(trim($phpbb_version->value)) != strtolower($current_phpbb_version))
+		else if (version_compare(strtolower(trim($phpbb_version->value)), strtolower($current_phpbb_version), '<'))
 		{
 			if (mpv::$mod_dir . '/' . basename($this->modx_filename) == $this->modx_filename)
 			{
