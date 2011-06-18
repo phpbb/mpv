@@ -170,6 +170,7 @@ abstract class test_base
 			    $content_new = '';
 				}
 			}
+		
 
 			if (empty($content_new))
 			{
@@ -183,7 +184,7 @@ abstract class test_base
 				$this->push_error($type, $message, array((string) ($line + 1) , '[code]' . trim($content) . '[/code]'));
 				$found = true;
 			}
-			else if ($preg_match && preg_match($preg_match, $content))
+			else if ($preg_match && preg_match($preg_match, $content_new))
 			{
 				$this->push_error($type, $message, array((string) ($line + 1) , '[code]' . trim($content) . '[/code]'));
 				$found = true;
