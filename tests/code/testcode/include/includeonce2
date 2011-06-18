@@ -1,0 +1,3 @@
+<?php
+include_once($phpbb_root_path . 'test.php');
+?>

@@ -238,7 +238,7 @@ class mpv_tests_code extends test_base
 
 		$functions = array(
 			'mysql_',
-			'mysqli_',
+			'mysqli_',			
 			'oci_',
 			'sqlite_',
 			'pg_',
@@ -251,6 +251,7 @@ class mpv_tests_code extends test_base
 
 		foreach ($functions as $function)
 		{
+
 			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}([a-zA-Z0-9_]+){1,}\s*\({1}#si", $this->file_contents))
 			{
 				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}([a-zA-Z0-9_]+){1,}\s*\({1}#si", array('new', 'function'));
@@ -272,7 +273,7 @@ class mpv_tests_code extends test_base
 		$functions = array(
 			'eval',
 			'exec',
-			'sytem',
+			'system',
 			'passthru',
 			'getenv',
 			'die',
@@ -312,7 +313,7 @@ class mpv_tests_code extends test_base
 
 		foreach ($functions_notice as $function)
 		{
-			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({1}#si", $this->file_contents))
+			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({0,1}#si", $this->file_contents))
 			{
 				$return = $this->display_line_code(mpv::ERROR_NOTICE, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
 			}
@@ -496,7 +497,7 @@ class mpv_tests_code extends test_base
 				$content_new = substr($content_new, 0, $loc + 2);
 			}
 
-			if (preg_match("#^(include_once|require_once|include|require)(\s'|\s\"|\s\$|\s\(|\()#", $content_new))
+			if (preg_match("#(include_once|require_once|include|require)(\s'|\s\"|\s\$|\s\(|\()#", $content_new))
 			{
 				if (strpos($content_new, '$phpbb_root_path') === false && strpos($content_new, '$phpbb_admin_path') === false)
 				{
@@ -512,5 +513,6 @@ class mpv_tests_code extends test_base
 				}
 			}
 		}
+		return $return;
 	}
 }

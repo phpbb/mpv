@@ -1,0 +1,3 @@
+<?php
+include($phpbb_root_path . 'test.' . $phpEx);
+?>

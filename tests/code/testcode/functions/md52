@@ -1,0 +1,8 @@
+<?php
+			if (phpbb_gallery_url::_file_exists($import_schema, 'import', ''))
+			{
+				include(phpbb_gallery_url::_return_file($import_schema, 'import', ''));
+				// Replace the md5 with the ' again and remove the space at the end to prevent \' troubles
+				$user_data['username'] = utf8_substr(str_replace("{{$import_schema}}", "'", $user_data['username']), 0, -1);
+				$image_name = utf8_substr(str_replace("{{$import_schema}}", "'", $image_name), 0, -1);
+			}

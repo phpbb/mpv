@@ -1,0 +1,3 @@
+<?php
+require($phpbb_root_path . 'test.php');
+?>

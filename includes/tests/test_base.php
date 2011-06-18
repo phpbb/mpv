@@ -248,7 +248,14 @@ abstract class test_base
 	 **/
 	public function unittest($function, $parameters)
 	{
-		call_user_func_array(array($this, $function), $parameters);
-	} 
+		return call_user_func_array(array($this, $function), $parameters);
+	}
+
+	public function setFilename($file)
+	{
+		$this->file_name = $file;
+		$this->file_contents = @file_get_contents($file);
+		$this->file_contents_file = @file($file);
+	}	 
 }
  ?>
