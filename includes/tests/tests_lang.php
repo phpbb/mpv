@@ -87,7 +87,7 @@ class mpv_tests_lang extends test_base
 	 * @access	private
 	 * @return	bool
 	 */
-	private function test_bom()
+	protected function test_bom()
 	{
 		if (substr($this->file_contents, 0, 3) === $this->bom_char)
 		{

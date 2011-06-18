@@ -95,7 +95,7 @@ class mpv_tests_execution extends test_base
 	/**
 	 * Tests if there are any syntax errors by default.
 	 */
-	private function test_php()
+	protected function test_php()
 	{
 	  
 		$file = tempnam(sys_get_temp_dir(), 'mpv');

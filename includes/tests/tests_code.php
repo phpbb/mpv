@@ -85,7 +85,7 @@ class mpv_tests_code extends test_base
 	 * Allowed non binary extension:
 	 * txt, php, html, htm, tpl, xml, xsl, css
 	 */
-	private function check_binary($filename)
+	protected function check_binary($filename)
 	{
 		$base = basename($filename);
 		$ext = substr($base, -3);
@@ -139,7 +139,7 @@ class mpv_tests_code extends test_base
 	 * @access private
 	 * @return bool
 	 */
-	function test_empty()
+	protected function test_empty()
 	{
 		if (strlen(trim($this->file_contents)) == 0)
 		{
@@ -157,7 +157,7 @@ class mpv_tests_code extends test_base
 	 * @access	private
 	 * @return	bool
 	 */
-	private function test_unix_endings()
+	protected function test_unix_endings()
 	{
 		if (strpos($this->file_contents, "\r") !== false)
 		{
@@ -174,7 +174,7 @@ class mpv_tests_code extends test_base
 	 * @access	private
 	 * @return	bool
 	 */
-	private function test_short_tags()
+	protected function test_short_tags()
 	{
 		$strpos = '';
 		if (strpos($this->file_contents, "<?=") !== false)
@@ -207,7 +207,7 @@ class mpv_tests_code extends test_base
 	 * @access private
 	 * @return bool
 	 */
-	private function test_in_phpbb()
+	protected function test_in_phpbb()
 	{
 		if (preg_match("#(a|u|m)cp/info/(a|u|m)cp_(.?)#i", $this->file_name))
 		{
@@ -232,7 +232,7 @@ class mpv_tests_code extends test_base
 	 * @access	private
 	 * @return	bool
 	 */
-	private function test_dbal()
+	protected function test_dbal()
 	{
 		$return = true;
 
@@ -265,7 +265,7 @@ class mpv_tests_code extends test_base
 	 * @access	private
 	 * @return	bool
 	 */
-	private function test_code()
+	protected function test_code()
 	{
 		$return = true;
 
@@ -335,7 +335,7 @@ class mpv_tests_code extends test_base
 	 * @access 	private
 	 * @return	bool
 	 */
-	private function test_echo()
+	protected function test_echo()
 	{
 		$return = true;
 
@@ -374,7 +374,7 @@ class mpv_tests_code extends test_base
 	 * @access	private
 	 * @return	bool
 	 */
-	private function test_globals()
+	protected function test_globals()
 	{
 		$return = true;
 
@@ -438,7 +438,7 @@ class mpv_tests_code extends test_base
 	 * @access	private
 	 * @return	bool
 	 */
-	private function test_request_var()
+	protected function test_request_var()
 	{
 		//
 		if (preg_match("#request_var\((['|\"]+)(.*)(['|\"]+), (['|\"]+)([0-9]+)(['|\"]+)#si", $this->file_contents))
@@ -453,7 +453,7 @@ class mpv_tests_code extends test_base
 	/**
 	 *
 	 */
-	private function test_include()
+	protected function test_include()
 	{
 		$return = true;
 

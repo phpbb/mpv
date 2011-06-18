@@ -86,7 +86,7 @@ class mpv_tests_html extends test_base
 	 *
 	 * @return bool
 	 */
-	private function test_br()
+	protected function test_br()
 	{
 		$return = true;
 
@@ -102,7 +102,7 @@ class mpv_tests_html extends test_base
 	 *
 	 * @return bool
 	 */
-	private function test_img()
+	protected function test_img()
 	{
 		$return = true;
 		/*

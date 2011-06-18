@@ -178,7 +178,7 @@ class mpv_tests_modx extends test_base
 	 * @access	public
 	 * @return	bool
 	 */
-	private function test_version()
+	protected function test_version()
 	{
 		$version = $this->modx_object->get_xpath('//header/mod-version', true);
 
@@ -229,7 +229,7 @@ class mpv_tests_modx extends test_base
 		return true;
 	}
 
-	private function test_xsl_exists()
+	protected function test_xsl_exists()
 	{
 		$found = false;
 		foreach ($this->validator->xsl_files as $xsl_file)
@@ -255,7 +255,7 @@ class mpv_tests_modx extends test_base
 	* @return bool
 	* @access private
 	*/
-	private function test_open()
+	protected function test_open()
 	{
 		$return = true;
 		$open_ary = $this->modx_object->get_by_name('open', false);
@@ -321,7 +321,7 @@ class mpv_tests_modx extends test_base
 	 * @access private
 	 * @return bool
 	 */
-	private function test_copy()
+	protected function test_copy()
 	{
 		$copy_ary = $this->modx_object->get_by_name('//action-group/copy/file', false);
 
@@ -347,7 +347,7 @@ class mpv_tests_modx extends test_base
 	* @access private
 	* @return bool
 	*/
-	private function test_edit()
+	protected function test_edit()
 	{
 		// First, grab all of the edit tags
 		$edit_ary = $this->modx_object->get_by_name('edit', false);
@@ -383,7 +383,7 @@ class mpv_tests_modx extends test_base
 	* @access private
 	* @return bool
 	*/
-	private function test_license()
+	protected function test_license()
 	{
 		$license = $this->modx_object->get_by_name('license', true);
 
@@ -410,7 +410,7 @@ class mpv_tests_modx extends test_base
 	* @access private
 	* @return bool
 	*/
-	private function test_inline_find()
+	protected function test_inline_find()
 	{
 		$return = true;
 		$inline_find_ary = $this->modx_object->get_by_name('inline-find', false);
@@ -433,7 +433,7 @@ class mpv_tests_modx extends test_base
 	* @access private
 	* @return bool
 	*/
-	private function test_inline_action()
+	protected function test_inline_action()
 	{
 		$return = true;
 		$inline_action_ary = $this->modx_object->get_by_name('inline-action', false);
@@ -458,7 +458,7 @@ class mpv_tests_modx extends test_base
 	* @return bool
 	* @access private
 	*/
-	private function test_links()
+	protected function test_links()
 	{
 		$return = true;
 		$link_ary = $this->modx_object->get_by_name('link', false);
@@ -480,7 +480,7 @@ class mpv_tests_modx extends test_base
 	/**
 	* Test the phpBB version
 	*/
-	private function test_phpbb_version()
+	protected function test_phpbb_version()
 	{
 		$return = true;
 

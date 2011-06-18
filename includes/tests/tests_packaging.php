@@ -80,7 +80,7 @@ class mpv_tests_packaging extends test_base
 	 * @access private
 	 * @return bool
 	 */
-	private function test_xsl()
+	protected function test_xsl()
 	{
 		if (sizeof($this->validator->xsl_files) == 0)
 		{
@@ -98,7 +98,7 @@ class mpv_tests_packaging extends test_base
 	 * @access private
 	 * @return bool	 
 	 */
-	private function test_files()
+	protected function test_files()
 	{
 		$error = false;
 		$found_umil = false;
@@ -187,7 +187,7 @@ class mpv_tests_packaging extends test_base
 	 * @access private
 	 * @return bool
 	 */
-	private function test_license()
+	protected function test_license()
 	{
 		foreach ($this->validator->package_files as $filename)
 		{
@@ -211,7 +211,7 @@ class mpv_tests_packaging extends test_base
 	 * @return bool
 	 * @access private
 	 */
-	private function test_prosilver_english()
+	protected function test_prosilver_english()
 	{
 		$return = true;
 		foreach ($this->validator->package_files as $filename)
@@ -245,7 +245,7 @@ class mpv_tests_packaging extends test_base
 	 * @access private
 	 * @return bool
 	 */
-	private function test_unwanted()
+	protected function test_unwanted()
 	{
 		// precache regexp for efficiency
 		$regexp = '#(^|.*/)(' . implode('|', array_map('preg_quote', mpv::$unwanted_files)) . ')(?:/|$)#i';

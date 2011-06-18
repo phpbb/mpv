@@ -239,6 +239,16 @@ abstract class test_base
 	protected function extract_dir($file)
 	{
 		return substr($file, 0, -strlen(basename($file)));
-	}	 
+	}	
+	
+	/**
+	 * Test a function from phpunit that is private.
+	 * @param string $function Functioname
+	 * @param array $parameters Function parameters
+	 **/
+	public function unittest($function, $parameters)
+	{
+		call_user_func_array(array($this, $function), $parameters);
+	} 
 }
  ?>
