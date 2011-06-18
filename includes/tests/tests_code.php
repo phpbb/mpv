@@ -497,7 +497,7 @@ class mpv_tests_code extends test_base
 				$content_new = substr($content_new, 0, $loc + 2);
 			}
 
-			if (preg_match("#(include_once|require_once|include|require)(\s'|\s\"|\s\$|\s\(|\()#", $content_new))
+			if (preg_match("#^(include_once|require_once|include|require)(\s'|\s\"|\s\$|\s\(|\()#", trim($content_new)))
 			{
 				if (strpos($content_new, '$phpbb_root_path') === false && strpos($content_new, '$phpbb_admin_path') === false)
 				{
