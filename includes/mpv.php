@@ -354,6 +354,8 @@ class mpv
 		$this->test_collections		= array();
 
 		$this->output_type = self::OUTPUT_BBCODE;
+		
+		require($this->dir . 'includes/tests/test_base.php');
 
 		// Get the available test collections
 		if ($opendir = opendir($this->dir . 'includes/tests/'))
