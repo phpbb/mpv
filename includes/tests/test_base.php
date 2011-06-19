@@ -114,13 +114,13 @@ abstract class test_base
 
 		if (!is_array($ignore_in_line))
 		{
-		  if (is_string($ignore_in_line))
-		  {
-		    $ignore_in_line = array(0 => $ignore_in_line);
+			if (is_string($ignore_in_line))
+			{
+		    	$ignore_in_line = array(0 => $ignore_in_line);
 			}
 			else
 			{
-			  $ignore_in_line = array();
+				$ignore_in_line = array();
 			}
 		}
 
@@ -165,16 +165,16 @@ abstract class test_base
 
 			foreach ($ignore_in_line as $value)
 			{
-			  if (strpos($content_new, $value) !== false)
-			  {
-			    $content_new = '';
+				if (strpos($content_new, $value) !== false)
+				{
+			    	$content_new = '';
 				}
 			}
 		
 
 			if (empty($content_new))
 			{
-			  continue;
+				continue;
 			}
 
 			// Yes, $content_new in if, and $content in code.

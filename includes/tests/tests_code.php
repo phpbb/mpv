@@ -399,7 +399,7 @@ class mpv_tests_code extends test_base
 		{
 			if (strpos($this->file_contents, $function) !== false)
 			{
-				$return = $this->display_line_code(mpv::ERROR_WARNING, 'USAGE_' . strtoupper(str_replace(array('_' , '$'), '', $function)), $function);
+				$return = $this->display_line_code(mpv::ERROR_WARNING, 'USAGE_' . strtoupper(str_replace(array('_' , '$'), '', $function)), $function, false, array('isset', 'empty'));
 			}
 		}
 
@@ -408,7 +408,7 @@ class mpv_tests_code extends test_base
 			if (strpos($this->file_contents, $function) !== false)
 			{
 				$lower = strtoupper(str_replace(array('_' , '$'), '', $function));
-				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . $lower, $function);
+				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . $lower, $function, false);
 			}
 		}
 
@@ -417,7 +417,7 @@ class mpv_tests_code extends test_base
 			if (strpos($this->file_contents, $function) !== false)
 			{
 				$lower = strtoupper(str_replace(array('_' , '$'), '', $function));
-				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . $lower, $function, false, array('isset'));
+				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . $lower, $function, false, array('isset', 'empty'));
 			}
 		}
 
