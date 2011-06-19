@@ -271,59 +271,50 @@ class mpv_tests_code extends test_base
 		$return = true;
 
 		$functions = array(
-			'eval',
-			'exec',
-			'system',
-			'passthru',
-			'getenv',
-			'die',
-			'sha1',
-			'addslashes',
-			'stripslashes',
+			'eval' 			=> mpv::ERROR_FAIL,
+			'exec' 			=> mpv::ERROR_FAIL,
+			'system' 		=> mpv::ERROR_FAIL,
+			'passthru' 		=> mpv::ERROR_FAIL,
+			'getenv'		=> mpv::ERROR_FAIL,
+			'die'			=> mpv::ERROR_FAIL,
+			'addslashes'	=> mpv::ERROR_FAIL,
+			'stripslashes'	=> mpv::ERROR_FAIL,
+			'include_once'	=> mpv::ERROR_NOTICE,
+			'require_once' 	=> mpv::ERROR_NOTICE,			
+			'md5'			=> mpv::ERROR_WARNING,
+			'sha1'			=> mpv::ERROR_WARNING,
 		);
 
 		$functions_none = array(
 			'`'
 		);
-
-		$functions_notice = array(
-			'include_once',
-			'require_once',
+		
+		$functions_without = array(
+			'include_once'	=> mpv::ERROR_NOTICE,
+			'require_once' 	=> mpv::ERROR_NOTICE,					
 		);
 
-		$functions_warning = array(
-			'md5',
-		);
-
-		foreach ($functions as $function)
+		foreach ($functions as $function => $code)
 		{
 			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({1}#si", $this->file_contents))
 			{
-				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
+				$return = $this->display_line_code($code, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
 			}
 		}
+		
+		foreach ($functions_without as $function => $code)
+		{
+			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({0}#si", $this->file_contents))
+			{
+				$return = $this->display_line_code($code, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
+			}
+		}		
 
 		foreach ($functions_none as $function)
 		{
 			if (preg_match("#" . preg_quote($function, '#') . "#si", $this->file_contents) && strpos($this->file_name, '/language/') == 0)
 			{
 				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#" . preg_quote($function) . "#si");
-			}
-		}
-
-		foreach ($functions_notice as $function)
-		{
-			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({0,1}#si", $this->file_contents))
-			{
-				$return = $this->display_line_code(mpv::ERROR_NOTICE, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
-			}
-		}
-
-		foreach ($functions_warning as $function)
-		{
-			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({1}#si", $this->file_contents))
-			{
-				$return = $this->display_line_code(mpv::ERROR_WARNING, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
 			}
 		}
 
@@ -361,7 +352,7 @@ class mpv_tests_code extends test_base
 
 		foreach ($functions_none as $function)
 		{
-		 	if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({1}#si", $this->file_contents))
+		 	if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({0,1}#si", $this->file_contents))
 			{
 				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
 			}
