@@ -254,7 +254,10 @@ class mpv_tests_code extends test_base
 
 			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}([a-zA-Z0-9_]+){1,}\s*\({1}#si", $this->file_contents))
 			{
-				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}([a-zA-Z0-9_]+){1,}\s*\({1}#si", array('new', 'function'));
+				if ($this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}([a-zA-Z0-9_]+){1,}\s*\({1}#si", array('new', 'function')))
+				{
+					$return = false;	
+				}
 			}
 		}
 		return $return;
@@ -298,7 +301,10 @@ class mpv_tests_code extends test_base
 		{
 			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({1}#si", $this->file_contents))
 			{
-				$return = $this->display_line_code($code, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
+				if ($this->display_line_code($code, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si"))
+				{
+					$return = false;	
+				}
 			}
 		}
 		
@@ -306,7 +312,10 @@ class mpv_tests_code extends test_base
 		{
 			if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({0}#si", $this->file_contents))
 			{
-				$return = $this->display_line_code($code, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
+				if ($this->display_line_code($code, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si"))
+				{
+					$return = false;	
+				}
 			}
 		}		
 
@@ -314,7 +323,10 @@ class mpv_tests_code extends test_base
 		{
 			if (preg_match("#" . preg_quote($function, '#') . "#si", $this->file_contents) && strpos($this->file_name, '/language/') == 0)
 			{
-				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#" . preg_quote($function) . "#si");
+				if ($this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#" . preg_quote($function) . "#si"))
+				{
+					$return = false;	
+				}
 			}
 		}
 
@@ -346,7 +358,10 @@ class mpv_tests_code extends test_base
 		{
 		 	if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({1}#si", $this->file_contents))
 			{
-				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si");
+				if ($this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si"))
+				{
+					$return = false;	
+				}
 			}
 		}
 
@@ -354,7 +369,10 @@ class mpv_tests_code extends test_base
 		{
 		 	if (preg_match("#(^\s*|[^a-z0-9_])" . preg_quote($function, '#') . "{1}\s*\({0,1}#si", $this->file_contents))
 			{
-				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si", array('fread'));
+				if ($this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . strtoupper(str_replace(array('_', '$', '('), '', $function)), false, "#(^\s*|[^a-z0-9_])" . preg_quote($function) . "([ \(|\(| ]+)#si", array('fread')))
+				{
+					$return = false;	
+				}
 			}
 		}
 		return $return;
@@ -399,7 +417,10 @@ class mpv_tests_code extends test_base
 		{
 			if (strpos($this->file_contents, $function) !== false)
 			{
-				$return = $this->display_line_code(mpv::ERROR_WARNING, 'USAGE_' . strtoupper(str_replace(array('_' , '$'), '', $function)), $function, false, array('isset', 'empty'));
+				if ($this->display_line_code(mpv::ERROR_WARNING, 'USAGE_' . strtoupper(str_replace(array('_' , '$'), '', $function)), $function, false, array('isset', 'empty')))
+				{
+					$return = false;	
+				}
 			}
 		}
 
@@ -408,7 +429,10 @@ class mpv_tests_code extends test_base
 			if (strpos($this->file_contents, $function) !== false)
 			{
 				$lower = strtoupper(str_replace(array('_' , '$'), '', $function));
-				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . $lower, $function, false);
+				if ($this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . $lower, $function, false))
+				{
+					$return = false;	
+				}
 			}
 		}
 
@@ -417,7 +441,10 @@ class mpv_tests_code extends test_base
 			if (strpos($this->file_contents, $function) !== false)
 			{
 				$lower = strtoupper(str_replace(array('_' , '$'), '', $function));
-				$return = $this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . $lower, $function, false, array('isset', 'empty'));
+				if ($this->display_line_code(mpv::ERROR_FAIL, 'USAGE_' . $lower, $function, false, array('isset', 'empty')))
+				{
+					$return = false;	
+				}
 			}
 		}
 

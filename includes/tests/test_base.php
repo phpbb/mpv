@@ -257,6 +257,13 @@ abstract class test_base
 		$this->file_name = $file;
 		$this->file_contents = @file_get_contents($file);
 		$this->file_contents_file = @file($file);
-	}	 
+	}	
+	
+	public function setCode($file)
+	{
+		$this->file_name = "";
+		$this->file_contents = $file;
+		$this->file_contents_file = explode("\n", $file);
+	} 
 }
  ?>
