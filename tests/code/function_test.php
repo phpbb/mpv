@@ -25,6 +25,7 @@ class phpbb_function_test extends phpbb_test_case
 			array('testcode/functions/die', 'USAGE_DIE', false),
 			array('testcode/functions/sha1', 'USAGE_SHA1', false),
 			array('testcode/functions/addslashes', 'USAGE_ADDSLASHES', false),
+			array('testcode/functions/htmlspecialchars', 'USAGE_HTMLSPECIALCHARS', false),
 			array('testcode/functions/stripslashes', 'USAGE_STRIPSLASHES', false),
 			
 			array('testcode/functions/backticks', 'USAGE_`', false),

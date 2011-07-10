@@ -127,6 +127,7 @@ $lang = array_merge($lang, array(
 	'USAGE_SHA1'			=> 'Using sha1() at line %s: %s',
 	'USAGE_ADDSLASHES'		=> 'Using addslashes() at line %s: %s',
 	'USAGE_STRIPSLASHES'	=> 'Using stripslashes() at line %s: %s',
+	'USAGE_HTMLSPECIALCHARS'=> 'Using htmlspecialchars() at line %s: %s',
 	'USAGE_INCLUDEONCE'		=> 'Using include_once() at line %s: %sUsing include with a function/class_exists check is preferred over include/require _once',
 	'USAGE_REQUIREONCE'		=> 'Using require_once() at line %s: %sUsing include with a function/class_exists check is preferred over include/require _once',
 	'USAGE_VARDUMP'			=> 'Using var_dump at line %s: %s',

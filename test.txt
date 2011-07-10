@@ -1,0 +1,99 @@
+Validation results:
+
+(Validating zip)
+
+[ NOTICE ] Please note that all checks are done by an automated tool.  In some cases a FAIL/WARNING can be valid/allowed usage of a function.
+[ FAIL ] phpbb_gallery_1_1_0_A1/install.xml: Your MOD version (1.1.0-a1) is unstable. It should be higher starting at 1.0.0.
+	Example:
+	0.0.1 is unstable
+	0.1.0 is unstable
+	1.0.1 is stable
+[ FAIL ] phpbb_gallery_1_1_0_A1/contrib/update_1_0_6_to_1_1_0_A1/update.xml: Your MOD version (1.1.0-a1) is unstable. It should be higher starting at 1.0.0.
+	Example:
+	0.0.1 is unstable
+	0.1.0 is unstable
+	1.0.1 is stable
+[ FAIL ] phpbb_gallery_1_1_0_A1/contrib/update_1_0_6_to_1_1_0_A1/update.xml: The file for link ../addons/rrc_on_index.xml does not exist in the zip file.
+[ FAIL ] phpbb_gallery_1_1_0_A1/contrib/update_1_0_6_to_1_1_0_A1/update.xml: The file for link ../addons/rrc_on_index.xml does not exist in the zip file.
+[ WARNING ] phpbb_gallery_1_1_0_A1/modx.prosilver.en.xsl: The MD5 signature of the XSL file is unknown, file might be modified. Found signature d4e1ff87e1ffca90345bed5a2a6bea6b, expected newest 515b908b69d5a926fefa9d4176565575
+[ WARNING ] phpbb_gallery_1_1_0_A1/contrib/modx.prosilver.en.xsl: The MD5 signature of the XSL file is unknown, file might be modified. Found signature d4e1ff87e1ffca90345bed5a2a6bea6b, expected newest 515b908b69d5a926fefa9d4176565575
+[ WARNING ] phpbb_gallery_1_1_0_A1/contrib/update_1_0_6_to_1_1_0_A1/modx.prosilver.en.xsl: The MD5 signature of the XSL file is unknown, file might be modified. Found signature d4e1ff87e1ffca90345bed5a2a6bea6b, expected newest 515b908b69d5a926fefa9d4176565575
+[ WARNING ] phpbb_gallery_1_1_0_A1/contrib/plugins/modx.prosilver.en.xsl: The MD5 signature of the XSL file is unknown, file might be modified. Found signature d4e1ff87e1ffca90345bed5a2a6bea6b, expected newest 515b908b69d5a926fefa9d4176565575
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using eval() at line 448: eval('$s_options = ' . str_replace('{VALUE}', $value, $options) . ';');
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using eval() at line 453: eval('$tpl = ' . str_replace('{VALUE}', $value, $options) . ';');
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 368: echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 369: echo '<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 370: echo '<head>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 371: echo '<meta http-equiv="content-type" content="text/html; charset=utf-8" />'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 372: echo '<title>' . $lang['INST_ERR_FATAL'] . '</title>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 373: echo '<link href="../adm/style/admin.css" rel="stylesheet" type="text/css" media="screen" />'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 374: echo '</head>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 375: echo '<body id="errorpage">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 376: echo '<div id="wrap">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 377: echo '	<div id="page-header">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 378: echo '	</div>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 379: echo '	<div id="page-body">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 380: echo '		<div id="acp">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 381: echo '		<div class="panel">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 382: echo '			<span class="corners-top"><span></span></span>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 383: echo '			<div id="content">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 384: echo '				<h1>' . $lang['INST_ERR_FATAL'] . '</h1>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 385: echo '		<p>' . $lang['INST_ERR_FATAL'] . "</p>\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 386: echo '		<p>' . basename($file) . ' [ ' . $line . " ]</p>\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 387: echo '		<p><b>' . $error . "</b></p>\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 388: echo '			</div>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 389: echo '			<span class="corners-bottom"><span></span></span>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 390: echo '		</div>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 391: echo '		</div>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 392: echo '	</div>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 393: echo '	<div id="page-footer">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 394: echo '		Powered by phpBB &copy; 2000, 2002, 2005, 2007 <a href="http://www.phpbb.com/">phpBB Group</a>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 395: echo '	</div>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 396: echo '</div>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 397: echo '</body>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/install/index.php: Using echo() at line 398: echo '</html>'; The phpBB template system should be used instead.
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/install/index.php: A call to include or require is missing $phpbb_root_path in call at line 106: include($file);
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/acp/acp_gallery_permissions.php: Using $_POST at line 678: foreach ($_POST['setting'] as $c_mask => $v_sets)request_var() should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/acp/acp_gallery_permissions.php: Using $_POST at line 729: foreach ($_POST['inherit'] as $c_mask => $v_sets)request_var() should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/acp/acp_gallery_albums.php: Using addslashes() at line 679: 'UA_PROGRESS_BAR'	=> addslashes($this->u_action . '&amp;action=progress_bar'),
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/includes/acp/acp_gallery.php: Using md5() at line 469: $image_filename = md5(unique_id()) . $filetype_ext;MD5 should not be used for anything related to passwords. Other usage of MD5 is probably valid.
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/includes/acp/acp_gallery.php: Using md5() at line 679: $import_schema = md5($start_time);MD5 should not be used for anything related to passwords. Other usage of MD5 is probably valid.
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/includes/acp/acp_gallery.php: A call to include or require is missing $phpbb_root_path in call at line 403: include(phpbb_gallery_url::_return_file($import_schema, 'import', ''));
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/includes/gallery/url.php: A call to include or require is missing $phpbb_root_path in call at line 178: include(self::path($path) . $sub_directory . self::phpEx_file($file));
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/includes/gallery/functions_phpbb.php: Using sha1() at line 322: $user->data["hash_$link_name"] = substr(sha1($user->data['user_form_salt'] . $link_name), 0, 8);
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/includes/gallery/functions_phpbb.php: Using $_SERVER at line 378: $version = $_SERVER['SERVER_PROTOCOL'];$_SERVER IS user input!
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/includes/gallery/functions_phpbb.php: Using $_SERVER at line 384: $version = $_SERVER['HTTP_VERSION'];$_SERVER IS user input!
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/includes/gallery/functions_phpbb.php: Using $_SERVER at line 455: $date = trim($_SERVER['HTTP_IF_MODIFIED_SINCE']);$_SERVER IS user input!
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 180: echo '<item>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 181: echo '<title>' . $title . '</title>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 182: echo '<link>' . $url_imagepage . '</link>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 183: echo '<description>&lt;img src="' . $u_thumbnail . '" alt="" /&gt;&lt;br /&gt;<![CDATA[' . $description; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 184: echo '<p>' . $user->lang['STATISTICS'] . ': ' . $image_username . ' ' . $this->separator_stats . ' ' . $user->format_date($row['image_time']) . '</p>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 185: echo ']]></description>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 187: echo '<media:content url="' . $url_fullsize . '" type="' . phpbb_gallery_image_file::mimetype_by_filename($row['image_filename']) . '" medium="image" isDefault="true" expression="full">'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 188: echo '	<media:title>' . $title . '</media:title>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 189: echo '	<media:description><![CDATA[' . $description . ''; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 190: echo '	<p>' . $user->lang['STATISTICS'] . ': ' . $image_username . ' ' . $this->separator_stats . ' ' . $user->format_date($row['image_time']) . '</p>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 191: echo '	]]></media:description>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 192: echo '	<media:thumbnail url="' . $u_thumbnail . '" />'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 193: echo '</media:content>'; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 194: echo '</item>' . "\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 206: echo '<?xml version="1.0" encoding="utf-8" standalone="yes"?>' . "\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 207: echo '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">' . "\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 209: echo '<channel>' . "\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 210: echo '<title>' . $title . '</title>' . "\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 211: echo '<link>' . $self_link . '</link>' . "\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 212: echo '<description>' . $description . '</description>' . "\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 217: echo '</channel>' . "\n"; The phpBB template system should be used instead.
+[ FAIL ] phpbb_gallery_1_1_0_A1/root/includes/gallery/feed.php: Using echo() at line 218: echo '</rss>' . "\n"; The phpBB template system should be used instead.
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/gallery/posting.php: A call to include or require is missing $phpbb_root_path in call at line 17: include('common.' . $phpEx);
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/gallery/image.php: Using $_SERVER at line 60: $check_referer = trim($_SERVER['HTTP_REFERER']);$_SERVER IS user input!
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/gallery/image.php: A call to include or require is missing $phpbb_root_path in call at line 17: include('common.' . $phpEx);
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/gallery/mcp.php: A call to include or require is missing $phpbb_root_path in call at line 17: include('common.' . $phpEx);
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/gallery/index.php: A call to include or require is missing $phpbb_root_path in call at line 17: include('common.' . $phpEx);
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/gallery/image_page.php: A call to include or require is missing $phpbb_root_path in call at line 17: include('common.' . $phpEx);
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/gallery/search.php: A call to include or require is missing $phpbb_root_path in call at line 20: include('common.' . $phpEx);
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/gallery/feed.php: A call to include or require is missing $phpbb_root_path in call at line 18: include('common.' . $phpEx);
+[ WARNING ] phpbb_gallery_1_1_0_A1/root/gallery/album.php: A call to include or require is missing $phpbb_root_path in call at line 17: include('common.' . $phpEx);
+
+Report made by MPV 4975225b7a5f78644d2cd3f73c58f73be856e51d

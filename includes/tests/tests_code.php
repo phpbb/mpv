@@ -282,6 +282,7 @@ class mpv_tests_code extends test_base
 			'die'			=> mpv::ERROR_FAIL,
 			'addslashes'	=> mpv::ERROR_FAIL,
 			'stripslashes'	=> mpv::ERROR_FAIL,
+			'htmlspecialchars'	=> mpv::ERROR_FAIL,
 			'include_once'	=> mpv::ERROR_NOTICE,
 			'require_once' 	=> mpv::ERROR_NOTICE,			
 			'md5'			=> mpv::ERROR_WARNING,
