@@ -29,7 +29,7 @@ define('HTML_FORMAT', true, true);
 define('HTML_HEADERS', false);
 
 // Latest phpBB3 version. Only used if LOCAL_ONLY is set to true
-define('PHPBB_VERSION', '3.0.9');
+define('PHPBB_VERSION', '3.0.10');
 
 // Latest MODX version. Only used if LOCAL_ONLY is set to true
 define('LATEST_MODX', '1.2.5');
@@ -40,7 +40,7 @@ define('LATEST_UMIL', '1.0.4');
 // MPV Debug, disabled by default, will add some extra info about the MPV status
 define('MPV_DEBUG', false);
 
-// MPV language, by default english. Any possiblities from includes/languages/ is allowed. 
+// MPV language, by default english. Any possiblities from includes/languages/ is allowed.
 // Use the _exact_ directory name
 define('MPV_LANG', 'en');
 
