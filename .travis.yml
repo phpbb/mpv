@@ -9,7 +9,7 @@ env:
   - DB=postgres
 
 before_script:
-  - pyrus install --force phpunit/DbUnit
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.2' ]; then pear install --force phpunit/DbUnit; else pyrus install --force phpunit/DbUnit; fi"
   - phpenv rehash
 
 script:
