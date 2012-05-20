@@ -34,16 +34,20 @@ $mpv->output_type = ((HTML_FORMAT) ? mpv::OUTPUT_HTML : mpv::OUTPUT_BBCODE);
 mpv::$exec_php = mpv::EXEC_PHP;
 $mpv->validate('./test-file.zip');
 
-if (HTML_HEADERS)
-{
-	print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-gb" xml:lang="en-gb">
+	print '<!DOCTYPE html>
 	<head>
 	<title>' . $lang['TITLE'] . '</title>
+    <link rel="stylesheet" href="style.css">
 	</head>
 	<body>';
-}
+	print '<div class="wrapper">';	
+	print '<header>';
+	print '<h2>' . $lang['VALIDATION_RESULTS'] . "</h2></br></header>";
+	print '<section>';
+	print ((HTML_FORMAT) ? nl2br($mpv) : $mpv);
+	print '</section>';
+	print '</div>';	
+	print '</body></html> ';
 
-print $lang['VALIDATION_RESULTS'] . "\n\n" . ((HTML_FORMAT) ? nl2br($mpv) : $mpv);
 
 ?>
