@@ -6,6 +6,8 @@ It is written and maintained by the phpBB Modifications Team.
 
 http://www.phpbb.com/mods/mpv/
 
+[![Build Status](https://secure.travis-ci.org/phpbb/mpv.png?branch=master)](http://travis-ci.org/phpbb/mpv)
+
 ## Contributions
 
 Do you have an improvement? Did you made a translation?  Did you fix a bug?  Fork our GitHub repo, make your changes in a separate branch, and send a pull request.
