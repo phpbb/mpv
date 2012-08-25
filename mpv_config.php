@@ -29,7 +29,7 @@ define('HTML_FORMAT', true, true);
 define('HTML_HEADERS', false);
 
 // Latest phpBB3 version. Only used if LOCAL_ONLY is set to true
-define('PHPBB_VERSION', '3.0.10');
+define('PHPBB_VERSION', '3.0.11');
 
 // Latest MODX version. Only used if LOCAL_ONLY is set to true
 define('LATEST_MODX', '1.2.5');
