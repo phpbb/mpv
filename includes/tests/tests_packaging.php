@@ -46,7 +46,7 @@ class mpv_tests_packaging extends test_base
 		'1.0.2'		=>	'db40dbe549fcbbb5a790f7e81ce8e4db',
 		'1.0.3'		=>	'e0999771662ee6eada0425ff076c3062',
 		'1.0.4'		=>	'ada48057d56ebd22298648a8130fe573',
-		'1.0.5'		=>	'6fc2ecd42400e93fea6468212fef73ab',
+		'1.0.5'		=>	'29c5b8a1c881b0b5b249dbfd29bb6f29',
 	);
 
 	/**
