@@ -21,17 +21,18 @@ class mpv_tests_packaging extends test_base
 	/**
 	 * String with valid MD5 for license.txt
 	 * @access	private
-	 * @var 	string	 
+	 * @var 	string
 	 */
 	private $license_md5 = array('eb723b61539feef013de476e68b5c50a', '0cce1e42ef3fb133940946534fcf8896', 'e060338598cd2cd6b8503733fdd40a11'); // Both seems to be good, one with unix lineends, one with windows?
-	
-	/**	 
+
+	/**
 	 * Array with MD5's for the MODX xsl files.
 	 * IMPORTANT: The first MD5 is _always_ the newest and only valid MD5!
 	 * @access	private
-	 * @var		array	
+	 * @var		array
 	 */
 	private $valid_md5_xsl = array(
+		'2c898226e678f472c708397ee2b6ccd3', // md5 for http://www.phpbb.com/mods/modx/1.2.6/modx.prosilver.en.xsl
 		'515b908b69d5a926fefa9d4176565575', // md5 for http://www.phpbb.com/mods/modx/1.2.5/modx.prosilver.en.xsl
 		'515b908b69d5a926fefa9d4176565575',
 		'cbb5a076d38102ed083b1a0538ee4980', // md5 for http://www.phpbb.com/mods/modx/1.2.4/modx.prosilver.en.xsl
@@ -41,7 +42,7 @@ class mpv_tests_packaging extends test_base
 		'95e0c31a6a6d31922eb6e92b2747dd2b', // md5 for http://www.phpbb.com/mods/modx/1.2.0/modx.prosilver.en.xsl
 		'6497dcb866bf9d0d882368cc9d4c8fae', // md5 for http://www.phpbb.com/mods/utilities/creator/file.php?file=modx.prosilver.en.xsl
 	);
-	
+
 	private $valid_md5_umil = array(
 		'1.0.2'		=>	'db40dbe549fcbbb5a790f7e81ce8e4db',
 		'1.0.3'		=>	'e0999771662ee6eada0425ff076c3062',
@@ -91,13 +92,13 @@ class mpv_tests_packaging extends test_base
 
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Test the MD5 for certian files like UMIL and xsl
 	 *
 	 * @access private
-	 * @return bool	 
+	 * @return bool
 	 */
 	protected function test_files()
 	{
@@ -108,7 +109,7 @@ class mpv_tests_packaging extends test_base
 			foreach ($this->validator->xsl_files as $file)
 			{
 				$md5 = md5_file($this->validator->temp_dir . $file);
-				
+
 				if (!in_array($md5, $this->valid_md5_xsl))
 				{
 					$error = true;
@@ -120,52 +121,52 @@ class mpv_tests_packaging extends test_base
 					$this->push_error(mpv::ERROR_FAIL, 'OLD_XSL', $file, array($md5));
 				}
 			}
-			
+
 			foreach ($this->validator->package_files as $file)
 			{
 				if (strpos($file, 'license.txt') !== false)
 				{
 					$md5 = md5_file($this->validator->temp_dir . $file);
-					
+
 					if (!in_array($md5, $this->license_md5))
 					{
 						$this->push_error(mpv::ERROR_FAIL, 'LICENSE_MD5', $file, array($md5, implode(', ',$this->license_md5)));
 					}
 				}
-				
+
 				$tmp = explode('/', $file);
 
 				if (isset($tmp[sizeof($tmp) - 2]) && isset($tmp[sizeof($tmp) - 1]) && $tmp[sizeof($tmp) - 2] == 'umil' && $tmp[sizeof($tmp) - 1] == 'umil.php')
 				{
 					$md5 = md5_file($this->validator->temp_dir . $file);
-					
+
 					if ($found_umil)
 					{
 						$this->push_error(mpv::ERROR_WARNING, 'POSSIBLE_TWO_UMIL', null, array($file, $found_umil));
 						continue;
 					}
-					
+
 					if (!defined('IN_PHPBB'))
 					{
 						define('IN_PHPBB', true);
 					}
 					include ($this->validator->temp_dir . $file);
-					
+
 					if (!defined('UMIL_VERSION'))
 					{
 						$this->push_error(mpv::ERROR_FAIL, 'NO_UMIL_VERSION', $file);
-						
+
 						continue;
 					}
 					else if (version_compare(UMIL_VERSION, mpv::get_current_version('umil'), '<'))
 					{
 						$this->push_error(mpv::ERROR_FAIL, 'UMIL_OUTDATED', $file);
-						
+
 						// Check to see if the md5 still exists
 						if (isset($this->valid_md5_umil[UMIL_VERSION]) && $this->valid_md5_umil[UMIL_VERSION] != $md5)
 						{
 							// Invalid MD5 for version as well :)
-							$this->push_error(mpv::ERROR_WARNING, 'INCORRECT_UMIL_MD5', $file);							
+							$this->push_error(mpv::ERROR_WARNING, 'INCORRECT_UMIL_MD5', $file);
 						}
 					}
 					else if (!isset($this->valid_md5_umil[UMIL_VERSION]))
@@ -196,7 +197,7 @@ class mpv_tests_packaging extends test_base
 			{
 				continue;
 			}
-			
+
 			if (strtolower(basename($filename)) == 'license.txt')
 			{
 				return true;
@@ -220,8 +221,8 @@ class mpv_tests_packaging extends test_base
 			if (mpv::check_unwanted($filename))
 			{
 				continue;
-			}		
-		
+			}
+
 			$file = strtolower(basename($filename));
 
 			if ($file == 'prosilver.xml' || (strpos($file, 'prosilver') !== false && strpos($file, '.xml') !== false))
