@@ -32,7 +32,7 @@ define('HTML_HEADERS', false);
 define('PHPBB_VERSION', '3.0.11');
 
 // Latest MODX version. Only used if LOCAL_ONLY is set to true
-define('LATEST_MODX', '1.2.5');
+define('LATEST_MODX', '1.2.6');
 
 // Latest UMIL version. Only used if LOCAL_ONLY is set to true
 define('LATEST_UMIL', '1.0.5');
