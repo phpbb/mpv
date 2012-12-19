@@ -1,0 +1,374 @@
+<?xml version="1.0" ?>
+<!-- MODX by the phpBB MOD Team XSD file v1.2.3 copyright 2005-2009 the phpBB MOD Team.
+	$Id: modx-1.2.4.xsd 201 2010-02-24 15:09:09Z tumba25 $ -->
+<xs:schema id="mod" targetNamespace="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd" xmlns:xmod="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd"
+	xmlns="https://www.phpbb.com/mods/xml/modx-1.2.6.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified"
+	xmlns:xdt="http://www.w3.org/2005/xpath-datatypes">
+	<xs:element name="mod" msdata:IsDataSet="true" msdata:Locale="en" msdata:EnforceConstraints="False">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="header" nillable="false" minOccurs="1" maxOccurs="1">
+					<xs:complexType>
+						<xs:choice maxOccurs="unbounded">
+							<xs:element name="title" nillable="false" minOccurs="1" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent msdata:ColumnName="title_Text" msdata:Ordinal="1">
+										<xs:extension base="xs:string">
+											<xs:attribute name="lang" form="unqualified" type="xs:language" use="required" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+
+							<xs:element name="description" nillable="false" minOccurs="1" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent msdata:ColumnName="description_Text" msdata:Ordinal="1">
+										<xs:extension base="xs:string">
+											<xs:attribute name="lang" form="unqualified" type="xs:language" use="required" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+
+							<xs:element name="author-notes" nillable="false" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent msdata:ColumnName="author-notes_Text" msdata:Ordinal="1">
+										<xs:extension base="xs:string">
+											<xs:attribute name="lang" form="unqualified" type="xs:language" use="required" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+
+							<xs:element name="github" nillable="false" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent msdata:ColumnName="github_Text" msdata:Ordinal="1">
+										<xs:extension base="xs:string">
+											<xs:attribute name="lang" form="unqualified" type="xs:language" use="optional" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+
+							<xs:element name="link-group" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:choice>
+										<xs:element name="link" minOccurs="1" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:simpleContent msdata:ColumnName="link_Text" msdata:Ordinal="1">
+													<xs:extension base="xs:string">
+														<xs:attribute name="type" form="unqualified" type="xmod:linkTypes" use="required" />
+														<xs:attribute name="href" form="unqualified" type="xs:string" use="required" />
+														<xs:attribute name="realname" form="unqualified" type="xs:string" use="optional" />
+														<xs:attribute name="lang" form="unqualified" type="xs:string" use="required" />
+													</xs:extension>
+												</xs:simpleContent>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+
+							<xs:element name="author-group" minOccurs="1" maxOccurs="1">
+								<xs:complexType>
+									<xs:choice maxOccurs="unbounded">
+										<xs:element name="author" minOccurs="1" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:choice maxOccurs="unbounded">
+													<xs:element name="realname" type="xs:string" minOccurs="0" maxOccurs="1" />
+													<xs:element name="email" type="xs:string" minOccurs="0" maxOccurs="1" />
+													<xs:element name="username" nillable="true" minOccurs="1" maxOccurs="1">
+														<xs:complexType>
+															<xs:simpleContent msdata:ColumnName="username_Text" msdata:Ordinal="0">
+																<xs:extension base="xs:string">
+																	<xs:attribute name="phpbbcom" form="unqualified" type="xs:string" use="optional" />
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="homepage" type="xs:string" minOccurs="0" maxOccurs="1" />
+													<xs:element name="contributions" type="xs:string" minOccurs="0" maxOccurs="1" />
+													<xs:element name="contributions-group" minOccurs="0">
+														<xs:complexType>
+															<xs:choice maxOccurs="unbounded">
+																<xs:element name="contributions" minOccurs="0">
+																	<xs:complexType>
+																		<xs:attribute name="status" form="unqualified" type="xmod:authorStatus" use="required" />
+																		<xs:attribute name="position" form="unqualified" type="xs:string" use="optional" />
+																		<xs:attribute name="from" form="unqualified" type="xs:date" use="optional" />
+																		<xs:attribute name="to" form="unqualified" type="xs:date" use="optional" />
+																	</xs:complexType>
+																</xs:element>
+															</xs:choice>
+														</xs:complexType>
+													</xs:element>
+												</xs:choice>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="mod-version" type="xs:string" minOccurs="1" maxOccurs="1" />
+							<xs:element name="installation" minOccurs="1" maxOccurs="1">
+								<xs:complexType>
+									<xs:choice maxOccurs="unbounded">
+										<xs:element name="level" type="xmod:installationLevels" minOccurs="1" maxOccurs="1" />
+										<xs:element name="time" type="xs:positiveInteger" minOccurs="1" maxOccurs="1" />
+										<xs:element name="target-version" type="xs:string" minOccurs="1" maxOccurs="1" />
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="history" minOccurs="0" maxOccurs="1">
+								<xs:complexType>
+									<xs:choice maxOccurs="unbounded">
+										<xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:choice maxOccurs="unbounded">
+													<xs:element name="date" type="xs:date" minOccurs="1" maxOccurs="1" />
+													<xs:element name="rev-version" type="xs:string" minOccurs="1" maxOccurs="1" />
+													<xs:element name="changelog" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:choice maxOccurs="unbounded">
+																<xs:element name="change" nillable="false" minOccurs="1" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:simpleContent msdata:ColumnName="change_Text" msdata:Ordinal="0">
+																			<xs:extension base="xs:string"></xs:extension>
+																		</xs:simpleContent>
+																	</xs:complexType>
+																</xs:element>
+															</xs:choice>
+															<xs:attribute name="lang" form="unqualified" type="xs:language" use="required" />
+														</xs:complexType>
+													</xs:element>
+												</xs:choice>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="meta" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="name" form="unqualified" type="xs:string" />
+									<xs:attribute name="content" form="unqualified" type="xs:string" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="license" type="xs:string" minOccurs="1" maxOccurs="1" />
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="action-group">
+					<xs:complexType>
+						<xs:choice maxOccurs="unbounded">
+							<xs:element name="sql" nillable="true" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent msdata:ColumnName="sql_Text" msdata:Ordinal="1">
+										<xs:extension base="xs:string">
+											<xs:attribute name="dbms" form="unqualified" type="xmod:sqlTypes" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="copy" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:choice maxOccurs="unbounded">
+										<xs:element name="file" minOccurs="1" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="from" form="unqualified" type="xs:string" use="required" />
+												<xs:attribute name="to" form="unqualified" type="xs:string" use="required" />
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="delete" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:choice maxOccurs="unbounded">
+										<xs:element name="file" minOccurs="1" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="name" form="unqualified" type="xs:string" use="required" />
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="open" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:choice maxOccurs="unbounded">
+										<xs:element name="edit" minOccurs="1" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:choice maxOccurs="unbounded">
+													<xs:element name="find" nillable="true" minOccurs="1" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:simpleContent msdata:ColumnName="find_Text" msdata:Ordinal="0">
+																<xs:extension base="xs:string">
+																	<xs:attribute name="type" form="unqualified" type="xmod:findTypes" use="optional" />
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="remove" nillable="true" minOccurs="0" maxOccurs="1">
+														<xs:complexType>
+															<xs:simpleContent msdata:ColumnName="remove_Text" msdata:Ordinal="0">
+																<xs:extension base="xs:string">
+																	<xs:attribute name="type" form="unqualified" type="xmod:findTypes" use="optional" />
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="action" nillable="true" minOccurs="0" maxOccurs="3">
+														<xs:complexType>
+															<xs:simpleContent msdata:ColumnName="action_Text" msdata:Ordinal="1">
+																<xs:extension base="xs:string">
+																	<xs:attribute name="type" form="unqualified" type="xmod:actionTypes" use="required" />
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="inline-edit" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:choice maxOccurs="unbounded">
+																<xs:element name="inline-find" nillable="true" minOccurs="1" maxOccurs="unbounded">
+																	<xs:complexType>
+																		<xs:simpleContent msdata:ColumnName="inline-find_Text" msdata:Ordinal="0">
+																			<xs:extension base="xs:string">
+																				<xs:attribute name="type" form="unqualified" type="xmod:findTypes" use="optional" />
+																			</xs:extension>
+																		</xs:simpleContent>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="inline-remove" nillable="true" minOccurs="0" maxOccurs="1">
+																	<xs:complexType>
+																		<xs:simpleContent msdata:ColumnName="inline-remove_Text" msdata:Ordinal="0">
+																			<xs:extension base="xs:string">
+																				<xs:attribute name="type" form="unqualified" type="xmod:findTypes" use="optional" />
+																			</xs:extension>
+																		</xs:simpleContent>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="inline-action" nillable="true" minOccurs="1" maxOccurs="3">
+																	<xs:complexType>
+																		<xs:simpleContent msdata:ColumnName="inline-action_Text" msdata:Ordinal="1">
+																			<xs:extension base="xs:string">
+																				<xs:attribute name="type" form="unqualified" type="xmod:inlineActionTypes" use="required" />
+																			</xs:extension>
+																		</xs:simpleContent>
+																	</xs:complexType>
+																</xs:element>
+															</xs:choice>
+														</xs:complexType>
+													</xs:element>
+													<xs:element name="comment" nillable="true" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:simpleContent msdata:ColumnName="comment_Text" msdata:Ordinal="1">
+																<xs:extension base="xs:string">
+																	<xs:attribute name="lang" form="unqualified" type="xs:language" use="required" />
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:choice>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+									<xs:attribute name="src" form="unqualified" type="xs:string" use="required" />
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="php-installer" type="xs:string" minOccurs="0" maxOccurs="1" />
+							<xs:element name="diy-instructions" nillable="true" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent msdata:ColumnName="diy-instructions_Text" msdata:Ordinal="1">
+										<xs:extension base="xs:string">
+											<xs:attribute name="lang" form="unqualified" type="xs:language" use="required" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+		<xs:key name="one-title-per-language">
+			<xs:selector xpath=".//xmod:title" />
+			<xs:field xpath="@lang" />
+		</xs:key>
+		<xs:key name="one-description-per-language">
+			<xs:selector xpath=".//xmod:description" />
+			<xs:field xpath="@lang" />
+		</xs:key>
+		<xs:key name="one-author-notes-per-language">
+			<xs:selector xpath=".//xmod:author-notes" />
+			<xs:field xpath="@lang" />
+		</xs:key>
+		<xs:unique name="one-author-per-username">
+			<xs:selector xpath=".//xmod:author" />
+			<xs:field xpath="xmod:realname" />
+		</xs:unique>
+		<xs:key name="one-diy-instructions-per-language">
+			<xs:selector xpath=".//xmod:diy-instructions" />
+			<xs:field xpath="@lang" />
+		</xs:key>
+	</xs:element>
+	<xs:simpleType name="authorStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="past" />
+			<xs:enumeration value="current" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="sqlTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="mysql" />
+			<xs:enumeration value="mysql_40" />
+			<xs:enumeration value="mysql_41" />
+			<xs:enumeration value="mysqli" />
+			<xs:enumeration value="mysql4" />
+			<xs:enumeration value="mssql" />
+			<xs:enumeration value="oracle" />
+			<xs:enumeration value="postgres" />
+			<xs:enumeration value="firebird" />
+			<xs:enumeration value="sqlite" />
+			<xs:enumeration value="sql-parser" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="actionTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="after-add" />
+			<xs:enumeration value="before-add" />
+			<xs:enumeration value="replace-with" />
+			<xs:enumeration value="operation" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="inlineActionTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="after-add" />
+			<xs:enumeration value="before-add" />
+			<xs:enumeration value="replace-with" />
+			<xs:enumeration value="operation" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="findTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="normal" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="installationLevels">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="easy" />
+			<xs:enumeration value="intermediate" />
+			<xs:enumeration value="advanced" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="linkTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="contrib" />
+			<xs:enumeration value="dependency" />
+			<xs:enumeration value="language" />
+			<xs:enumeration value="parent" />
+			<xs:enumeration value="template" />
+			<xs:enumeration value="template-lang" />
+			<xs:enumeration value="text" />
+			<xs:enumeration value="uninstall" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
