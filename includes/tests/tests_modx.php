@@ -28,10 +28,10 @@ class mpv_tests_modx extends test_base
 	/**
 	 * The MODX cortex_xml object we're currently working with
 	 *
-	 * @access	private
+	 * @access	public
 	 * @var		object
 	 */
-	private $modx_object;
+	public $modx_object;
 
 	/**
 	 * The directory this MODX file is in.
@@ -204,7 +204,13 @@ class mpv_tests_modx extends test_base
 		// Check the version format and numbering
 		if (preg_match('#((\d+)\.)+(\d+)[a-z]?#', $version, $matches))
 		{
-			if ($matches[0] < 1 || preg_match('#((\d+)\.)+(\d+)-([' . $option . ']+)(\d+{0,)?#i', $version, $matches))
+			if (preg_match('#((\d+)\.)+(\d+)-(' . $option . '+)(\d+{0,)?#i', $version, $matches))
+			{
+				$this->push_error(mpv::ERROR_FAIL, 'MAJOR_VERSION_UNSTABLE', array($version));
+				return false;
+			}
+
+			if (version_compare('1.0.0', $version) > 0)
 			{
 				$this->push_error(mpv::ERROR_FAIL, 'MAJOR_VERSION_UNSTABLE', array($version));
 				return false;
@@ -214,15 +220,6 @@ class mpv_tests_modx extends test_base
 		{
 			// Not a valid version
 			$this->push_error(mpv::ERROR_FAIL, 'INVALID_VERSION_FORMAT', array($version));
-			return false;
-		}
-		
-		$tmp = trim(preg_replace('#((\d+)\.)+(\d+)[a-z]?#', '', $version));
-		
-		if (!empty($tmp))
-		{
-			// Woohoo, user is nub, something more as a number
-			$this->push_error(mpv::ERROR_FAIL, 'VERSION_SHOULD_BE_VERSION', array($version, $version));
 			return false;
 		}
 
