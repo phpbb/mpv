@@ -40,6 +40,7 @@ $lang = array_merge($lang, array(
 	'MIN_PHP'				=> 'PHP 5.2.0 is required',
 	'INVALID_ID'			=> 'Invalid ID',
 	'NO_DATA'				=> 'No data found',
+	'INVALID_MODE'			=> 'Invalid server mode',
 	'VALIDATION_RESULTS'	=> 'Validation results:',
 	'MEM_USE'				=> 'Memory Usage:',
 	'TOTAL_TIME'			=> 'Time : %.3fs',
