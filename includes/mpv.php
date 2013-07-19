@@ -897,20 +897,20 @@ class mpv
 
 		$errstr = '';
 		$errno = 0;
-		$host = 'www.phpbb.com';
+		$host = 'version.phpbb.com';
 		$port = 80;
 		$timeout = 10;
-		$directory = '/updatecheck';
+		$directory = '';
 		switch ($type)
 		{
 			case 'phpbb':
-				$filename = '30x.txt';
+				$filename = 'phpbb/30x.txt';
 			break;
 			case 'modx':
-				$filename = 'modx_1x.txt';
+				$filename = 'modx/modx_1x.txt';
 			break;
 			case 'umil':
-				$filename = 'umil.txt';
+				$filename = 'umil/umil.txt';
 			break;
 			default:
 				return false;
