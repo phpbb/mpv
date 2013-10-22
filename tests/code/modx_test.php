@@ -8,6 +8,9 @@
 */
 
 require_once dirname(__FILE__) . '/../../includes/tests/tests_modx.php';
+require_once dirname(__FILE__) . '/../mock/modx_object.php';
+require_once dirname(__FILE__) . '/../mock/modx_license.php';
+require_once dirname(__FILE__) . '/../mock/modx_version.php';
 
 class phpbb_modx_test extends phpbb_test_case
 {
@@ -103,41 +106,4 @@ class phpbb_modx_test extends phpbb_test_case
 
 		$this->assertEquals($expected_result, $result);
 	}
-}
-
-class phpbb_mock_modx_object
-{
-	private $xpath;
-
-	private $data_ary;
-
-	public function get_xpath($foo, $bar = true)
-	{
-		return $this->xpath;
-	}
-
-	public function set_xpath($foo)
-	{
-		$this->xpath = $foo;
-	}
-
-	public function get_by_name($name, $return = true)
-	{
-		return (isset($this->data_ary[$name])) ? $this->data_ary[$name] : false;
-	}
-
-	public function set_by_name($name, $value)
-	{
-		$this->data_ary[$name] = $value;
-	}
-}
-
-class phpbb_mock_modx_version
-{
-	public $value;
-}
-
-class phpbb_mock_modx_license
-{
-	public $value;
 }
