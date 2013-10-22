@@ -392,7 +392,12 @@ class mpv_tests_modx extends test_base
 		}
 		$license = $license->value;
 
-		if ($license != 'http://opensource.org/licenses/gpl-license.php GNU General Public License v2')
+		$allowed_licenses = array(
+			'http://opensource.org/licenses/gpl-license.php GNU General Public License v2',
+			'http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2',
+		);
+
+		if (!in_array($license, $allowed_licenses))
 		{
 			$this->push_error(mpv::ERROR_WARNING, 'LICENSE_NOT_GPL2');
 

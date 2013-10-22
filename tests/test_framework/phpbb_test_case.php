@@ -11,6 +11,8 @@ class phpbb_test_case extends PHPUnit_Framework_TestCase
 {
 	protected $test_case_helpers;
 
+	public static $expected_error;
+
 	public function __construct($name = NULL, array $data = array(), $dataName = '')
 	{
 		parent::__construct($name, $data, $dataName);
@@ -38,6 +40,6 @@ class phpbb_test_case extends PHPUnit_Framework_TestCase
 
 	public function setExpectedTriggerError($errno, $message = '')
 	{
-		$this->get_test_case_helpers()->setExpectedTriggerError($errno, $message);
+		self::$expected_error = $message;
 	}
 }
