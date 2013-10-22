@@ -7,7 +7,7 @@
 *
 */
 
-class mpv
+class mpv extends phpbb_test_case
 {
 	/**
 	 * Constant for "fail" error
@@ -31,7 +31,6 @@ class mpv
 	
 	public function push_error($type, $message)
 	{
-		trigger_error($message, E_USER_ERROR);
+		$this->assertEquals(phpbb_test_case::$expected_error, $message);
 	}
 }
-?>

@@ -16,10 +16,10 @@ class phpbb_short_test extends phpbb_test_case
 	{
 		// array(Input -> redirect(), expected triggered error (else false), expected returned result url (else false))
 		return array(
-			array('testcode/short1', 'SHORT_TAGS', false),
-			array('testcode/short2', 'SHORT_TAGS', false),
-			array('testcode/short3', 'SHORT_TAGS', false),
-			array('testcode/short4', 'SHORT_TAGS', false),
+			array('testcode/short1', 'SHORT_TAGS', true),
+			array('testcode/short2', 'SHORT_TAGS', true),
+			array('testcode/short3', 'SHORT_TAGS', true),
+			array('testcode/short4', 'SHORT_TAGS', true),
 			array('testcode/noShort', false, true),			
 		);
 	}
