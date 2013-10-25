@@ -36,7 +36,7 @@ $mpv->validate('./test-file.zip');
 
 if (HTML_HEADERS)
 {
-	print '<!DOCTYPE html>'
+	print '<!DOCTYPE html>';
 	print '<html>
 	<head>
 	<title>' . $lang['TITLE'] . '</title>
