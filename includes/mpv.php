@@ -639,6 +639,7 @@ class mpv
 					$file_exists++;
 				}
 			}
+			closedir($dh);
 		}
 
 		if (!$file_exists && $dir_exists)
