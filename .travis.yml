@@ -10,7 +10,7 @@ install:
   - php composer.phar install --dev --no-interaction --prefer-source
 
 script:
-  - vendor/phpunit/bin/phpunit
+  - vendor/bin/phpunit
 
 matrix:
   allow_failures:
