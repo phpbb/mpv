@@ -3,6 +3,8 @@
 namespace epv\Files\Type;
 
 
-interface CssFileInterface {
+use epv\Files\FileInterface;
+
+interface CssFileInterface extends FileInterface{
 
 } 

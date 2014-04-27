@@ -3,6 +3,8 @@
 namespace epv\Files\Type;
 
 
-interface XmlFileInterface {
+use epv\Files\FileInterface;
+
+interface XmlFileInterface extends FileInterface {
 
 } 

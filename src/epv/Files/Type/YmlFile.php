@@ -28,6 +28,16 @@ class YmlFile extends BaseFile implements YmlFileInterface
     }
 
     /**
+     * Get a array with the data in the yaml file.
+     *
+     * @return array
+     */
+    public function getYaml()
+    {
+        return $this->yamlFile;
+    }
+
+    /**
      * Get the file type for the specific file.
      * @return int
      */

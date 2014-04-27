@@ -9,6 +9,8 @@
 namespace epv\Output;
 
 
+use epv\Files\FileInterface;
+
 class Messages {
     private static $messages = array();
     private static $fatal;
@@ -26,8 +28,9 @@ class Messages {
      *
      * @param $type int message type
      * @param $message string message.
+     * @param \epv\Files\FileInterface $file
      */
-    public static function addMessage($type, $message)
+    public static function addMessage($type, $message, FileInterface $file = null)
     {
         switch ($type)
         {
@@ -46,7 +49,7 @@ class Messages {
             default:
                 // TODO: Decide on this?
         }
-        self::$messages[] = new Message($type, $message);
+        self::$messages[] = new Message($type, $message, $file);
     }
 
     /**

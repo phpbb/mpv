@@ -3,6 +3,8 @@
 namespace epv\Files\Type;
 
 
-interface BinairFileInterface {
+use epv\Files\FileInterface;
+
+interface BinairFileInterface extends FileInterface{
 
 } 

@@ -4,6 +4,7 @@ namespace epv\Tests;
 
 
 use epv\Files\FileLoader;
+use epv\Files\Line;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -73,7 +74,7 @@ class TestRunner
             {
                 if ($test->doValidateFile($file->getFileType()))
                 {
-                    $test->validateFile();
+                    $test->validateFile($file);
                 }
 
                 // To prevent looping over too many tests, we check here if we need to loop
@@ -86,12 +87,15 @@ class TestRunner
 
             if (sizeof ($linetest))
             {
+                $linenr = 1;
                 foreach ($file->getLines() as $line)
                 {
+                    $runline = new Line($file, $linenr, $line);
                     foreach ($linetest as $test)
                     {
-                        $test->validateLine();
+                        $test->validateLine($runline);
                     }
+                    $linenr++;
                 }
             }
         }

@@ -3,8 +3,9 @@
 namespace epv\Tests;
 
 
+use epv\Files\FileInterface;
+use epv\Files\LineInterface;
 use epv\Tests\Exception\TestException;
-use epv\Tests\Tests\Type;
 
 abstract class BaseTest implements TestInterface {
     private $debug;
@@ -17,23 +18,31 @@ abstract class BaseTest implements TestInterface {
      */
     protected  $directory = false;
 
+    /**
+     * @param $debug
+     */
     public function __construct($debug)
     {
         $this->debug = $debug;
     }
 
     /**
+     *
+     * @param \epv\Files\LineInterface $line
      * @throws Exception\TestException
+     * @internal param $
      */
-    public function validateLine()
+    public function validateLine(LineInterface $line)
     {
         throw new TestException("Test declared to be a line test, but doesn't implement validateLine");
     }
 
     /**
+     * @param \epv\Files\FileInterface $file
      * @throws Exception\TestException
+     * @internal param $
      */
-    public function validateFile()
+    public function validateFile(FileInterface $file)
     {
         throw new TestException("Test declared to be a file test, but doesn't implement validateFile");
     }

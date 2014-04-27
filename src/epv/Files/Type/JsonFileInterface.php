@@ -3,6 +3,8 @@
 namespace epv\Files\Type;
 
 
-interface JsonFileInterface {
+use epv\Files\FileInterface;
+
+interface JsonFileInterface extends FileInterface{
 
 } 

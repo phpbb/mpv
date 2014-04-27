@@ -3,6 +3,8 @@
 namespace epv\Files\Type;
 
 
-interface PHPFileInterface {
+use epv\Files\FileInterface;
+
+interface PHPFileInterface  extends FileInterface{
 
 } 

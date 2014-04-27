@@ -41,4 +41,13 @@ abstract class BaseFile implements FileInterface {
     {
         return $this->fileArray;
     }
+
+    /**
+     * Get the filename for this file.
+     * @return filename
+     */
+    public function getFilename()
+    {
+        return $this->fileName;
+    }
 } 

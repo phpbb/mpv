@@ -3,17 +3,25 @@
 namespace epv\Tests;
 
 
+use epv\Files\FileInterface;
+use epv\Files\LineInterface;
+
 interface TestInterface {
     /**
      * Validate a line in a specific file.
      * This method is only called if doValidateLine returns true.
+     * @param \epv\Files\LineInterface $line Line to validate
+     * @return
      */
-    public function validateLine();
+    public function validateLine(LineInterface $line);
+
     /**
      * Validate a full file.
      * This method is only called if doValidateFile returns true.
+     * @param \epv\Files\FileInterface $file
+     * @return
      */
-    public function validateFile();
+    public function validateFile(FileInterface $file);
 
     /**
      * Validate the directory listing.

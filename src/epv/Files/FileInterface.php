@@ -15,4 +15,10 @@ interface FileInterface {
      * @return array
      */
     function getLines();
+
+    /**
+     * Get the filename for this file.
+     * @return string
+     */
+    function getFilename();
 } 

@@ -3,6 +3,8 @@
 namespace epv\Files\Type;
 
 
-interface JavascriptFileInterface {
+use epv\Files\FileInterface;
+
+interface JavascriptFileInterface  extends FileInterface{
 
 } 

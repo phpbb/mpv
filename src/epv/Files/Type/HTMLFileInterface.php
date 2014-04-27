@@ -3,6 +3,8 @@
 namespace epv\Files\Type;
 
 
-interface HTMLFileInterface {
+use epv\Files\FileInterface;
+
+interface HTMLFileInterface extends FileInterface{
 
 } 
