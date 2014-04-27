@@ -3,6 +3,6 @@
 namespace epv\Files\Type;
 
 
-interface ComposerFileInterface {
+interface ComposerFileInterface extends JsonFileInterface {
 
 } 

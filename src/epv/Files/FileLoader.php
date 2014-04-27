@@ -6,6 +6,7 @@ namespace epv\Files;
 use epv\Files\Exception\FileException;
 use epv\Files\Type\ComposerFile;
 use epv\Files\Type\HTMLFile;
+use epv\Files\Type\JsonFile;
 use epv\Files\Type\PHPFile;
 use epv\Files\Type\PlainFile;
 use epv\Files\Type\XmlFile;
@@ -106,7 +107,7 @@ class FileLoader {
                 }
                 else
                 {
-                    return null;
+                    return new JsonFile($this->debug, $fileName );
                 }
             case 'yml':
                 return new YmlFile($this->debug, $fileName);
@@ -116,7 +117,9 @@ class FileLoader {
             case 'xml':
                 return new XmlFile($this->debug, $fileName);
             default:
-                    return null;
+                $file = basename($fileName)
+                Messages::addMessage(Messages::WARNING, "Can't detect type for file $file, handling it as binair file");
+                return BinairFile($this->debug, $fileName);
         }
     }
 } 

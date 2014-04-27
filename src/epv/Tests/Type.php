@@ -19,4 +19,6 @@ class Type {
     const TYPE_SERVICE = 32;
     const TYPE_XML = 64;
     const TYPE_YML = 128;
+    const TYPE_JSON = 256;
+    const TYPE_BINAIR = 512;
 } 
