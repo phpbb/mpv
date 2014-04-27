@@ -64,6 +64,6 @@ class Messages {
      */
     public static function getFatalCount()
     {
-        return self::$fatal + self::$error;
+        return self::$fatal;
     }
 } 
