@@ -20,7 +20,7 @@ class epv_test_validate_directory_structure  extends BaseTest{
             'license.txt',
             'composer.json',
             'ext.php',
-            'blala.php',
+            //'blala.php',
         );
 
         foreach ($requiredFiles as $file)
@@ -38,7 +38,7 @@ class epv_test_validate_directory_structure  extends BaseTest{
             }
             if (!$found)
             {
-                Messages::addMessage(Messages::ERROR, sprintf("The file %s is missing in the extension package.", $file));
+                Messages::addMessage(Messages::ERROR, sprintf("The required file %s is missing in the extension package.", $file));
             }
         }
     }
