@@ -25,14 +25,14 @@ class ValidateCommand extends  Command{
             ->setName('run')
             ->setDescription('Run the extension validator on your extension.')
             ->addArgument('dir', InputArgument::REQUIRED, 'The directory the extension is in.')
-            ->addOption('debug', null, InputOption::VALUE_OPTIONAL, "Run in debug")
+            ->addOption('debug', null, InputOption::VALUE_NONE, "Run in debug")
 
         ;
     }
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dir = $input->getArgument("dir");
-        $this->debug = !$input->getOption("debug");
+        $this->debug = $input->getOption("debug");
 
         $output = new Output($output, $this->debug);
 

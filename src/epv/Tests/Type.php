@@ -21,4 +21,7 @@ class Type {
     const TYPE_YML = 128;
     const TYPE_JSON = 256;
     const TYPE_BINAIR = 512;
+    const TYPE_CSS = 1024;
+    const TYPE_JS = 2048;
+
 } 

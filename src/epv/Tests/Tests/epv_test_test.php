@@ -10,8 +10,7 @@ class epv_test_test extends BaseTest{
     {
         parent::__construct($debug);
 
-        $this->fileTypeLine = Type::TYPE_PHP | Type::TYPE_PLAIN;
-
+        //$this->fileTypeLine = Type::TYPE_PHP | Type::TYPE_PLAIN;
     }
 
     public function testName()

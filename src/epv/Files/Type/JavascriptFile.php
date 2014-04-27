@@ -3,14 +3,15 @@
 namespace epv\Files\Type;
 
 use epv\Tests\Tests\Type;
+use epv\Files\BaseFile;
 
-class ServiceFile extends YmlFile implements ServiceFileInterface{
+class JavascriptFile extends BaseFile implements JavascriptFileInterface{
     /**
      * Get the file type for the specific file.
      * @return int
      */
     function getFileType()
     {
-        return Type::TYPE_YML | Type::TYPE_SERVICE;
+        return Type::TYPE_JS;
     }
 } 

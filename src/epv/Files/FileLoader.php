@@ -5,12 +5,16 @@ namespace epv\Files;
 
 use epv\Files\Exception\FileException;
 use epv\Files\Type\ComposerFile;
+use epv\Files\Type\CssFile;
 use epv\Files\Type\HTMLFile;
+use epv\Files\Type\JavascriptFile;
 use epv\Files\Type\JsonFile;
 use epv\Files\Type\PHPFile;
 use epv\Files\Type\PlainFile;
+use epv\Files\Type\ServiceFile;
 use epv\Files\Type\XmlFile;
 use epv\Files\Type\YmlFile;
+use epv\Files\Type\BinairFile;
 use epv\Output\Messages;
 use epv\Output\OutputInterface;
 
@@ -56,7 +60,7 @@ class FileLoader {
             // If that has no matches, we try the
             // last extension.
 
-            $file = self::tryLoadFile($fileName, $split[1]);
+            $file = self::tryLoadFile($fileName, $split[1], true);
 
             if (!$file)
             {
@@ -88,9 +92,10 @@ class FileLoader {
      *
      * @param $fileName
      * @param $extension
-     * @return ComposerFile|HTMLFile|PHPFile|PlainFile|XmlFile|YmlFile|null
+     * @param $returnNull boolean Return null in case of then file is not reconised.
+     * @return BinairFile|ComposerFile|CssFile|HTMLFile|JavascriptFile|JsonFile|PHPFile|PlainFile|XmlFile|YmlFile|null
      */
-    private function tryLoadFile($fileName, $extension)
+    private function tryLoadFile($fileName, $extension, $returnNull = false)
     {
         $this->output->writelnIfDebug("<info>Trying to load $fileName with extension $extension</info>");
 
@@ -110,16 +115,30 @@ class FileLoader {
                     return new JsonFile($this->debug, $fileName );
                 }
             case 'yml':
+                if (strtolower(basename($fileName)) == 'services.yml')
+                {
+                    $this->output->writelnIfDebug("Srvices");
+                    return new ServiceFile($this->debug, $fileName);
+                }
                 return new YmlFile($this->debug, $fileName);
             case 'txt':
             case 'md':
                 return new PlainFile($this->debug, $fileName);
             case 'xml':
                 return new XmlFile($this->debug, $fileName);
+            case 'js':
+                return new JavascriptFile($this->debug, $fileName);
+            case 'css':
+                return new CssFile($this->debug, $fileName);
             default:
+                if ($returnNull)
+                {
+                    return null;
+                }
+
                 $file = basename($fileName);
                 Messages::addMessage(Messages::WARNING, "Can't detect type for file $file, handling it as binair file");
-                return BinairFile($this->debug, $fileName);
+                return new BinairFile($this->debug, $fileName);
         }
     }
 } 

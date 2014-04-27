@@ -60,6 +60,41 @@ class TestRunner
                 $test->validateDirectory($this->dirList);
             }
         }
+
+        // Time to loop over the files in memory,
+        // And over the tests that are available.
+        // First do the full file check.
+        // After that loop over each line and test per line.
+        foreach ($this->files as $file)
+        {
+            $linetest = array();
+
+            foreach ($this->tests as $test)
+            {
+                if ($test->doValidateFile($file->getFileType()))
+                {
+                    $test->validateFile();
+                }
+
+                // To prevent looping over too many tests, we check here if we need to loop
+                // over tests for line by line tests.
+                if ($test->doValidateLine($file->getFileType()))
+                {
+                    $linetest[] = $test;
+                }
+            }
+
+            if (sizeof ($linetest))
+            {
+                foreach ($file->getLines() as $line)
+                {
+                    foreach ($linetest as $test)
+                    {
+                        $test->validateLine();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -109,7 +144,7 @@ class TestRunner
      */
     private function tryToLoadTest(SplFileInfo $test)
     {
-        $this->output->writeln("<info>Got {$test->getRealpath()}.</info>");
+        $this->output->writelnIfDebug("<info>Got {$test->getRealpath()}.</info>");
         $file = str_replace('.php', '', basename($test->getRealPath()));
 
         $class = '\\epv\\Tests\\Tests\\' . $file;

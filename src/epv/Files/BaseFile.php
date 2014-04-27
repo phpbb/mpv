@@ -5,12 +5,12 @@ namespace epv\Files;
 
 use epv\Files\Exception\FileException;
 
-class BaseFile implements FileInterface {
+abstract class BaseFile implements FileInterface {
 
-    private $fileName;
-    private $fileData;
-    private $fileArray;
-    private $debug;
+    protected  $fileName;
+    protected  $fileData;
+    protected  $fileArray;
+    protected  $debug;
 
     /**
      * @param $debug Debug Mode
@@ -32,5 +32,13 @@ class BaseFile implements FileInterface {
             throw new FileException("Unable to read file {$fileName}.");
         }
         $this->fileArray = explode("\n", $this->fileData);
+    }
+
+    /**
+     * @return array
+     */
+    public function getLines()
+    {
+        return $this->fileArray;
     }
 } 

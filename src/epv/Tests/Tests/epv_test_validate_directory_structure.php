@@ -20,7 +20,6 @@ class epv_test_validate_directory_structure  extends BaseTest{
             'license.txt',
             'composer.json',
             'ext.php',
-            //'blala.php',
         );
 
         foreach ($requiredFiles as $file)
@@ -45,6 +44,6 @@ class epv_test_validate_directory_structure  extends BaseTest{
 
     public function testName()
     {
-        return "EPV test";
+        return "Validate directory structure";
     }
 }
