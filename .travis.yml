@@ -1,0 +1,24 @@
+language: php
+php:
+  - 5.3.3
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
+
+install:
+  - php composer.phar install --dev --no-interaction --prefer-source
+
+script:
+  - vendor/phpunit/bin/phpunit
+
+matrix:
+  allow_failures:
+    - php: hhvm
+
+notifications:
+  email:
+    recipients:
+      - paul999@phpbb.com
+    on_success: change
+    on_failure: change

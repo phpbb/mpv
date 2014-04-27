@@ -1,0 +1,34 @@
+{
+    "name": "phpbb/epv",
+    "description": "A extension validator for phpBB extensions. Extensions are required to pass the validator when submitted to the extension database.",
+    "require-dev": {
+    },
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Paul Sohier",
+            "email": "paul@phpbb.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/yaml": "2.4.*",
+        "symfony/console": "2.4.*",
+        "symfony/finder": "2.4.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "bin": [
+        "epv/EPV"
+    ],
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+}
