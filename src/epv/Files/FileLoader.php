@@ -117,7 +117,7 @@ class FileLoader {
             case 'xml':
                 return new XmlFile($this->debug, $fileName);
             default:
-                $file = basename($fileName)
+                $file = basename($fileName);
                 Messages::addMessage(Messages::WARNING, "Can't detect type for file $file, handling it as binair file");
                 return BinairFile($this->debug, $fileName);
         }
