@@ -44,7 +44,7 @@ class mpv_tests_code extends test_base
 			// Only test PHP files
 			// We also check files that should be binary, but arent.
 			// Maybe there is php in that?
-			if (in_array(substr($package_file, -3), array('txt', 'tml', 'htm', 'tpl', 'xsl', 'xml', 'css', '.js', 'sql', 'ess')) || $this->check_binary($this->validator->temp_dir . $package_file))
+			if (in_array(substr($package_file, -3), array('.md', 'txt', 'tml', 'htm', 'tpl', 'xsl', 'xml', 'css', '.js', 'sql', 'ess')) || $this->check_binary($this->validator->temp_dir . $package_file))
 
 			{
 				continue;
@@ -90,7 +90,7 @@ class mpv_tests_code extends test_base
 		$base = basename($filename);
 		$ext = substr($base, -3);
 
-		if (in_array($ext, array('txt', 'php', 'tml', 'htm', 'tpl', 'xsl', 'xml', 'css', '.js', 'sql', 'ess')))
+		if (in_array($ext, array('.md', 'txt', 'php', 'tml', 'htm', 'tpl', 'xsl', 'xml', 'css', '.js', 'sql', 'ess')))
 		{
 			return false;
 		}
