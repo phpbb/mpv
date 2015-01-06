@@ -340,7 +340,7 @@ function generate_text_for_html_display($text)
 	);
 
 	//Replace BBCode
-	$text = preg_replace(array_keys($bbcode), array_values($bbcode), $text);
+	$text = @preg_replace(array_keys($bbcode), array_values($bbcode), $text);
 	
 	return $text;
 }
