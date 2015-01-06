@@ -16,14 +16,14 @@ function end_output()
 	// Some debug stuff.
 	$mtime = explode(' ', microtime());
 	$totaltime = $mtime[0] + $mtime[1] - $starttime;
-	
+
 	if (is_array($lang))
 	{
 		$debug_output = "\n" . sprintf($lang['TOTAL_TIME'], $totaltime);
 	}
 	else
 	{
-		$debug_output = "\n" . sprintf('Time : %.3fs', $totaltime);	
+		$debug_output = "\n" . sprintf('Time : %.3fs', $totaltime);
 	}
 
 	if (function_exists('memory_get_usage') && is_array($lang))// Do not display this if $lang is not defined.
@@ -336,12 +336,12 @@ function generate_text_for_html_display($text)
 		"/\[u\](.*?)\[\/u\]/is" => '<span style="text-decoration:underline;">$1</span>',
 		"/\[color\=(.*?)\](.*?)\[\/color\]/is" => '<span style="color:$1;">$2</span>',
 		"/\[code\](.*?)\[\/code\]/is" => '<pre style="padding-left:20px;">$1</pre>',
-		'#\[url(=(.*))?\](.*)\[/url\]#iUe' => "validate_url('\$2', '\$3')",
 	);
 
 	//Replace BBCode
 	$text = @preg_replace(array_keys($bbcode), array_values($bbcode), $text);
-	
+	$text = preg_replace_callback('#\[url(=(.*))?\](.*)\[/url\]#iU', function ($ary) { return(validate_url($ary[2], $ary[3])); }, $text);
+
 	return $text;
 }
 
